@@ -11,8 +11,24 @@ import {
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
+import ExpenseList from '../components/ExpenseList';
 
 export default class HomeScreen extends React.Component {
+  state = {
+    expenses: [
+      {category: 'Groceries', description: "tiger", amount: "3812.70"},
+      {category: 'Apparel', description: "doggie", amount: "129.33"}
+    ],
+    expenseCategories: [
+      'Groceries',
+      'Dining Out',
+      'Entertainment',
+      'Transportation',
+      'Apparel',
+      'Health',
+      'Alcohol'
+    ]
+  };
   static navigationOptions = {
     header: null,
   };
@@ -32,29 +48,11 @@ export default class HomeScreen extends React.Component {
             />
           </View>
 
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
+          <ExpenseList expenseData={this.state.expenses}/>
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
+          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in: wut</Text>
 
           <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
             <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
@@ -86,16 +84,6 @@ export default class HomeScreen extends React.Component {
       );
     }
   }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({
