@@ -5,18 +5,25 @@ import AppNavigator from './navigation/AppNavigator';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+
 import accountReducer from './reducers/accountReducer';
+import expenseReducer from './reducers/expenseReducer';
+import categoriesReducer from './reducers/categoriesReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
+  expenses: expenseReducer,
+  categories: categoriesReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
-
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {isLoadingComplete: false,}
+    this.store = createStore(rootReducer, applyMiddleware(thunk));
+  }
+
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -29,7 +36,7 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <Provider store={store}>
+        <Provider store={this.store}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <AppNavigator />

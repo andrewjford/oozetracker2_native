@@ -3,23 +3,45 @@ import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
-  StyleSheet,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class AuthLoadingScreen extends React.Component {
+import { setTokenFromLocalStorage } from '../actions/accountActions';
+
+class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
   }
 
-  // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
+  retrieveLocalStorage = async () => {
+    try {
+      const tokenExpiryDate = JSON.parse(await AsyncStorage.getItem('expiryDate'));
+      if (tokenExpiryDate && Date.now() < new Date(tokenExpiryDate)) {
+        const token = this.retrieveToken();
+        if (token) {
+          this.props.setTokenFromLocalStorage(token);
+        }
+      }
+    } catch (error) {
+      console.log('no token expiry');
+    }
+  };
+  
+  retrieveToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      this.props.setTokenFromLocalStorage(token);
+    } catch (error) {
+      console.log('no token');
+    }
+  };
 
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'Main' : 'Auth');
+  _bootstrapAsync = async () => {
+    const token = this.retrieveLocalStorage();
+    this.props.navigation.navigate(token ? 'Main' : 'Auth');
   };
 
   // Render any loading content that you like here
@@ -32,3 +54,11 @@ export default class AuthLoadingScreen extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    setTokenFromLocalStorage,
+  }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(AuthLoadingScreen);

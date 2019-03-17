@@ -13,10 +13,8 @@ export default class LoginInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      form: {
-        email: '',
-        password: '',
-      },
+      email: '',
+      password: '',
     };
   }
 

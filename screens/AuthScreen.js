@@ -7,11 +7,14 @@ import {
   Text,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { MonoText } from '../components/StyledText';
 import LoginForm from '../components/LoginForm';
+import { login } from '../actions/accountActions';
 
-export default class AuthScreen extends React.Component {
-  state = {};
+class AuthScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -21,17 +24,14 @@ export default class AuthScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <LoginForm />
+            <LoginForm login={this.props.login} />
           </View>
 
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in: wut</Text>
+          <Text style={styles.tabBarInfoText}>Ayyy {this.props.account.token}</Text>
 
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
         </View>
       </View>
     );
@@ -60,6 +60,20 @@ export default class AuthScreen extends React.Component {
     }
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.account,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    login,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
 
 const styles = StyleSheet.create({
   container: {
