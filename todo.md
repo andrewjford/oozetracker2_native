@@ -1,0 +1,3 @@
+- get new expense to properly add to expenses state
+- host backend
+- connect native to backend
