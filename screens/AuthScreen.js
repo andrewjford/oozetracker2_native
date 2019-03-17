@@ -5,11 +5,10 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-
 import { MonoText } from '../components/StyledText';
+import LoginForm from '../components/LoginForm';
 
 export default class AuthScreen extends React.Component {
   state = {};
@@ -22,14 +21,7 @@ export default class AuthScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
+            <LoginForm />
           </View>
 
         </ScrollView>
