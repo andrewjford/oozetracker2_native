@@ -4,7 +4,7 @@ import BackendCallout from '../services/BackendCallout';
 import { fetchRecentExpenses } from './expenseActions';
 import { fetchCategories } from './categoriesActions';
 
-const API_URL = 'http://192.168.8.192:3001';
+const API_URL = 'http://192.168.0.137:3001';
 
 export const login = (account) => {
   return (dispatch) => {
@@ -34,7 +34,7 @@ export const loginCallout = (account) => {
         return dispatch({
           type: 'SET_TOKEN',
           payload: {token: response.token},
-        }).catch(error => console.log('wtf '+ error));
+        });
       })
       .catch(error => console.log('login callout failed. ' + error.message));
   }
