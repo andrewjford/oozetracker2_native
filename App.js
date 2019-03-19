@@ -20,7 +20,9 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {isLoadingComplete: false,}
+    this.state = {
+      isLoadingComplete: false,
+    }
     this.store = createStore(rootReducer, applyMiddleware(thunk));
   }
 

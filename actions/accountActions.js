@@ -53,11 +53,17 @@ export const logout = () => {
 }
 
 export const setTokenFromLocalStorage = (token) => {
+  return {
+    type: 'SET_TOKEN',
+    payload: {token},
+  }
+}
+
+export const setTokenAndFetchData = (token) => {
   return (dispatch) => {
-    return dispatch({
-      type: 'SET_TOKEN',
-      payload: {token},
-    });
+    dispatch(setTokenFromLocalStorage(token));
+    dispatch(fetchRecentExpenses())
+    dispatch(fetchCategories());
   }
 }
 

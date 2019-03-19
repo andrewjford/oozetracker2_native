@@ -5,15 +5,16 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { MonoText } from '../components/StyledText';
 import ExpenseList from '../components/ExpenseList';
+import { logout } from '../actions/accountActions';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   state = {
     expenses: [
       {category: 'Groceries', description: "tiger", amount: "3812.70"},
@@ -48,7 +49,7 @@ export default class HomeScreen extends React.Component {
             />
           </View>
 
-          <ExpenseList expenseData={this.state.expenses}/>
+          <ExpenseList expenseData={this.props.expenses}/>
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
@@ -85,6 +86,22 @@ export default class HomeScreen extends React.Component {
     }
   }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.account,
+    expenses: state.expenses.expenses,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    logout,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {

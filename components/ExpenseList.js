@@ -12,26 +12,26 @@ const listExpenses = (props) => {
     
     if (expenses) {
       const groupedExpenses = expenses.reduce((accum, expense) => {
-        if (accum[expense.category]) {
-          accum[expense.category] += parseFloat(expense.amount);
+        if (accum[expense.name]) {
+          accum[expense.name] += parseFloat(expense.amount);
         } else {
-          accum[expense.category] = parseFloat(expense.amount);
+          accum[expense.name] = parseFloat(expense.amount);
         }
   
         return accum;
       }, {});
 
-      const categorySummary = Object.entries(groupedExpenses)
-        .map(([theKey, value]) => ({category: theKey, amount: value}));
+      const nameSummary = Object.entries(groupedExpenses)
+        .map(([theKey, value]) => ({name: theKey, amount: value}));
 
       return (
-        <FlatList data={categorySummary}
-          keyExtractor={item => item.category}
+        <FlatList data={nameSummary}
+          keyExtractor={item => item.name}
           renderItem={
             ({item}) => {
               return (
                 <View style={styles.container}>
-                  <Text style={styles.itemLeft}>{item.category}</Text>
+                  <Text style={styles.itemLeft}>{item.name}</Text>
                   <Text style={styles.itemRight}>{item.amount}</Text>
                 </View>
               )

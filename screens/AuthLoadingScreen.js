@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { setTokenFromLocalStorage } from '../actions/accountActions';
+import { setTokenFromLocalStorage, setTokenAndFetchData } from '../actions/accountActions';
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -20,20 +20,21 @@ class AuthLoadingScreen extends React.Component {
     try {
       const tokenExpiryDate = JSON.parse(await AsyncStorage.getItem('expiryDate'));
       if (tokenExpiryDate && Date.now() < new Date(tokenExpiryDate)) {
-        const token = this.retrieveToken();
+        const token = await AsyncStorage.getItem('token');
         if (token) {
-          this.props.setTokenFromLocalStorage(token);
+          console.log('token '+token);
+          this.props.setTokenAndFetchData(token);
         }
       }
     } catch (error) {
-      console.log('no token expiry');
+      console.log('error fetching' + error.message);
     }
   };
   
   retrieveToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      this.props.setTokenFromLocalStorage(token);
+      return token;
     } catch (error) {
       console.log('no token');
     }
@@ -58,6 +59,7 @@ class AuthLoadingScreen extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     setTokenFromLocalStorage,
+    setTokenAndFetchData
   }, dispatch)
 }
 
