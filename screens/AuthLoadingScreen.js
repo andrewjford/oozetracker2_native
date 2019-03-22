@@ -24,24 +24,16 @@ class AuthLoadingScreen extends React.Component {
         if (token) {
           console.log('token '+token);
           this.props.setTokenAndFetchData(token);
+          return token;
         }
       }
     } catch (error) {
       console.log('error fetching' + error.message);
     }
   };
-  
-  retrieveToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      return token;
-    } catch (error) {
-      console.log('no token');
-    }
-  };
 
   _bootstrapAsync = async () => {
-    const token = this.retrieveLocalStorage();
+    const token = await this.retrieveLocalStorage();
     this.props.navigation.navigate(token ? 'Main' : 'Auth');
   };
 
