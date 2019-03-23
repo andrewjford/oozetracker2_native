@@ -5,14 +5,20 @@ import { fetchRecentExpenses } from './expenseActions';
 import { fetchCategories } from './categoriesActions';
 import { API_URL } from '../constants/Config';
 
+export const loginPromise = (account) => {
+  return (dispatch) => {
+    return dispatch(loginCallout(account));
+  }
+}
+
 export const login = (account) => {
   return (dispatch) => {
-    dispatch(loginCallout(account))
+    return dispatch(loginCallout(account))
       .then(() => {
-        dispatch(fetchRecentExpenses());
+        return dispatch(fetchRecentExpenses());
       })
       .then(() => {
-        dispatch(fetchCategories());
+        return dispatch(fetchCategories());
       })
       .catch(error => console.log('login failed'))
   }
@@ -20,11 +26,8 @@ export const login = (account) => {
 
 export const loginCallout = (account) => {
   return (dispatch) => {
-    console.log('calling '+`${API_URL}/api/v1/login`);
-    console.log('with '+JSON.stringify(account));
     return BackendCallout.postToApi(`${API_URL}/api/v1/login`, account)
       .then(response => {
-        console.log('responsess '+JSON.stringify(response));
         const expiryDate = new Date();
         expiryDate.setSeconds(response.tokenExpiration);
         AsyncStorage.setItem('token', response.token);

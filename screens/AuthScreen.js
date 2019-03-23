@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Image,
   Platform,
   ScrollView,
   StyleSheet,
@@ -10,7 +9,6 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { MonoText } from '../components/StyledText';
 import LoginForm from '../components/LoginForm';
 import { login } from '../actions/accountActions';
 
@@ -19,12 +17,21 @@ class AuthScreen extends React.Component {
     header: null,
   };
 
+  login = (account) => {
+    this.props.login(account)
+      .then(() => {
+        if (this.props.account.token) {
+          this.props.navigation.navigate('Home');
+        }
+      })
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <LoginForm login={this.props.login} />
+            <LoginForm login={this.login} />
           </View>
 
         </ScrollView>

@@ -24,6 +24,7 @@ AuthStack.navigationOptions = {
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  NewExpense: NewExpense,
 });
 
 HomeStack.navigationOptions = {

@@ -22,7 +22,6 @@ class AuthLoadingScreen extends React.Component {
       if (tokenExpiryDate && Date.now() < new Date(tokenExpiryDate)) {
         const token = await AsyncStorage.getItem('token');
         if (token) {
-          console.log('token '+token);
           this.props.setTokenAndFetchData(token);
           return token;
         }
@@ -34,6 +33,7 @@ class AuthLoadingScreen extends React.Component {
 
   _bootstrapAsync = async () => {
     const token = await this.retrieveLocalStorage();
+    console.log('states '+JSON.stringify(this.props.navigation.state));
     this.props.navigation.navigate(token ? 'Main' : 'Auth');
   };
 

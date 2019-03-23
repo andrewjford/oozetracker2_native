@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Button
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -34,7 +35,12 @@ class HomeScreen extends React.Component {
     header: null,
   };
 
+  navigateToNewExpense = () => {
+    this.props.navigation.navigate('NewExpense');
+  }
+
   render() {
+    console.log('states '+JSON.stringify(this.props.navigation.state));
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -50,6 +56,10 @@ class HomeScreen extends React.Component {
           </View>
 
           <ExpenseList expenseData={this.props.expenses}/>
+          <Button
+            title="dostuff"
+            onPress={this.navigateToNewExpense}
+          />
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
