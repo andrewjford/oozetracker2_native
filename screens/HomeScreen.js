@@ -40,7 +40,6 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-    console.log('states '+JSON.stringify(this.props.navigation.state));
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>

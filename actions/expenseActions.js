@@ -5,7 +5,6 @@ export const fetchRecentExpenses = () => {
   return (dispatch, getState) => {
     BackendCallout.getFromApi(`${API_URL}/api/v1/reports/recent`, getState().account.token)
       .then(data => {
-        console.log('fetch data '+JSON.stringify(data.rows));
         return dispatch({
           type: 'FETCH_RECENT_EXPENSES',
           payload: data.rows

@@ -33,7 +33,6 @@ class AuthLoadingScreen extends React.Component {
 
   _bootstrapAsync = async () => {
     const token = await this.retrieveLocalStorage();
-    console.log('states '+JSON.stringify(this.props.navigation.state));
     this.props.navigation.navigate(token ? 'Main' : 'Auth');
   };
 

@@ -23,7 +23,9 @@ export default class App extends React.Component {
     this.state = {
       isLoadingComplete: false,
     }
-    this.store = createStore(rootReducer, applyMiddleware(thunk));
+
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    this.store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
   }
 
 

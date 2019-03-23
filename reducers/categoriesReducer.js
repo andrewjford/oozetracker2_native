@@ -1,6 +1,5 @@
 const categoriesReducer = (state = {
   displayCategoryInput: false,
-  inlineEditValue: null,
   categories: [],
 }, action) => {
   switch (action.type) {
