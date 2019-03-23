@@ -1,6 +1,5 @@
 import BackendCallout from '../services/BackendCallout';
-
-const API_URL = 'http://192.168.0.137:3001';
+import { API_URL } from '../constants/Config';
 
 export const fetchRecentExpenses = () => {
   return (dispatch, getState) => {

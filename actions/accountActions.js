@@ -3,8 +3,7 @@ import { AsyncStorage } from 'react-native';
 import BackendCallout from '../services/BackendCallout';
 import { fetchRecentExpenses } from './expenseActions';
 import { fetchCategories } from './categoriesActions';
-
-const API_URL = 'http://192.168.0.137:3001';
+import { API_URL } from '../constants/Config';
 
 export const login = (account) => {
   return (dispatch) => {
