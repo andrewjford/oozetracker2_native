@@ -20,17 +20,16 @@ export default class ExpenseInput extends React.Component {
       description: '',
       amount: 0,
       date: theDate,
-      category: this.props.expenseCategories[0]
+      category: this.props.categories[0].id
     };
 
     this.submit = this.submit.bind(this);
     this.handleAmountChange = this.handleAmountChange.bind(this);
-    this.handleCategoryChange = this.handleCategoryChange.bind(this);
   }
 
-  categories = this.props.expenseCategories.map((category) => {
+  categories = this.props.categories.map((category) => {
     return (
-      <Picker.Item label={category} value={category} key={category}/>
+      <Picker.Item label={category.name} value={category.id} key={category.id}/>
     )
   });
 
@@ -42,8 +41,8 @@ export default class ExpenseInput extends React.Component {
     this.setState({amount: text});
   }
 
-  handleCategoryChange(newCategory) {
-    this.setState({category: newCategory});
+  handleCategoryChange = (newcategory) => {
+    this.setState({category: newcategory});
   }
 
   render() {

@@ -11,27 +11,10 @@ class NewExpense extends React.Component {
     title: 'New Expense',
   };
 
-  state = {
-    expenseCategories: [
-      'Groceries',
-      'Dining Out',
-      'Entertainment',
-      'Transportation',
-      'Apparel',
-      'Health',
-      'Alcohol'
-    ]
-  };
-
-  addExpense = () => {
-    
-  }
-
-  cats = () => {
-    if (this.categories) {
-      return this.categories.map(each => <Text>{each}</Text>);
-    }
-    return <Text>nope</Text>
+  addExpense = (newExpense) => {
+    this.props.createExpense(newExpense)
+      .then(() => this.props.navigation.navigate('Home'))
+      .catch(error => console.log('error: '+error.message));
   }
 
   render() {
@@ -39,9 +22,8 @@ class NewExpense extends React.Component {
       <ScrollView style={styles.container}>
         <ExpenseInput
           title={'Create Expense'}
-          expenseCategories={this.state.expenseCategories}
+          categories={this.props.categories}
           createExpense={this.addExpense} />
-          {this.cats()}
       </ScrollView>
     );
   }
