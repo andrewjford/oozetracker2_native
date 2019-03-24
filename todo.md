@@ -1,3 +1,2 @@
-- get new expense to properly add to expenses state
-- host backend
-- connect native to backend
+- make a monthly summary screen
+- do styling
