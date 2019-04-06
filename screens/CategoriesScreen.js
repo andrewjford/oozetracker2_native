@@ -8,15 +8,10 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getMonthly } from '../actions/expenseActions';
-
 const TableRow = (props) => {
   return (
     <View style={styles.tableRow}>
       <View style={styles.tableCell}><Text>{props.lineItem.name}</Text></View>
-      <View style={styles.tableCell}>
-        <Text style={styles.textRight}>{props.lineItem.sum}</Text>
-      </View>
     </View>
   );
 }
@@ -24,50 +19,28 @@ const TableRow = (props) => {
 class CategoriesScreen extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      date: new Date(),
-      monthNames: ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ],
-      rotate: false,
-    };
-  }
-  componentDidMount() {
-    const currentMonthRequest = {
-      month: this.state.date.getMonth(),
-      year: this.state.date.getFullYear()
-    };
-    this.props.getMonthly(currentMonthRequest);
+    this.state = {};
   }
 
   renderLineItems = () => {
-    if (!this.props.monthlyView) {return <Text>No Recorded Expenses</Text>};
-    return this.props.monthlyView.rows.map((lineItem) => {
+    if (!this.props.categories) {return <Text>Add some categories!</Text>};
+    return this.props.categories.map((category) => {
       return (
-        <TableRow lineItem={lineItem} key={lineItem.id}/>
+        <TableRow lineItem={category} key={category.id}/>
       );
     });
   }
 
   render() {
-    const total = !this.props.monthlyView ? 0 : this.props.monthlyView.rows.reduce((accum, lineItem) => {
-      return accum + parseFloat(lineItem.sum);
-    },0);
-    
     return (
       <View style={styles.container}>
-      <Text style={styles.headerText}>
-        {this.state.date.getFullYear()} {this.state.monthNames[this.state.date.getMonth()]}
-      </Text>
+        <Text style={styles.headerText}>Categories</Text>
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.tableContainer}>
             {this.renderLineItems()}
-            <TableRow lineItem={{name: "Total", sum: total}} />
           </View>
         </ScrollView>
-
       </View>
     );
   }
@@ -80,13 +53,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    getMonthly,
-  }, dispatch)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesScreen);
+export default connect(mapStateToProps)(CategoriesScreen);
 
 const styles = StyleSheet.create({
   container: {
