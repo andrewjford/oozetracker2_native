@@ -7,6 +7,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createCategory } from '../actions/categoriesActions';
+
+import CategoryForm from '../components/CategoryForm';
 
 const TableRow = (props) => {
   return (
@@ -35,17 +38,17 @@ class CategoriesScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.headerText}>Categories</Text>
-
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.tableContainer}>
             {this.renderLineItems()}
           </View>
         </ScrollView>
+
+        <CategoryForm createCategory={this.props.createCategory}/>
       </View>
     );
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {
@@ -53,7 +56,13 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(CategoriesScreen);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    createCategory,
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesScreen);
 
 const styles = StyleSheet.create({
   container: {
