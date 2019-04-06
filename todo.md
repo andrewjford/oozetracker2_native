@@ -1,2 +1,5 @@
-- make a monthly summary screen
+- categories screen
+- monthly screen
+  - add month cycling
+  - 
 - do styling
