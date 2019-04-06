@@ -3,7 +3,8 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider as StoreProvider } from 'react-redux';
+import { Provider as PaperProvider } from 'react-native-paper';
 import thunk from 'redux-thunk';
 
 import accountReducer from './reducers/accountReducer';
@@ -40,12 +41,14 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <Provider store={this.store}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
-          </View>
-        </Provider>
+        <StoreProvider store={this.store}>
+          <PaperProvider>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              <AppNavigator />
+            </View>
+          </PaperProvider>
+        </StoreProvider>
       );
     }
   }
