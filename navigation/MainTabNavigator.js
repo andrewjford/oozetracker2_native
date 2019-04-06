@@ -6,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import NewExpense from '../screens/NewExpense';
 import MonthlyScreen from '../screens/MonthlyScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import CategoriesScreen from '../screens/CategoriesScreen';
 
 const MonthlyStack = createStackNavigator({
   Monthly: MonthlyScreen,
@@ -45,33 +45,33 @@ const NewExpenseStack = createStackNavigator({
   NewExpense: NewExpense,
 });
 
-NewExpense.navigationOptions = {
+NewExpenseStack.navigationOptions = {
   tabBarLabel: 'New Expense',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
+    <TabBarIcon 
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-card' : 'md-card'}
     />
-  ),
+  )
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
-});
+const CategoriesStack = createStackNavigator({
+  Categories: CategoriesScreen,
+})
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+CategoriesStack.navigationOptions = {
+  tabBarLabel: 'Categories',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
+    <TabBarIcon 
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      name={Platform.OS === 'ios' ? 'ios-filing' : 'md-filing'}
     />
-  ),
-};
+  )
+}
 
 export default createBottomTabNavigator({
   HomeStack,
   MonthlyStack,
   NewExpenseStack,
-  SettingsStack,
+  CategoriesStack,
 });
