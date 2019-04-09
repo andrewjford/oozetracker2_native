@@ -5,6 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { List } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createCategory } from '../actions/categoriesActions';
@@ -29,7 +30,7 @@ class CategoriesScreen extends React.Component {
     if (!this.props.categories) {return <Text>Add some categories!</Text>};
     return this.props.categories.map((category) => {
       return (
-        <TableRow lineItem={category} key={category.id}/>
+        <List.Item title={category.name} key={category.id}/>
       );
     });
   }
@@ -38,11 +39,9 @@ class CategoriesScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.headerText}>Categories</Text>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.tableContainer}>
-            {this.renderLineItems()}
-          </View>
-        </ScrollView>
+        <List.Section>
+          {this.renderLineItems()}
+        </List.Section>
 
         <CategoryForm createCategory={this.props.createCategory}/>
       </View>
