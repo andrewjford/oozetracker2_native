@@ -4,7 +4,7 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { Provider as StoreProvider } from 'react-redux';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import thunk from 'redux-thunk';
 
 import accountReducer from './reducers/accountReducer';
@@ -42,7 +42,7 @@ export default class App extends React.Component {
     } else {
       return (
         <StoreProvider store={this.store}>
-          <PaperProvider>
+          <PaperProvider theme={DefaultTheme}>
             <View style={styles.container}>
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
               <AppNavigator />
@@ -62,9 +62,6 @@ export default class App extends React.Component {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
     ]);
   };

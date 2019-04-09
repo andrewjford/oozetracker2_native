@@ -1,43 +1,31 @@
 import React from 'react';
-
+import { DataTable } from 'react-native-paper';
 import {
   StyleSheet,
   View,
-  Text,
-  FlatList
 } from 'react-native';
 
 const listExpenses = (props) => {
     const expenses = props.expenseData;
     
     if (expenses) {
-      const groupedExpenses = expenses.reduce((accum, expense) => {
-        if (accum[expense.name]) {
-          accum[expense.name] += parseFloat(expense.amount);
-        } else {
-          accum[expense.name] = parseFloat(expense.amount);
-        }
-  
-        return accum;
-      }, {});
-
-      const nameSummary = Object.entries(groupedExpenses)
-        .map(([theKey, value]) => ({name: theKey, amount: value}));
+      const lineItems = expenses.map((expense) => {
+        return <DataTable.Row key={expense.id}>
+          <DataTable.Cell>{expense.description}</DataTable.Cell>
+          <DataTable.Cell>{expense.name}</DataTable.Cell>
+          <DataTable.Cell numeric>{expense.amount}</DataTable.Cell>
+        </DataTable.Row>
+      });
 
       return (
-        <FlatList data={nameSummary}
-          keyExtractor={item => item.name}
-          renderItem={
-            ({item}) => {
-              return (
-                <View style={styles.container}>
-                  <Text style={styles.itemLeft}>{item.name}</Text>
-                  <Text style={styles.itemRight}>{item.amount}</Text>
-                </View>
-              )
-            }
-          }
-        />
+        <DataTable>
+          <DataTable.Header>
+            <DataTable.Title>Description</DataTable.Title>
+            <DataTable.Title>Category</DataTable.Title>
+            <DataTable.Title numeric>Amount</DataTable.Title>
+          </DataTable.Header>
+          {lineItems}
+        </DataTable>
       )
     } else {
       return null;
