@@ -4,10 +4,10 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   Button,
   Picker
 } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import DatePicker from 'react-native-datepicker'
 
 export default class ExpenseInput extends React.Component {
@@ -48,9 +48,8 @@ export default class ExpenseInput extends React.Component {
   render() {
     return (
       <View style={this.props.coolStyle}>
-        <Text style={styles.bigText}>{this.props.title}</Text>
         <DatePicker
-          style={{width: 200}}
+          style={{width: '100%'}}
           date={this.state.date}
           mode="date"
           placeholder="select date"
@@ -71,9 +70,9 @@ export default class ExpenseInput extends React.Component {
           onDateChange={(date) => {this.setState({date: date})}}
         />
         <TextInput
-          style={{height: 40, width: 260, backgroundColor: "white"}}
+          label="Description"
+          value={this.state.description}
           onChangeText={(description) => this.setState({description})}
-          placeholder="Description"
         />
 
         <TextInput
