@@ -5,7 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { List } from 'react-native-paper';
+import { List, Button } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createCategory } from '../actions/categoriesActions';
@@ -26,6 +26,15 @@ class CategoriesScreen extends React.Component {
     this.state = {};
   }
 
+  handleAddPress = () => {
+    this.setState({showCategoryForm: true});
+  }
+
+  createCategory = (newCategory) => {
+    this.props.createCategory(newCategory);
+    this.setState({showCategoryForm: false});
+  }
+
   renderLineItems = () => {
     if (!this.props.categories) {return <Text>Add some categories!</Text>};
     return this.props.categories.map((category) => {
@@ -33,6 +42,14 @@ class CategoriesScreen extends React.Component {
         <List.Item title={category.name} key={category.id}/>
       );
     });
+  }
+
+  renderAddCategories = () => {
+    if (this.state.showCategoryForm) {
+      return <CategoryForm createCategory={this.createCategory}/>;
+    } else {
+      return <Button mode="contained" onPress={this.handleAddPress}>Add a Category</Button>
+    }
   }
 
   render() {
@@ -43,7 +60,7 @@ class CategoriesScreen extends React.Component {
           {this.renderLineItems()}
         </List.Section>
 
-        <CategoryForm createCategory={this.props.createCategory}/>
+        {this.renderAddCategories()}
       </View>
     );
   }

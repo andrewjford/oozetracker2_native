@@ -5,8 +5,8 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Button,
 } from 'react-native';
+import { Button } from 'react-native-paper';
 
 export default class CategoryForm extends React.Component {
 
@@ -19,6 +19,7 @@ export default class CategoryForm extends React.Component {
 
   submit = () => {
     this.props.createCategory(this.state);
+    this.state.name = '';
   }
 
   handleNameChange = (value) => {
@@ -34,10 +35,7 @@ export default class CategoryForm extends React.Component {
           placeholder="Name"
         />
 
-        <Button
-          title="Create Category"
-          onPress={this.submit}
-        />
+        <Button mode="contained" onPress={this.submit}>Submit</Button>
       </View>
     )
   }
