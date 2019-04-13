@@ -5,6 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -55,6 +56,18 @@ class MonthlyScreen extends React.Component {
     });
   }
 
+  renderRows = () => {
+    if (!this.props.monthlyView) {return <Text>No Recorded Expenses</Text>};
+    return this.props.monthlyView.rows.map(lineItem => {
+      return (
+        <DataTable.Row key={lineItem.id}>
+          <DataTable.Cell>{lineItem.name}</DataTable.Cell>
+          <DataTable.Cell numeric>{lineItem.sum}</DataTable.Cell>
+        </DataTable.Row>
+      );
+    })
+  }
+
   render() {
     const total = !this.props.monthlyView ? 0 : this.props.monthlyView.rows.reduce((accum, lineItem) => {
       return accum + parseFloat(lineItem.sum);
@@ -62,16 +75,23 @@ class MonthlyScreen extends React.Component {
     
     return (
       <View style={styles.container}>
-      <Text style={styles.headerText}>
-        {this.state.date.getFullYear()} {this.state.monthNames[this.state.date.getMonth()]}
-      </Text>
+        <Text style={styles.headerText}>
+          {this.state.date.getFullYear()} {this.state.monthNames[this.state.date.getMonth()]}
+        </Text>
 
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.tableContainer}>
-            {this.renderLineItems()}
-            <TableRow lineItem={{name: "Total", sum: total}} />
-          </View>
-        </ScrollView>
+        <DataTable>
+          <DataTable.Header>
+            <DataTable.Title>Category</DataTable.Title>
+            <DataTable.Title numeric>Amount</DataTable.Title>
+          </DataTable.Header>
+
+          {this.renderRows()}
+
+          <DataTable.Row>
+            <DataTable.Cell>Total</DataTable.Cell>
+            <DataTable.Cell numeric>{total}</DataTable.Cell>
+          </DataTable.Row>
+        </DataTable>
 
       </View>
     );
