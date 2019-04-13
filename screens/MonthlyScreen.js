@@ -69,8 +69,12 @@ class MonthlyScreen extends React.Component {
           {this.renderRows()}
 
           <DataTable.Row>
-            <DataTable.Cell>Total</DataTable.Cell>
-            <DataTable.Cell numeric>{total.format()}</DataTable.Cell>
+            <DataTable.Cell>
+              <Text style={styles.bold}>Total</Text>
+            </DataTable.Cell>
+            <DataTable.Cell numeric>
+              <Text style={styles.bold}>{total.format()}</Text>
+            </DataTable.Cell>
           </DataTable.Row>
         </DataTable>
       </View>
@@ -101,6 +105,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 5,
+    fontWeight: 'bold',
+  },
+  bold: {
     fontWeight: 'bold',
   },
 });
