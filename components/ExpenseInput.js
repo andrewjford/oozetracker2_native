@@ -60,9 +60,9 @@ export default class ExpenseInput extends React.Component {
 
           <TextInput
             style={styles.inputContainerStyle}
+            label="Amount"
             keyboardType="numeric"
             onChangeText={this.handleAmountChange}
-            placeholder="Amount"
           />
 
           <Picker selectedValue={this.state.category}
