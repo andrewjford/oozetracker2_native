@@ -1,21 +1,18 @@
 import React from 'react';
-
 import {
   View,
-  Text,
+  ScrollView,
   StyleSheet,
-  Button,
   Picker
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import DatePicker from 'react-native-datepicker'
+import { TextInput, Button } from 'react-native-paper';
+import DatePicker from './DatePicker';
 
 export default class ExpenseInput extends React.Component {
 
   constructor(props) {
     super(props);
     let theDate = new Date();
-    theDate = `${theDate.getFullYear()}-${theDate.getMonth()+1}-${theDate.getDate()}`
     this.state = {
       description: '',
       amount: 0,
@@ -47,51 +44,37 @@ export default class ExpenseInput extends React.Component {
 
   render() {
     return (
-      <View style={this.props.coolStyle}>
-        <DatePicker
-          style={{width: '100%'}}
-          date={this.state.date}
-          mode="date"
-          placeholder="select date"
-          format="YYYY-MM-DD"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              left: 0,
-              top: 4,
-              marginLeft: 0
-            },
-            dateInput: {
-              marginLeft: 36
-            }
-          }}
-          onDateChange={(date) => {this.setState({date: date})}}
-        />
-        <TextInput
-          label="Description"
-          value={this.state.description}
-          onChangeText={(description) => this.setState({description})}
-        />
+      <View>
+        <ScrollView style={[styles.container]}>
+          <DatePicker
+            style={styles.inputContainerStyle}
+            date={this.state.date}
+            onDateChange={(date) => {this.setState({date: date})}}
+          />
+          <TextInput
+            style={styles.inputContainerStyle}
+            label="Description"
+            value={this.state.description}
+            onChangeText={(description) => this.setState({description})}
+          />
 
-        <TextInput
-          style={{height: 40, width: 100, backgroundColor: "white"}}
-          keyboardType="numeric"
-          onChangeText={this.handleAmountChange}
-          placeholder="Amount"
-        />
+          <TextInput
+            style={styles.inputContainerStyle}
+            keyboardType="numeric"
+            onChangeText={this.handleAmountChange}
+            placeholder="Amount"
+          />
 
-        <Picker selectedValue={this.state.category}
-          style={{height: 40, width: '100%'}}
-          onValueChange={this.handleCategoryChange}>
-          {this.categories}
-        </Picker>
+          <Picker selectedValue={this.state.category}
+            style={styles.inputContainerStyle}
+            onValueChange={this.handleCategoryChange}>
+            {this.categories}
+          </Picker>
 
-        <Button
-          title="Submit"
-          onPress={this.submit}
-        />
+        </ScrollView>
+        <Button onPress={this.submit} mode="contained" style={styles.button}>
+          Submit
+        </Button>
       </View>
     )
   }
@@ -99,22 +82,17 @@ export default class ExpenseInput extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
+    padding: 8,
   },
-  bigText: {
-    fontWeight: 'bold'
+  wrapper: {
+    flex: 1,
   },
-  bigButton: {
-    marginBottom: 30,
-    width: 260,
-    alignItems: 'center',
-    backgroundColor: '#2196F3'
+  inputContainerStyle: {
+    margin: 8,
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10
+    width: "40%",
+    alignSelf: "center",
   }
-  });
+});

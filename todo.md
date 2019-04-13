@@ -1,4 +1,6 @@
 - categories screen
+  - edit
+  - delete
 - monthly screen
   - add month cycling
   - 

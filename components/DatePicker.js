@@ -7,7 +7,7 @@ class DatePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: undefined,
+      date: props.date,
       open: false
     };
     this._textInput = createRef();
@@ -24,6 +24,7 @@ class DatePicker extends Component {
   handleChange = date => {
     this.handleClose();
     this.setState({ date });
+    this.props.onDateChange(date);
   };
 
   handleClose = () => {
@@ -48,12 +49,12 @@ class DatePicker extends Component {
 
   render() {
     const { date, open } = this.state;
-    const value = date ? date.toLocaleString() : '';
+    const value = date ? `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}` : '';
 
     return (
-      <View style={{ flex: 1, justifyContent:'center' }}>
+      <View style={this.props.style}>
         <TextInput
-          label='Paper DatePiker'
+          label='Date'
           ref={this._textInput}
           render={this.renderTouchText}
           value={value}
