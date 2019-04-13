@@ -8,19 +8,9 @@ import {
 import { DataTable } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import currency from 'currency.js';
 
 import { getMonthly } from '../actions/expenseActions';
-
-const TableRow = (props) => {
-  return (
-    <View style={styles.tableRow}>
-      <View style={styles.tableCell}><Text>{props.lineItem.name}</Text></View>
-      <View style={styles.tableCell}>
-        <Text style={styles.textRight}>{props.lineItem.sum}</Text>
-      </View>
-    </View>
-  );
-}
 
 class MonthlyScreen extends React.Component {
   constructor(props) {
@@ -47,31 +37,22 @@ class MonthlyScreen extends React.Component {
     this.props.getMonthly(currentMonthRequest);
   }
 
-  renderLineItems = () => {
-    if (!this.props.monthlyView) {return <Text>No Recorded Expenses</Text>};
-    return this.props.monthlyView.rows.map((lineItem) => {
-      return (
-        <TableRow lineItem={lineItem} key={lineItem.id}/>
-      );
-    });
-  }
-
   renderRows = () => {
-    if (!this.props.monthlyView) {return <Text>No Recorded Expenses</Text>};
+    if (!this.props.monthlyView) {return <Text></Text>};
     return this.props.monthlyView.rows.map(lineItem => {
       return (
         <DataTable.Row key={lineItem.id}>
           <DataTable.Cell>{lineItem.name}</DataTable.Cell>
-          <DataTable.Cell numeric>{lineItem.sum}</DataTable.Cell>
+          <DataTable.Cell numeric>{lineItem.sum.format()}</DataTable.Cell>
         </DataTable.Row>
       );
     })
   }
 
   render() {
-    const total = !this.props.monthlyView ? 0 : this.props.monthlyView.rows.reduce((accum, lineItem) => {
-      return accum + parseFloat(lineItem.sum);
-    },0);
+    const total = !this.props.monthlyView ? currency(0) : this.props.monthlyView.rows.reduce((accum, lineItem) => {
+      return accum.add(lineItem.sum);
+    },currency(0));
     
     return (
       <View style={styles.container}>
@@ -89,15 +70,13 @@ class MonthlyScreen extends React.Component {
 
           <DataTable.Row>
             <DataTable.Cell>Total</DataTable.Cell>
-            <DataTable.Cell numeric>{total}</DataTable.Cell>
+            <DataTable.Cell numeric>{total.format()}</DataTable.Cell>
           </DataTable.Row>
         </DataTable>
-
       </View>
     );
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {
@@ -117,31 +96,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(MonthlyScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignSelf: 'center',
-    width: '75%',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  tableContainer: {
-    flex: 1,
-    marginBottom: 20,
-  },
-  tableRow: {
-    flex: 1,
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-  },
-  tableCell: {
-    flex: 1,
-    alignSelf: 'stretch',
-  },
-  textRight: {
-    textAlign: 'right',
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
   },
   headerText: {
     fontSize: 20,

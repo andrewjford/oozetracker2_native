@@ -1,5 +1,6 @@
 import BackendCallout from '../services/BackendCallout';
 import { API_URL } from '../constants/Config';
+import currency from 'currency.js';
 
 export const fetchRecentExpenses = () => {
   return (dispatch, getState) => {
@@ -65,14 +66,17 @@ export const getMonthly = (monthObject) => {
   return (dispatch, getState) => {
     BackendCallout.postToApi(`${API_URL}/api/v1/reports/monthly`, monthObject, getState().account.token)
     .then(report => {
-        return dispatch({
-          type: 'GET_MONTHLY',
-          payload: report,
-        });
-      })
-      .catch(error => {
-        console.log(error)
+      report.rows = report.rows.map((each) => {
+        return {...each, sum: currency(each.sum)}
       });
+      return dispatch({
+        type: 'GET_MONTHLY',
+        payload: report,
+      });
+    })
+    .catch(error => {
+      console.log(error)
+    });
   }
 }
 
