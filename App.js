@@ -17,6 +17,16 @@ const rootReducer = combineReducers({
   categories: categoriesReducer,
 });
 
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#388e3c',
+    accent: '#a5d6a7',
+  }
+};
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -42,7 +52,7 @@ export default class App extends React.Component {
     } else {
       return (
         <StoreProvider store={this.store}>
-          <PaperProvider theme={DefaultTheme}>
+          <PaperProvider theme={theme}>
             <View style={styles.container}>
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
               <AppNavigator />

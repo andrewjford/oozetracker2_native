@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import NewExpense from '../screens/NewExpense';
 import MonthlyScreen from '../screens/MonthlyScreen';
 import CategoriesScreen from '../screens/CategoriesScreen';
+import Colors from '../constants/Colors';
 
 const MonthlyStack = createStackNavigator({
   Monthly: MonthlyScreen,
@@ -14,6 +15,9 @@ const MonthlyStack = createStackNavigator({
 
 MonthlyStack.navigationOptions = {
   tabBarLabel: 'Summary',
+  tabBarOptions: { 
+    activeTintColor: Colors.tintColor,
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -28,6 +32,9 @@ const HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
+  tabBarOptions: { 
+    activeTintColor: Colors.tintColor,
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -42,6 +49,9 @@ const NewExpenseStack = createStackNavigator({
 
 NewExpenseStack.navigationOptions = {
   tabBarLabel: 'New Expense',
+  tabBarOptions: { 
+    activeTintColor: Colors.tintColor,
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon 
       focused={focused}
@@ -56,6 +66,9 @@ const CategoriesStack = createStackNavigator({
 
 CategoriesStack.navigationOptions = {
   tabBarLabel: 'Categories',
+  tabBarOptions: { 
+    activeTintColor: Colors.tintColor,
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon 
       focused={focused}
