@@ -26,6 +26,10 @@ class CategoriesScreen extends React.Component {
     this.state = {};
   }
 
+  static navigationOptions = {
+    title: 'Categories',
+  };
+
   handleAddPress = () => {
     this.setState({showCategoryForm: true});
   }
@@ -54,14 +58,13 @@ class CategoriesScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.headerText}>Categories</Text>
+      <ScrollView style={styles.container}>
         <List.Section>
           {this.renderLineItems()}
         </List.Section>
 
         {this.renderAddCategories()}
-      </View>
+      </ScrollView>
     );
   }
 }

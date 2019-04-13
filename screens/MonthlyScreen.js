@@ -33,6 +33,11 @@ class MonthlyScreen extends React.Component {
       rotate: false,
     };
   }
+
+  static navigationOptions = {
+    title: 'Monthly Summary',
+  };
+
   componentDidMount() {
     const currentMonthRequest = {
       month: this.state.date.getMonth(),

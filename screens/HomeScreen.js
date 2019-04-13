@@ -13,6 +13,10 @@ import ExpenseList from '../components/ExpenseList';
 import { logout } from '../actions/accountActions';
 
 class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Recent Expenses',
+  };
+
   navigateToNewExpense = () => {
     this.props.navigation.navigate('NewExpense');
   }
@@ -20,7 +24,6 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Headline style={styles.header}>Recent Expenses</Headline>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <ExpenseList expenseData={this.props.expenses}/>
         </ScrollView>
