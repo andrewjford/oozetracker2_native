@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -12,7 +12,7 @@ class NewExpense extends React.Component {
   };
 
   addExpense = (newExpense) => {
-    this.props.createExpense(newExpense)
+    return this.props.createExpense(newExpense)
       .then(() => this.props.navigation.navigate('Home'))
       .catch(error => console.log('error: '+error.message));
   }

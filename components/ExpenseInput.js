@@ -15,7 +15,7 @@ export default class ExpenseInput extends React.Component {
     let theDate = new Date();
     this.state = {
       description: '',
-      amount: 0,
+      amount: '0',
       date: theDate,
       category: this.props.categories[0].id
     };
@@ -31,7 +31,10 @@ export default class ExpenseInput extends React.Component {
   });
 
   submit() {
-    this.props.createExpense(this.state);
+    this.props.createExpense(this.state)
+      .then(() => {
+        this.resetState();
+      });
   }
 
   handleAmountChange(text) {
@@ -40,6 +43,16 @@ export default class ExpenseInput extends React.Component {
 
   handleCategoryChange = (newcategory) => {
     this.setState({category: newcategory});
+  }
+
+  resetState = () => {
+    let theDate = new Date();
+    this.setState({
+      description: '',
+      amount: '0',
+      date: theDate,
+      category: this.props.categories[0].id
+    })
   }
 
   render() {
@@ -62,6 +75,7 @@ export default class ExpenseInput extends React.Component {
             style={styles.inputContainerStyle}
             label="Amount"
             keyboardType="numeric"
+            value={this.state.amount}
             onChangeText={this.handleAmountChange}
           />
 
