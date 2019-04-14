@@ -57,8 +57,8 @@ export default class ExpenseInput extends React.Component {
 
   render() {
     return (
-      <View>
-        <ScrollView style={[styles.container]}>
+      <View style={[styles.container]}>
+        <ScrollView>
           <DatePicker
             style={styles.inputContainerStyle}
             date={this.state.date}
@@ -97,7 +97,8 @@ export default class ExpenseInput extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8,
+    padding: 16,
+    justifyContent: "space-between",
   },
   wrapper: {
     flex: 1,
@@ -108,5 +109,5 @@ const styles = StyleSheet.create({
   button: {
     width: "40%",
     alignSelf: "center",
-  }
+  },
 });

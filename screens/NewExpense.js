@@ -19,12 +19,10 @@ class NewExpense extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <ExpenseInput
-          title={'Create Expense'}
-          categories={this.props.categories}
-          createExpense={this.addExpense} />
-      </ScrollView>
+      <ExpenseInput
+        title={'Create Expense'}
+        categories={this.props.categories}
+        createExpense={this.addExpense} />
     );
   }
 }
