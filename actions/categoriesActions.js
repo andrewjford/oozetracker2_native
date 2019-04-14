@@ -28,7 +28,7 @@ export const createCategory = (newCategory) => {
 
 export const updateCategory = (categoryToUpdate) => {
   return (dispatch, getState) => {
-    BackendCallout.putToApi(`${API_URL}/api/v1/categories/${categoryToUpdate.id}`, categoryToUpdate, getState().account.token)
+    return BackendCallout.putToApi(`${API_URL}/api/v1/categories/${categoryToUpdate.id}`, categoryToUpdate, getState().account.token)
       .then((responseCategory) => {
         return dispatch({
           type: 'UPDATE_CATEGORY',

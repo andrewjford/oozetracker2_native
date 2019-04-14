@@ -1,3 +1,6 @@
+- after category creation, need new category in state to create new expense
+- keyboard blocks input on category edit
+- need refresh on summary page
 - categories screen
   - edit
   - delete

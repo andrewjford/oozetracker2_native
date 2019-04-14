@@ -5,10 +5,14 @@ import {
   Text,
   View,
 } from 'react-native';
-import { List, Button, IconButton } from 'react-native-paper';
+import { List, Button, IconButton, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createCategory, deleteCategory } from '../actions/categoriesActions';
+import { 
+  createCategory,
+  deleteCategory,
+  updateCategory,
+} from '../actions/categoriesActions';
 
 import CategoryForm from '../components/CategoryForm';
 
@@ -26,6 +30,26 @@ class CategoriesScreen extends React.Component {
     this.setState({showCategoryForm: true});
   }
 
+  handleEdit = (category) => {
+    this.setState({
+      editing: category.id,
+      input: category.name,
+    });
+  }
+
+  handleUpdate = () => {
+    console.log(this.state);
+    this.props.updateCategory({
+      id: this.state.editing,
+      name: this.state.input,
+    }).then(() => {
+      this.setState({
+        editing: null,
+        input: null,
+      });
+    });
+  }
+
   createCategory = (newCategory) => {
     this.props.createCategory(newCategory);
     this.setState({showCategoryForm: false});
@@ -34,10 +58,25 @@ class CategoriesScreen extends React.Component {
   renderLineItems = () => {
     if (!this.props.categories) {return <Text>Add some categories!</Text>};
     return this.props.categories.map((category) => {
-      return (
-        <List.Item title={category.name} key={category.id}
-          right={() => <IconButton color="red" icon="close" onPress={() => this.props.deleteCategory({id: category.id})}/>}/>
-      );
+      if (this.state.editing && this.state.editing === category.id) {
+        return (
+          <View key={category.id}>
+              <TextInput
+                value={this.state.input}
+                onChangeText={input => this.setState({ input })}
+                onBlur={() => this.handleUpdate()}
+                autoFocus={true}/>
+          </View>
+        )
+      } else {
+        return (
+          <List.Item
+            title={category.name} 
+            key={category.id}
+            onPress={() => this.handleEdit(category)}
+            right={() => <IconButton color="red" icon="close" onPress={() => this.props.deleteCategory({id: category.id})}/>}/>
+        );
+      }
     });
   }
 
@@ -72,6 +111,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     createCategory,
     deleteCategory,
+    updateCategory,
   }, dispatch)
 }
 
