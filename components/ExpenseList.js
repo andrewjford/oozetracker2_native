@@ -10,7 +10,7 @@ const listExpenses = (props) => {
     
     if (expenses) {
       const lineItems = expenses.map((expense) => {
-        return <DataTable.Row key={expense.id}>
+        return <DataTable.Row key={expense.id} onPress={() => props.navigation.navigate("Expense", { expense })}>
           <DataTable.Cell>{expense.description}</DataTable.Cell>
           <DataTable.Cell>{expense.name}</DataTable.Cell>
           <DataTable.Cell numeric>{expense.amount}</DataTable.Cell>
@@ -33,21 +33,6 @@ const listExpenses = (props) => {
   }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    flexWrap: "nowrap",
-    justifyContent: "center",
-    width: "80%"
-  },
-  itemLeft: {
-    width: "50%",
-    textAlign: "left"
-  },
-  itemRight: {
-    width: "50%",
-    textAlign: "right"
-  }
 });
 
 export default listExpenses;

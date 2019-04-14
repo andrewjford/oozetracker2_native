@@ -1,10 +1,12 @@
 - after category creation, need new category in state to create new expense
 - keyboard blocks input on category edit
 - need refresh on summary page
-- categories screen
-  - edit
-  - delete
+- preload close icon
 - monthly screen
   - add month cycling
   - 
+- expenses
+  - expense detail view
+  - expense detail edit/update
+  - expense detail delete
 - do styling

@@ -8,6 +8,7 @@ import NewExpense from '../screens/NewExpense';
 import MonthlyScreen from '../screens/MonthlyScreen';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import Colors from '../constants/Colors';
+import ExpenseDetail from '../components/ExpenseDetail';
 
 const MonthlyStack = createStackNavigator({
   Monthly: MonthlyScreen,
@@ -28,6 +29,7 @@ MonthlyStack.navigationOptions = {
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  Expense: ExpenseDetail
 });
 
 HomeStack.navigationOptions = {

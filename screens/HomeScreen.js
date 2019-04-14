@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Headline } from 'react-native-paper';
 
 import ExpenseList from '../components/ExpenseList';
 import { logout } from '../actions/accountActions';
@@ -25,7 +24,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <ExpenseList expenseData={this.props.expenses}/>
+          <ExpenseList expenseData={this.props.expenses} navigation={this.props.navigation}/>
         </ScrollView>
       </View>
     );
