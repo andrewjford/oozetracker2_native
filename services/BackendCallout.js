@@ -58,7 +58,7 @@ export default class BackendCallout extends React.Component {
     });
 
     if(response.status !== 204) {
-      throw Error('wut');
+      throw Error(`Error: ${response.message}`);
     }
     return 'success';
   }

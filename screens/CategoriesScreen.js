@@ -5,20 +5,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import { List, Button } from 'react-native-paper';
+import { List, Button, IconButton } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createCategory } from '../actions/categoriesActions';
+import { createCategory, deleteCategory } from '../actions/categoriesActions';
 
 import CategoryForm from '../components/CategoryForm';
-
-const TableRow = (props) => {
-  return (
-    <View style={styles.tableRow}>
-      <View style={styles.tableCell}><Text>{props.lineItem.name}</Text></View>
-    </View>
-  );
-}
 
 class CategoriesScreen extends React.Component {
   constructor(props) {
@@ -43,7 +35,8 @@ class CategoriesScreen extends React.Component {
     if (!this.props.categories) {return <Text>Add some categories!</Text>};
     return this.props.categories.map((category) => {
       return (
-        <List.Item title={category.name} key={category.id}/>
+        <List.Item title={category.name} key={category.id}
+          right={() => <IconButton color="red" icon="close" onPress={() => this.props.deleteCategory({id: category.id})}/>}/>
       );
     });
   }
@@ -52,7 +45,7 @@ class CategoriesScreen extends React.Component {
     if (this.state.showCategoryForm) {
       return <CategoryForm createCategory={this.createCategory}/>;
     } else {
-      return <Button mode="contained" onPress={this.handleAddPress}>Add a Category</Button>
+      return <Button style={styles.button} mode="contained" onPress={this.handleAddPress}>Add a Category</Button>
     }
   }
 
@@ -78,6 +71,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     createCategory,
+    deleteCategory,
   }, dispatch)
 }
 
@@ -86,36 +80,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(CategoriesScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignSelf: 'center',
-    width: '75%',
+    backgroundColor: "#fff",
+    alignSelf: "center",
+    width: "100%",
   },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  tableContainer: {
-    flex: 1,
-    marginBottom: 20,
-  },
-  tableRow: {
-    flex: 1,
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-  },
-  tableCell: {
-    flex: 1,
-    alignSelf: 'stretch',
-  },
-  textRight: {
-    textAlign: 'right',
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  headerText: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 5,
-    fontWeight: 'bold',
+  button: {
+    width: "60%",
+    alignSelf: "center",
   },
 });
