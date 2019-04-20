@@ -9,6 +9,7 @@ import MonthlyScreen from '../screens/MonthlyScreen';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import Colors from '../constants/Colors';
 import ExpenseDetail from '../components/ExpenseDetail';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const MonthlyStack = createStackNavigator({
   Monthly: MonthlyScreen,
@@ -79,9 +80,27 @@ CategoriesStack.navigationOptions = {
   )
 }
 
+const SettingsStack = createStackNavigator({
+  Settings: SettingsScreen,
+})
+
+SettingsStack.navigationOptions = {
+  tabBarLabel: 'Settings',
+  tabBarOptions: { 
+    activeTintColor: Colors.tintColor,
+  },
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon 
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-settings' : 'md-settings'}
+    />
+  )
+}
+
 export default createBottomTabNavigator({
   HomeStack,
   MonthlyStack,
   NewExpenseStack,
   CategoriesStack,
+  SettingsStack,
 });

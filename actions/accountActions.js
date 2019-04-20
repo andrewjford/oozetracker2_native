@@ -43,15 +43,18 @@ export const loginCallout = (account) => {
 }
 
 export const logout = () => {
-  AsyncStorage.removeItem('token');
-  AsyncStorage.removeItem('expiryDate');
-
   return (dispatch) => {
-    return dispatch({
-      type: 'REMOVE_TOKEN',
-      payload: null,
-    })
+    return Promise.all([
+      AsyncStorage.removeItem('token'),
+      AsyncStorage.removeItem('expiryDate'),
+    ]).then(() => {
+      return dispatch({
+        type: 'REMOVE_TOKEN',
+        payload: null,
+      });
+    });
   }
+
 }
 
 export const setTokenFromLocalStorage = (token) => {
