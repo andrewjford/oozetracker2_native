@@ -58,7 +58,7 @@ class DatePicker extends Component {
           ref={this._textInput}
           render={this.renderTouchText}
           value={value}
-          mode="outlined"
+          mode={this.props.mode ? this.props.mode : "flat"}
         />
         <DateTimePicker
           date={date}

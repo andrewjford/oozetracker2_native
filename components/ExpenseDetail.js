@@ -86,6 +86,7 @@ class ExpenseDetail extends React.Component {
     this.props.updateExpense(this.state)
       .then((data) => {
         this.setState({editing: false});
+        Keyboard.dismiss();
       });
   }
 
@@ -108,7 +109,7 @@ class ExpenseDetail extends React.Component {
         </Button>
       </View>
     } else {
-      return <View>
+      return <View style={styles.buttonContainer}>
         <Button onPress={this.handleDelete} mode="contained" style={styles.button}>
           Delete
         </Button>
@@ -124,6 +125,7 @@ class ExpenseDetail extends React.Component {
             style={styles.inputContainerStyle}
             date={this.state.date}
             onDateChange={this.handleDateChange}
+            mode="outlined"
           />
           <TextInput
             style={styles.inputContainerStyle}
