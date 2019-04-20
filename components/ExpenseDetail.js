@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import DatePicker from './DatePicker';
-import { updateExpense } from '../actions/expenseActions';
+import { updateExpense, deleteExpense } from '../actions/expenseActions';
 
 class ExpenseDetail extends React.Component {
   constructor(props) {
@@ -89,6 +89,13 @@ class ExpenseDetail extends React.Component {
       });
   }
 
+  handleDelete = () => {
+    this.props.deleteExpense(this.state.id)
+      .then(() => {
+        this.props.navigation.navigate("Home");
+      });
+  }
+
   buttons = () => {
     if (this.state.editing) {
       return <View style={styles.buttonContainer}>
@@ -102,7 +109,7 @@ class ExpenseDetail extends React.Component {
       </View>
     } else {
       return <View>
-        <Button onPress={this.deleteExpense} mode="contained" style={styles.button}>
+        <Button onPress={this.handleDelete} mode="contained" style={styles.button}>
           Delete
         </Button>
       </View>
@@ -182,6 +189,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     updateExpense,
+    deleteExpense,
   }, dispatch)
 }
 

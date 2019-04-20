@@ -52,7 +52,7 @@ export const getExpense = (id) => {
 
 export const deleteExpense = (id) => {
   return (dispatch, getState) => {
-    BackendCallout.delete(`${API_URL}/api/v1/expenses/` + id, getState().account.token)
+    return BackendCallout.delete(`${API_URL}/api/v1/expenses/` + id, getState().account.token)
       .then(response => {
         return dispatch({
           type: 'DELETE_EXPENSE',
