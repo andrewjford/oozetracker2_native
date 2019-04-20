@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Picker
 } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { Text, TextInput, Button } from 'react-native-paper';
 import DatePicker from './DatePicker';
 
 class ExpenseDetail extends React.Component {
@@ -51,7 +51,7 @@ class ExpenseDetail extends React.Component {
             style={styles.inputContainerStyle}
             label="Description"
             value={this.state.description}
-            onChangeText={(description) => this.setState({description})}
+            mode="outlined"
           />
 
           <TextInput
@@ -60,6 +60,7 @@ class ExpenseDetail extends React.Component {
             keyboardType="numeric"
             value={this.state.amount}
             onChangeText={this.handleAmountChange}
+            mode="outlined"
           />
 
           <Picker selectedValue={this.state.category}
