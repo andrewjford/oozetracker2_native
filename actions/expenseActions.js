@@ -28,7 +28,7 @@ export const createExpense = (newExpense) => {
 
 export const updateExpense = (expense) => {
   return (dispatch, getState) => {
-    BackendCallout.putToApi(`${API_URL}/api/v1/expenses/${expense.id}`, expense, getState().account.token)
+    return BackendCallout.putToApi(`${API_URL}/api/v1/expenses/${expense.id}`, expense, getState().account.token)
       .then((responseExpense) => {
         return dispatch({
           type: 'UPDATE_EXPENSE',

@@ -9,4 +9,5 @@
   - expense detail view
   - expense detail edit/update
   - expense detail delete
-- do styling
+- error handling
+- loading spinners
