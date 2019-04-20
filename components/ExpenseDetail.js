@@ -11,6 +11,7 @@ import {
 import { TextInput, Button } from 'react-native-paper';
 import DatePicker from './DatePicker';
 import { updateExpense, deleteExpense } from '../actions/expenseActions';
+import Colors from '../constants/Colors';
 
 class ExpenseDetail extends React.Component {
   constructor(props) {
@@ -28,6 +29,10 @@ class ExpenseDetail extends React.Component {
       editing: false,
     };
   }
+
+  static navigationOptions = {
+    headerTintColor: Colors.tintColor,
+  };
 
   categories = this.props.categories.map((category) => {
     return (
