@@ -29,17 +29,7 @@ class AuthScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
             <LoginForm login={this.login} />
-          </View>
-
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>Ayyy {this.props.account.token}</Text>
-
-        </View>
       </View>
     );
   }

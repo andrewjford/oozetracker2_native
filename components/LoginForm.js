@@ -2,11 +2,9 @@ import React from 'react';
 
 import {
   View,
-  Text,
   StyleSheet,
-  TextInput,
-  Button,
 } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 
 export default class LoginInput extends React.Component {
 
@@ -24,25 +22,22 @@ export default class LoginInput extends React.Component {
 
   render() {
     return (
-      <View style={this.props.coolStyle}>
-        <Text style={styles.bigText}>Login</Text>
+      <View style={styles.container}>
         <TextInput
-          style={{height: 40, width: 260, backgroundColor: "white"}}
+          style={styles.inputContainerStyle}
+          label="Email"
           onChangeText={(email) => this.setState({email})}
-          placeholder="Email"
         />
 
         <TextInput
-          style={{height: 40, width: 100, backgroundColor: "white"}}
+          style={styles.inputContainerStyle}
           onChangeText={(password) => this.setState({password})}
-          placeholder="password"
+          label="Password"
           secureTextEntry={true}
         />
 
-        <Button
-          title="Login"
-          onPress={this.submit}
-        />
+        <Button mode="contained" onPress={this.submit}
+                style={styles.button}>Login</Button>
       </View>
     )
   }
@@ -50,22 +45,16 @@ export default class LoginInput extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bigText: {
-    fontWeight: 'bold'
-  },
-  bigButton: {
-    marginBottom: 30,
-    width: 260,
-    alignItems: 'center',
-    backgroundColor: '#2196F3'
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10
-  }
-  });
+    width: '40%',
+  },
+  inputContainerStyle: {
+    margin: 8,
+    width: '85%',
+  },
+});
