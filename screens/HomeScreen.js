@@ -4,14 +4,25 @@ import {
   StyleSheet,
   Text,
   View,
+  RefreshControl,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import ExpenseList from '../components/ExpenseList';
 import { logout } from '../actions/accountActions';
+import { fetchRecentExpenses } from '../actions/expenseActions';
+import { fetchCategories } from '../actions/categoriesActions';
 
 class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      refreshing: false,
+    };
+  }
+
   static navigationOptions = {
     title: 'Recent Expenses',
   };
@@ -20,10 +31,24 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('NewExpense');
   }
 
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    Promise.all([this.props.fetchCategories(), this.props.fetchRecentExpenses()])
+      .then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView style={styles.container}
+                    contentContainerStyle={styles.contentContainer}
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh}/>
+                    }>
           <ExpenseList expenseData={this.props.expenses} navigation={this.props.navigation}/>
         </ScrollView>
       </View>
@@ -65,6 +90,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     logout,
+    fetchRecentExpenses,
+    fetchCategories,
   }, dispatch)
 }
 

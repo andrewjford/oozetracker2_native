@@ -3,9 +3,8 @@ import { API_URL } from '../constants/Config';
 
 export const fetchCategories = () => {
   return (dispatch, getState) => {
-    BackendCallout.getFromApi(`${API_URL}/api/v1/categories`, getState().account.token)
+    return BackendCallout.getFromApi(`${API_URL}/api/v1/categories`, getState().account.token)
       .then(data => {
-        console.log('fetch cats '+JSON.stringify(data.rows));
         return dispatch({
           type: 'FETCH_CATEGORIES',
           payload: data.rows
