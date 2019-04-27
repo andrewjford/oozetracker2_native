@@ -4,9 +4,8 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
 } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 
 export default class CategoryForm extends React.Component {
 
@@ -30,9 +29,10 @@ export default class CategoryForm extends React.Component {
     return (
       <View style={this.props.coolStyle}>
         <TextInput
-          style={{height: 40, width: 100, backgroundColor: "white"}}
+          style={styles.inputStyle}
+          label="Name"
+          value={this.state.name}
           onChangeText={this.handleNameChange}
-          placeholder="Name"
         />
 
         <Button mode="contained" onPress={this.submit}>Submit</Button>
@@ -60,5 +60,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10
+  },
+  inputStyle: {
+    width: '100%'
   }
   });

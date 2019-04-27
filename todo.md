@@ -1,6 +1,5 @@
-- fix styling of login
-- after submit login, show spinner
 - after category creation, need new category in state to create new expense
+- category name input needs to be full width
 - keyboard blocks input on category edit
 - update login page style
 - monthly screen
