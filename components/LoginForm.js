@@ -4,7 +4,7 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, Text } from 'react-native-paper';
 
 export default class LoginInput extends React.Component {
 
@@ -13,6 +13,7 @@ export default class LoginInput extends React.Component {
     this.state = {
       email: '',
       password: '',
+      loading: null,
     };
   }
 
@@ -36,8 +37,11 @@ export default class LoginInput extends React.Component {
           secureTextEntry={true}
         />
 
-        <Button mode="contained" onPress={this.submit}
-                style={styles.button}>Login</Button>
+        <Button mode="contained"
+                onPress={this.submit}
+                style={styles.button}>
+          <Text style={styles.buttonContent}>Login</Text>
+        </Button>
       </View>
     )
   }
@@ -51,7 +55,15 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   button: {
-    width: '40%',
+    margin: 8,
+    width: "30%",
+    paddingVertical: 4,
+    borderRadius: 4,
+  },
+  buttonContent: {
+    fontWeight: "600",
+    fontSize: 22,
+    color: "white",
   },
   inputContainerStyle: {
     margin: 8,

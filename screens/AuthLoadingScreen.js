@@ -13,7 +13,7 @@ import { setTokenFromLocalStorage, setTokenAndFetchData } from '../actions/accou
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
-    this._bootstrapAsync();
+    this.navigateFromToken();
   }
 
   retrieveLocalStorage = async () => {
@@ -31,7 +31,7 @@ class AuthLoadingScreen extends React.Component {
     }
   };
 
-  _bootstrapAsync = async () => {
+  navigateFromToken = async () => {
     const token = await this.retrieveLocalStorage();
     console.log('derp '+token);
     this.props.navigation.navigate(token ? 'Main' : 'Auth');
