@@ -15,6 +15,7 @@ import {
 } from '../actions/categoriesActions';
 
 import CategoryForm from '../components/CategoryForm';
+import Colors from '../constants/Colors';
 
 class CategoriesScreen extends React.Component {
   constructor(props) {
@@ -38,7 +39,6 @@ class CategoriesScreen extends React.Component {
   }
 
   handleUpdate = () => {
-    console.log(this.state);
     this.props.updateCategory({
       id: this.state.editing,
       name: this.state.input,
@@ -82,7 +82,7 @@ class CategoriesScreen extends React.Component {
 
   renderAddCategories = () => {
     if (this.state.showCategoryForm) {
-      return <CategoryForm createCategory={this.createCategory}/>;
+      return <CategoryForm createCategory={this.createCategory} />;
     } else {
       return <Button style={styles.button} mode="contained" onPress={this.handleAddPress}>Add a Category</Button>
     }
@@ -90,13 +90,17 @@ class CategoriesScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <List.Section>
-          {this.renderLineItems()}
-        </List.Section>
-
-        {this.renderAddCategories()}
-      </ScrollView>
+      <View style={styles.container}>
+        <ScrollView style={styles.scrollContainer}>
+          <List.Section>
+            {this.renderLineItems()}
+          </List.Section>
+  
+        </ScrollView>
+        <View style={styles.addSection}>
+          {this.renderAddCategories()}
+        </View>
+      </View>
     );
   }
 }
@@ -128,4 +132,14 @@ const styles = StyleSheet.create({
     width: "60%",
     alignSelf: "center",
   },
+  addSection: {
+    height: "15%",
+    marginVertical: 8,
+    borderTopColor: Colors.accentColor,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    justifyContent: "center",
+  },
+  scrollContainer: {
+    height: "85%",
+  }
 });
