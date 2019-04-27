@@ -21,6 +21,11 @@ export default class CategoryForm extends React.Component {
     this.state.name = '';
   }
 
+  cancel = () => {
+    this.props.cancel();
+    this.state.name = '';
+  }
+
   handleNameChange = (value) => {
     this.setState({name: value});
   }
@@ -36,6 +41,7 @@ export default class CategoryForm extends React.Component {
         />
 
         <Button mode="contained" onPress={this.submit}>Submit</Button>
+        <Button mode="contained" onPress={this.cancel}>Cancel</Button>
       </View>
     )
   }

@@ -4,16 +4,17 @@ import {
   StyleSheet,
   Text,
   View,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { List, Button, IconButton, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { 
   createCategory,
   deleteCategory,
   updateCategory,
 } from '../actions/categoriesActions';
-
 import CategoryForm from '../components/CategoryForm';
 import Colors from '../constants/Colors';
 
@@ -50,6 +51,10 @@ class CategoriesScreen extends React.Component {
     });
   }
 
+  cancelForm = () => {
+    this.setState({showCategoryForm: false});
+  }
+
   createCategory = (newCategory) => {
     this.props.createCategory(newCategory);
     this.setState({showCategoryForm: false});
@@ -82,7 +87,12 @@ class CategoriesScreen extends React.Component {
 
   renderAddCategories = () => {
     if (this.state.showCategoryForm) {
-      return <CategoryForm createCategory={this.createCategory} />;
+      return (
+        <View style={styles.extraSpace}>
+          <CategoryForm createCategory={this.createCategory}
+                        cancel={this.cancelForm} />
+        </View>
+      );
     } else {
       return <Button style={styles.button} mode="contained" onPress={this.handleAddPress}>Add a Category</Button>
     }
@@ -90,7 +100,7 @@ class CategoriesScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <ScrollView style={styles.scrollContainer}>
           <List.Section>
             {this.renderLineItems()}
@@ -100,7 +110,7 @@ class CategoriesScreen extends React.Component {
         <View style={styles.addSection}>
           {this.renderAddCategories()}
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -141,5 +151,8 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     height: "85%",
+  },
+  extraSpace: {
+    height: 240,
   }
 });
