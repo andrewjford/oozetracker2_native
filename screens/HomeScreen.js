@@ -6,6 +6,7 @@ import {
   View,
   RefreshControl,
 } from 'react-native';
+import { Button } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -51,31 +52,9 @@ class HomeScreen extends React.Component {
                     }>
           <ExpenseList expenseData={this.props.expenses} navigation={this.props.navigation}/>
         </ScrollView>
+        <Button mode="contained" onPress={this.navigateToNewExpense}>New Expense</Button>
       </View>
     );
-  }
-
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
-    }
   }
 }
 

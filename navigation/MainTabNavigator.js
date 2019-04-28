@@ -30,7 +30,8 @@ MonthlyStack.navigationOptions = {
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  Expense: ExpenseDetail
+  Expense: ExpenseDetail,
+  NewExpense: NewExpense,
 });
 
 HomeStack.navigationOptions = {
@@ -46,22 +47,22 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const NewExpenseStack = createStackNavigator({
-  NewExpense: NewExpense,
-});
+// const NewExpenseStack = createStackNavigator({
+//   NewExpense: NewExpense,
+// });
 
-NewExpenseStack.navigationOptions = {
-  tabBarLabel: 'New Expense',
-  tabBarOptions: { 
-    activeTintColor: Colors.tintColor,
-  },
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon 
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-card' : 'md-card'}
-    />
-  )
-};
+// NewExpenseStack.navigationOptions = {
+//   tabBarLabel: 'New Expense',
+//   tabBarOptions: { 
+//     activeTintColor: Colors.tintColor,
+//   },
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon 
+//       focused={focused}
+//       name={Platform.OS === 'ios' ? 'ios-card' : 'md-card'}
+//     />
+//   )
+// };
 
 const CategoriesStack = createStackNavigator({
   Categories: CategoriesScreen,
@@ -100,7 +101,6 @@ SettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
   HomeStack,
   MonthlyStack,
-  NewExpenseStack,
   CategoriesStack,
   SettingsStack,
 });

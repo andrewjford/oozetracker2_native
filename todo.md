@@ -1,5 +1,5 @@
 - after category creation, need new category in state to create new expense
-- keyboard blocks input on category edit
+- check other input screens for keyboard awareness
 - update login page style
 - monthly screen
   - add month cycling
