@@ -94,7 +94,7 @@ class CategoriesScreen extends React.Component {
         </View>
       );
     } else {
-      return <Button style={styles.button} mode="contained" onPress={this.handleAddPress}>Add a Category</Button>
+      return <Button style={styles.button} mode="contained" onPress={this.handleAddPress}>Add Category</Button>
     }
   }
 

@@ -10,6 +10,7 @@ import { Button } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import Colors from '../constants/Colors';
 import ExpenseList from '../components/ExpenseList';
 import { logout } from '../actions/accountActions';
 import { fetchRecentExpenses } from '../actions/expenseActions';
@@ -86,12 +87,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   button: {
-    width: "35%",
+    marginVertical: 8,
+    minWidth: "35%",
     alignSelf: "center",
     justifyContent: "center",
   },
   buttonContainer: {
-    height: "10%",
-    alignItems: "center",
+    height: "15%",
+    marginVertical: 8,
+    borderTopColor: Colors.accentColor,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    justifyContent: "center",
   }
 });

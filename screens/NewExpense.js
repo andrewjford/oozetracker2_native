@@ -5,10 +5,12 @@ import { bindActionCreators } from 'redux';
 
 import ExpenseInput from '../components/ExpenseInput';
 import { createExpense } from '../actions/expenseActions';
+import Colors from '../constants/Colors';
 
 class NewExpense extends React.Component {
   static navigationOptions = {
     title: 'New Expense',
+    headerTintColor: Colors.tintColor,
   };
 
   addExpense = (newExpense) => {
