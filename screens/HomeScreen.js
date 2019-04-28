@@ -52,7 +52,11 @@ class HomeScreen extends React.Component {
                     }>
           <ExpenseList expenseData={this.props.expenses} navigation={this.props.navigation}/>
         </ScrollView>
-        <Button mode="contained" onPress={this.navigateToNewExpense}>New Expense</Button>
+        <View style={styles.buttonContainer}>
+          <Button mode="contained" style={styles.button} onPress={this.navigateToNewExpense}>
+            New Expense
+          </Button>
+        </View>
       </View>
     );
   }
@@ -81,21 +85,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
+  button: {
+    width: "35%",
+    alignSelf: "center",
+    justifyContent: "center",
   },
-  header: {
-    textAlign: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
+  buttonContainer: {
+    height: "10%",
+    alignItems: "center",
+  }
 });

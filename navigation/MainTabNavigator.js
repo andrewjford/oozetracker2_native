@@ -47,23 +47,6 @@ HomeStack.navigationOptions = {
   ),
 };
 
-// const NewExpenseStack = createStackNavigator({
-//   NewExpense: NewExpense,
-// });
-
-// NewExpenseStack.navigationOptions = {
-//   tabBarLabel: 'New Expense',
-//   tabBarOptions: { 
-//     activeTintColor: Colors.tintColor,
-//   },
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon 
-//       focused={focused}
-//       name={Platform.OS === 'ios' ? 'ios-card' : 'md-card'}
-//     />
-//   )
-// };
-
 const CategoriesStack = createStackNavigator({
   Categories: CategoriesScreen,
 })
