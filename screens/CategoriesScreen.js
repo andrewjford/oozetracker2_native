@@ -87,14 +87,12 @@ class CategoriesScreen extends React.Component {
 
   renderAddCategories = () => {
     if (this.state.showCategoryForm) {
-      return (
-        <View style={styles.extraSpace}>
-          <CategoryForm createCategory={this.createCategory}
-                        cancel={this.cancelForm} />
-        </View>
-      );
+      return <CategoryForm createCategory={this.createCategory}
+                           cancel={this.cancelForm} />
     } else {
-      return <Button style={styles.button} mode="contained" onPress={this.handleAddPress}>Add Category</Button>
+      return <Button style={styles.button}
+                     mode="contained"
+                     onPress={this.handleAddPress}>Add Category</Button>
     }
   }
 
@@ -107,7 +105,7 @@ class CategoriesScreen extends React.Component {
           </List.Section>
   
         </ScrollView>
-        <View style={styles.addSection}>
+        <View style={this.state.showCategoryForm ? styles.expandedAdd : styles.addSection}>
           {this.renderAddCategories()}
         </View>
       </KeyboardAvoidingView>
@@ -152,7 +150,13 @@ const styles = StyleSheet.create({
   scrollContainer: {
     height: "85%",
   },
+  expandedAdd: {
+    height: "35%",
+    marginVertical: 8,
+    borderTopColor: Colors.accentColor,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    justifyContent: "center",
+  },
   extraSpace: {
-    height: 240,
   }
 });

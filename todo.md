@@ -1,9 +1,6 @@
 - home screen expense list column headers should stick
-- home screen button width cutting off text on small screen
 - expense list needs date column
 - need spinner on monthly summary data fetch
-- category screen add category triggers edit of hidden existing categories
-  - should auto focus name input when add category is pressed
 - check other input screens for keyboard awareness
 - update login page style
 - monthly screen

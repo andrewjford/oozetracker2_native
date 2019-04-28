@@ -16,6 +16,10 @@ export default class CategoryForm extends React.Component {
     };
   }
 
+  componentDidMount(){
+    this.nameInput.focus();
+  }
+
   submit = () => {
     this.props.createCategory(this.state);
     this.state.name = '';
@@ -38,6 +42,7 @@ export default class CategoryForm extends React.Component {
           label="Name"
           value={this.state.name}
           onChangeText={this.handleNameChange}
+          ref={(input) => { this.nameInput = input; }} 
         />
 
         <Button mode="contained" onPress={this.submit}>Submit</Button>
