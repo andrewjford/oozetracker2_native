@@ -31,6 +31,7 @@ class ExpenseDetail extends React.Component {
   }
 
   static navigationOptions = {
+    title: 'Expense Detail',
     headerTintColor: Colors.tintColor,
   };
 

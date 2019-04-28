@@ -36,7 +36,7 @@ export default class CategoryForm extends React.Component {
 
   render() {
     return (
-      <View style={this.props.coolStyle}>
+      <View style={styles.container}>
         <TextInput
           style={styles.inputStyle}
           label="Name"
@@ -45,8 +45,8 @@ export default class CategoryForm extends React.Component {
           ref={(input) => { this.nameInput = input; }} 
         />
 
-        <Button mode="contained" onPress={this.submit}>Submit</Button>
-        <Button mode="contained" onPress={this.cancel}>Cancel</Button>
+        <Button mode="contained" onPress={this.submit} style={styles.button}>Submit</Button>
+        <Button mode="outlined" onPress={this.cancel} style={styles.button}>Cancel</Button>
       </View>
     )
   }
@@ -54,8 +54,8 @@ export default class CategoryForm extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   bigText: {
@@ -68,9 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3'
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10
+    width: "100%",
   },
   inputStyle: {
     width: '100%'

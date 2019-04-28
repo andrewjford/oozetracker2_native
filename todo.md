@@ -1,10 +1,9 @@
 - home screen expense list column headers should stick
 - expense list needs date column
-- need spinner on monthly summary data fetch
+- loading spinners
+  - need spinner on monthly summary data fetch
 - check other input screens for keyboard awareness
-- update login page style
 - monthly screen
   - add month cycling
 - preload close icon?
 - error handling
-- loading spinners

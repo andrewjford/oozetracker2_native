@@ -151,12 +151,8 @@ const styles = StyleSheet.create({
     height: "85%",
   },
   expandedAdd: {
-    height: "35%",
-    marginVertical: 8,
+    height: "45%",
     borderTopColor: Colors.accentColor,
     borderTopWidth: StyleSheet.hairlineWidth,
-    justifyContent: "center",
   },
-  extraSpace: {
-  }
 });
