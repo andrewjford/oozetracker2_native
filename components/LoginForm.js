@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  View,
+  KeyboardAvoidingView,
   StyleSheet,
 } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
@@ -23,17 +23,19 @@ export default class LoginInput extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <TextInput
           style={styles.inputContainerStyle}
           label="Email"
+          value={this.state.email}
           onChangeText={(email) => this.setState({email})}
         />
 
         <TextInput
           style={styles.inputContainerStyle}
-          onChangeText={(password) => this.setState({password})}
           label="Password"
+          value={this.state.password}
+          onChangeText={(password) => this.setState({password})}
           secureTextEntry={true}
         />
 
@@ -42,7 +44,7 @@ export default class LoginInput extends React.Component {
                 style={styles.button}>
           <Text style={styles.buttonContent}>Login</Text>
         </Button>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
