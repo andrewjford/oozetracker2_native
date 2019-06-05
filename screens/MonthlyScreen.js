@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  RefreshControl,
 } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { connect } from 'react-redux';
@@ -22,6 +23,7 @@ class MonthlyScreen extends React.Component {
         "July", "August", "September", "October", "November", "December"
       ],
       rotate: false,
+      isRefreshing: false,
     };
   }
 
@@ -49,6 +51,18 @@ class MonthlyScreen extends React.Component {
     })
   }
 
+  _onRefresh = () => {
+    this.setState({isRefreshing: true});
+    const currentMonthRequest = {
+      month: this.state.date.getMonth(),
+      year: this.state.date.getFullYear()
+    };
+    this.props.getMonthly(currentMonthRequest)
+      .then(() => {
+      this.setState({isRefreshing: false});
+    });
+  }
+
   render() {
     const total = !this.props.monthlyView ? currency(0) : this.props.monthlyView.rows.reduce((accum, lineItem) => {
       return accum.add(lineItem.sum);
@@ -60,23 +74,31 @@ class MonthlyScreen extends React.Component {
           {this.state.date.getFullYear()} {this.state.monthNames[this.state.date.getMonth()]}
         </Text>
 
-        <DataTable>
-          <DataTable.Header>
-            <DataTable.Title>Category</DataTable.Title>
-            <DataTable.Title numeric>Amount</DataTable.Title>
-          </DataTable.Header>
+        <ScrollView style={styles.container}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this._onRefresh}/>
+          }>
 
-          {this.renderRows()}
+          <DataTable>
+            <DataTable.Header>
+              <DataTable.Title>Category</DataTable.Title>
+              <DataTable.Title numeric>Amount</DataTable.Title>
+            </DataTable.Header>
 
-          <DataTable.Row>
-            <DataTable.Cell>
-              <Text style={styles.bold}>Total</Text>
-            </DataTable.Cell>
-            <DataTable.Cell numeric>
-              <Text style={styles.bold}>{total.format()}</Text>
-            </DataTable.Cell>
-          </DataTable.Row>
-        </DataTable>
+            {this.renderRows()}
+
+            <DataTable.Row>
+              <DataTable.Cell>
+                <Text style={styles.bold}>Total</Text>
+              </DataTable.Cell>
+              <DataTable.Cell numeric>
+                <Text style={styles.bold}>{total.format()}</Text>
+              </DataTable.Cell>
+            </DataTable.Row>
+          </DataTable>
+        </ScrollView>
       </View>
     );
   }

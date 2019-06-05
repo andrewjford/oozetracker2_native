@@ -64,7 +64,7 @@ export const deleteExpense = (id) => {
 
 export const getMonthly = (monthObject) => {
   return (dispatch, getState) => {
-    BackendCallout.postToApi(`${API_URL}/api/v1/reports/monthly`, monthObject, getState().account.token)
+    return BackendCallout.postToApi(`${API_URL}/api/v1/reports/monthly`, monthObject, getState().account.token)
     .then(report => {
       report.rows = report.rows.map((each) => {
         return {...each, sum: currency(each.sum)}
