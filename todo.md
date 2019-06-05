@@ -1,3 +1,4 @@
+- point it to heroku
 - home screen expense list column headers should stick
 - expense list needs date column
 - loading spinners
