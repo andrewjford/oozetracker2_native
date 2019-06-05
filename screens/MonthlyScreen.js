@@ -6,12 +6,13 @@ import {
   View,
   RefreshControl,
 } from 'react-native';
-import { DataTable } from 'react-native-paper';
+import { DataTable, IconButton } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import currency from 'currency.js';
 
-import { getMonthly } from '../actions/expenseActions';
+import { getMonthly, changeMonthlyView } from '../actions/expenseActions';
+import Colors from '../constants/Colors';
 
 class MonthlyScreen extends React.Component {
   constructor(props) {
@@ -63,6 +64,42 @@ class MonthlyScreen extends React.Component {
     });
   }
 
+  changeMonthlyView = (monthlyObject) => {
+    const cachedView = this.props.monthlies.find((monthly) => {
+      return monthly.month === monthlyObject.month && monthly.year === monthlyObject.year;
+    });
+
+    if (cachedView) {
+      this.props.changeMonthlyView(cachedView);
+    } else {
+      this.props.getMonthly(monthlyObject);
+    }
+  }
+
+  handleLeftMonthClick = () => {
+    const date = this.state.date;
+    date.setMonth(this.state.date.getMonth() - 1);
+    this.setState({date});
+
+    const currentMonthRequest = {
+      month: date.getMonth(),
+      year: date.getFullYear()
+    };
+    this.changeMonthlyView(currentMonthRequest);
+  }
+
+  handleRightMonthClick = () => {
+    const date = this.state.date;
+    date.setMonth(this.state.date.getMonth() + 1);
+    this.setState({date});
+    
+    const currentMonthRequest = {
+      month: date.getMonth(),
+      year: date.getFullYear()
+    };
+    this.changeMonthlyView(currentMonthRequest);
+  }
+
   render() {
     const total = !this.props.monthlyView ? currency(0) : this.props.monthlyView.rows.reduce((accum, lineItem) => {
       return accum.add(lineItem.sum);
@@ -99,6 +136,15 @@ class MonthlyScreen extends React.Component {
             </DataTable.Row>
           </DataTable>
         </ScrollView>
+
+        <View style={styles.buttonContainer}>
+          <IconButton color={Colors.tintColor} icon="arrow-back" onPress={this.handleLeftMonthClick}/>
+          <Text style={styles.headerText}>
+            {this.state.date.getFullYear()} {this.state.monthNames[this.state.date.getMonth()]}
+          </Text>
+          <IconButton color={Colors.tintColor} icon="arrow-forward" onPress={this.handleRightMonthClick}/>
+        </View>
+
       </View>
     );
   }
@@ -114,6 +160,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     getMonthly,
+    changeMonthlyView,
   }, dispatch)
 }
 
@@ -132,4 +179,14 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: 'bold',
   },
+  buttonContainer: {
+    flexDirection: "row", 
+    height: "10%",
+    marginVertical: 8,
+    borderTopColor: Colors.accentColor,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    justifyContent: "center",
+    alignItems: "center",
+  }
+
 });
