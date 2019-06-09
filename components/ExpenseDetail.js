@@ -125,30 +125,31 @@ class ExpenseDetail extends React.Component {
 
   render() {
     return (
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         <ScrollView>
-          <DatePicker
-            style={styles.inputContainerStyle}
-            date={this.state.date}
-            onDateChange={this.handleDateChange}
-            mode="outlined"
-          />
-          <TextInput
-            style={styles.inputContainerStyle}
-            label="Description"
-            value={this.state.description}
-            onChangeText={this.handleDescriptionChange}
-            mode="outlined"
-          />
-
-          <TextInput
-            style={styles.inputContainerStyle}
-            label="Amount"
-            keyboardType="numeric"
-            value={this.state.amount}
-            onChangeText={this.handleAmountChange}
-            mode="outlined"
-          />
+          <View style={styles.inputFields}>
+            <DatePicker
+              style={styles.inputContainerStyle}
+              date={this.state.date}
+              onDateChange={this.handleDateChange}
+              mode="outlined"
+            />
+            <TextInput
+              style={styles.inputContainerStyle}
+              label="Description"
+              value={this.state.description}
+              onChangeText={this.handleDescriptionChange}
+              mode="outlined"
+            />
+            <TextInput
+              style={styles.inputContainerStyle}
+              label="Amount"
+              keyboardType="numeric"
+              value={this.state.amount}
+              onChangeText={this.handleAmountChange}
+              mode="outlined"
+            />
+          </View>
 
           <Picker selectedValue={this.state.category}
             style={styles.inputContainerStyle}
@@ -167,8 +168,10 @@ class ExpenseDetail extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     justifyContent: "space-between",
+  },
+  inputFields: {
+    padding: 16,
   },
   wrapper: {
     flex: 1,
@@ -181,9 +184,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   buttonContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    height: "10%",
+    marginVertical: 8,
+    borderTopColor: Colors.accentColor,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    justifyContent: "center",
   }
 });
 

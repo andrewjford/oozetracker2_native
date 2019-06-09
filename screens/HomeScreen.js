@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonContainer: {
-    height: "15%",
+    height: "10%",
     marginVertical: 8,
     borderTopColor: Colors.accentColor,
     borderTopWidth: StyleSheet.hairlineWidth,

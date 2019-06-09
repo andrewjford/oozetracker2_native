@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   addSection: {
-    height: "15%",
+    height: "10%",
     marginVertical: 8,
     borderTopColor: Colors.accentColor,
     borderTopWidth: StyleSheet.hairlineWidth,
