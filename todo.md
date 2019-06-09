@@ -1,7 +1,7 @@
 - error handling
-- home screen expense list column headers should stick
-- expense list needs date column
 - loading spinners
   - need spinner on monthly summary data fetch
+- home screen expense list column headers should stick
+- expense list needs date column
 - check other input screens for keyboard awareness
 - preload close icon?
