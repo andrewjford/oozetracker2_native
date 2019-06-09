@@ -109,7 +109,7 @@ export const getMonthly = (monthObject) => {
       return dispatch({
         type: 'NEW_ERROR',
         payload: ErrorHandling.toErrorArray(error),
-      })
+      });
     });
   }
 }

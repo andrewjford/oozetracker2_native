@@ -15,6 +15,8 @@ import ExpenseList from '../components/ExpenseList';
 import { logout } from '../actions/accountActions';
 import { fetchRecentExpenses } from '../actions/expenseActions';
 import { fetchCategories } from '../actions/categoriesActions';
+import ErrorDisplay from '../components/ErrorDisplay';
+import { newError } from '../actions/errorActions';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -51,6 +53,7 @@ class HomeScreen extends React.Component {
                         refreshing={this.state.refreshing}
                         onRefresh={this._onRefresh}/>
                     }>
+          <ErrorDisplay/>
           <ExpenseList expenseData={this.props.expenses} navigation={this.props.navigation}/>
         </ScrollView>
         <View style={styles.buttonContainer}>
@@ -76,6 +79,7 @@ const mapDispatchToProps = (dispatch) => {
     logout,
     fetchRecentExpenses,
     fetchCategories,
+    newError,
   }, dispatch)
 }
 

@@ -1,4 +1,8 @@
 const toErrorArray = error => {
+  if (typeof(error) === 'object') {
+    return [error.message];
+  }
+  
   let errorsArray;
   const parsedError = JSON.parse(error.message);
   if (!parsedError) {
