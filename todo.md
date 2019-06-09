@@ -5,4 +5,3 @@
 - expense list needs date column
 - check other input screens for keyboard awareness
 - preload close icon?
-- zero should highlight inFocus - amount input

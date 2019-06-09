@@ -10,11 +10,13 @@ import thunk from 'redux-thunk';
 import accountReducer from './reducers/accountReducer';
 import expenseReducer from './reducers/expenseReducer';
 import categoriesReducer from './reducers/categoriesReducer';
+import errorReducer from './reducers/errorReducer';
 
 const rootReducer = combineReducers({
   account: accountReducer,
   expenses: expenseReducer,
   categories: categoriesReducer,
+  errors: errorReducer,
 });
 
 const theme = {

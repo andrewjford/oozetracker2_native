@@ -1,6 +1,7 @@
 import BackendCallout from '../services/BackendCallout';
 import { API_URL } from '../constants/Config';
 import currency from 'currency.js';
+import ErrorHandling from '../services/ErrorHandling';
 
 export const fetchRecentExpenses = () => {
   return (dispatch, getState) => {
@@ -10,7 +11,13 @@ export const fetchRecentExpenses = () => {
           type: 'FETCH_RECENT_EXPENSES',
           payload: data.rows
         });
-      });
+      })
+      .catch(error => {
+        return dispatch({
+          type: 'NEW_ERROR',
+          payload: ErrorHandling.toErrorArray(error),
+        })
+      });;
   }
 }
 
@@ -21,6 +28,12 @@ export const createExpense = (newExpense) => {
         return dispatch({
           type: 'NEW_EXPENSE',
           payload: responseExpense,
+        })
+      })
+      .catch(error => {
+        return dispatch({
+          type: 'NEW_ERROR',
+          payload: ErrorHandling.toErrorArray(error),
         })
       });
   }
@@ -35,6 +48,12 @@ export const updateExpense = (expense) => {
           payload: responseExpense,
         })
       })
+      .catch(error => {
+        return dispatch({
+          type: 'NEW_ERROR',
+          payload: ErrorHandling.toErrorArray(error),
+        })
+      });
   }
 }
 
@@ -47,6 +66,12 @@ export const getExpense = (id) => {
           payload: expense,
         })
       })
+      .catch(error => {
+        return dispatch({
+          type: 'NEW_ERROR',
+          payload: ErrorHandling.toErrorArray(error),
+        })
+      });
   }
 }
 
@@ -57,6 +82,12 @@ export const deleteExpense = (id) => {
         return dispatch({
           type: 'DELETE_EXPENSE',
           payload: id,
+        })
+      })
+      .catch(error => {
+        return dispatch({
+          type: 'NEW_ERROR',
+          payload: ErrorHandling.toErrorArray(error),
         })
       });
   }
@@ -75,7 +106,10 @@ export const getMonthly = (monthObject) => {
       });
     })
     .catch(error => {
-      console.log(error)
+      return dispatch({
+        type: 'NEW_ERROR',
+        payload: ErrorHandling.toErrorArray(error),
+      })
     });
   }
 }
