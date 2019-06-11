@@ -29,10 +29,7 @@ export default class ExpenseInput extends React.Component {
   });
 
   submit = () => {
-    this.props.createExpense(this.state)
-      .then(() => {
-        this.resetState();
-      });
+    this.props.createExpense(this.state);
   }
 
   handleAmountChange = (text) => {
@@ -41,16 +38,6 @@ export default class ExpenseInput extends React.Component {
 
   handleCategoryChange = (newcategory) => {
     this.setState({category: newcategory});
-  }
-
-  resetState = () => {
-    let theDate = new Date();
-    this.setState({
-      description: '',
-      amount: 0,
-      date: theDate,
-      category: this.props.categories[0].id
-    })
   }
 
   render() {
