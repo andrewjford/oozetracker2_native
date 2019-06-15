@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {
-  KeyboardAvoidingView,
   StyleSheet,
+  View,
 } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 
@@ -23,7 +23,7 @@ export default class LoginInput extends React.Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.container}>
         <TextInput
           style={styles.inputContainerStyle}
           label="Email"
@@ -44,7 +44,7 @@ export default class LoginInput extends React.Component {
                 style={styles.button}>
           <Text style={styles.buttonContent}>Login</Text>
         </Button>
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    justifyContent: "center",
     alignItems: "center"
   },
   button: {

@@ -1,15 +1,16 @@
 import React from 'react';
 import {
-  Platform,
   StyleSheet,
   View,
   ActivityIndicator,
+  Image,
+  KeyboardAvoidingView
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import LoginForm from '../components/LoginForm';
-import { loginCallout } from '../actions/accountActions';
+import { login } from '../actions/accountActions';
 import { fetchRecentExpenses } from '../actions/expenseActions';
 import { fetchCategories } from '../actions/categoriesActions';
 import Colors from '../constants/Colors';
@@ -28,7 +29,7 @@ class AuthScreen extends React.Component {
 
   login = (account) => {
     this.setState({loading: true});
-    this.props.loginCallout(account)
+    this.props.login(account)
       .then(() => this.props.fetchRecentExpenses())
       .then(() => this.props.fetchCategories())
       .then(() => {
@@ -53,12 +54,21 @@ class AuthScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ErrorDisplay errors={this.state.errors}/>
-        <View style={styles.content}>
-          {this.loginForm()}
-        </View>
-      </View>
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
+          <View style={styles.topSection}>
+            <View style={styles.imageContainer}>
+              <Image
+                resizeMode={"center"}
+                style={styles.image}
+                source={require('../assets/images/fullblob.png')}
+              />
+            </View>
+            <ErrorDisplay errors={this.state.errors} />
+          </View>
+          <View style={styles.formSection}>
+            {this.loginForm()}
+          </View>
+        </KeyboardAvoidingView>
     );
   }
 }
@@ -71,7 +81,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    loginCallout,
+    login,
     fetchRecentExpenses,
     fetchCategories
   }, dispatch)
@@ -82,18 +92,22 @@ export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
-  content: {
-    flex: 9,
-    backgroundColor: '#fff',
-    justifyContent: "center",
-    alignItems: "center",
+  imageContainer: {
+    flex: 5,
+    paddingHorizontal: 24,
   },
-  error: {
-    height: "10%",
+  image: {
+    flex:1,
+    height: undefined,
+    width: undefined,
+    justifyContent: "flex-end",
   },
-  errorContainer: {
-    backgroundColor: "blue",
-  }
+  topSection: {
+    flex: 1
+  },
+  formSection: {
+    flex: 1
+  },
 });

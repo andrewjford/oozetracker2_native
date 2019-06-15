@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
-import { Surface, Text, IconButton } from 'react-native-paper';
+import { View, StyleSheet,Text } from 'react-native';
+import { Surface, IconButton } from 'react-native-paper';
 
 const ErrorDisplay = props => {
   const errorSection = () => {
