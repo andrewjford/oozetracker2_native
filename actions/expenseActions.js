@@ -17,7 +17,7 @@ export const fetchRecentExpenses = () => {
           type: 'NEW_ERROR',
           payload: ErrorHandling.toErrorArray(error),
         })
-      });;
+      });
   }
 }
 

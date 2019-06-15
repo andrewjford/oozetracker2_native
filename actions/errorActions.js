@@ -8,3 +8,11 @@ export const newError = (error) => {
     })
   }
 }
+
+export const clearErrors = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: 'CLEAR_ERRORS'
+    })
+  }
+}

@@ -16,7 +16,6 @@ import { logout } from '../actions/accountActions';
 import { fetchRecentExpenses } from '../actions/expenseActions';
 import { fetchCategories } from '../actions/categoriesActions';
 import ErrorDisplay from '../components/ErrorDisplay';
-import { newError } from '../actions/errorActions';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -79,7 +78,6 @@ const mapDispatchToProps = (dispatch) => {
     logout,
     fetchRecentExpenses,
     fetchCategories,
-    newError,
   }, dispatch)
 }
 

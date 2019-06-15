@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { Surface, Text } from 'react-native-paper';
+import { Surface, Text, IconButton } from 'react-native-paper';
 
 const ErrorDisplay = props => {
   const errorSection = () => {
-    if (props.errors.showError) {
+    if (props.errors && props.errors.length > 0) {
       return (
         <View style={styles.container}>
           <Surface style={styles.surface}>
-            <Text>Error: {props.errors.errors.toString()}</Text>
+            <IconButton icon="error" color="white" style={styles.icon}/>
+            <Text style={styles.text}>Error: {props.errors.toString()}</Text>
           </Surface>
         </View>
       );
@@ -21,13 +22,7 @@ const ErrorDisplay = props => {
   return errorSection();
 }
 
-const mapStateToProps = state => {
-  return {
-    errors: state.errors,
-  }
-}
-
-export default connect(mapStateToProps)(ErrorDisplay);
+export default ErrorDisplay;
 
 const styles = StyleSheet.create({
   container: {
@@ -41,6 +36,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   surface: {
-    backgroundColor: 'red'
-  }
+    flexDirection: 'row',
+    flex: 1,
+    backgroundColor: 'red',
+    alignItems: 'center',
+  },
+  text: {
+    color: "white",
+    fontSize: 18,
+  },
 });

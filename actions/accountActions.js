@@ -5,26 +5,7 @@ import { fetchRecentExpenses } from './expenseActions';
 import { fetchCategories } from './categoriesActions';
 import { API_URL } from '../constants/Config';
 
-export const loginPromise = (account) => {
-  return (dispatch) => {
-    return dispatch(loginCallout(account));
-  }
-}
-
 export const login = (account) => {
-  return (dispatch) => {
-    return dispatch(loginCallout(account))
-      .then(() => {
-        return dispatch(fetchRecentExpenses());
-      })
-      .then(() => {
-        return dispatch(fetchCategories());
-      })
-      .catch(error => console.log('login failed'))
-  }
-}
-
-export const loginCallout = (account) => {
   return (dispatch) => {
     return BackendCallout.postToApi(`${API_URL}/api/v1/login`, account)
       .then(response => {
@@ -37,8 +18,7 @@ export const loginCallout = (account) => {
           type: 'SET_TOKEN',
           payload: {token: response.token},
         });
-      })
-      .catch(error => console.log('login callout failed. ' + error.message));
+      });
   }
 }
 
@@ -80,8 +60,7 @@ export const register = (form) => {
       })
       .then(() => {
         dispatch(fetchCategories());
-      })
-      .catch(error => console.log('register failed'));
+      });
   }
 }
 

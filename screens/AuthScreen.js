@@ -9,12 +9,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import LoginForm from '../components/LoginForm';
-import { login } from '../actions/accountActions';
+import { loginCallout } from '../actions/accountActions';
+import { fetchRecentExpenses } from '../actions/expenseActions';
+import { fetchCategories } from '../actions/categoriesActions';
 import Colors from '../constants/Colors';
+import ErrorDisplay from '../components/ErrorDisplay';
+import ErrorHandling from '../services/ErrorHandling';
 
 class AuthScreen extends React.Component {
   state = {
     loading: null,
+    errors: [],
   }
 
   static navigationOptions = {
@@ -23,7 +28,9 @@ class AuthScreen extends React.Component {
 
   login = (account) => {
     this.setState({loading: true});
-    this.props.login(account)
+    this.props.loginCallout(account)
+      .then(() => this.props.fetchRecentExpenses())
+      .then(() => this.props.fetchCategories())
       .then(() => {
         this.setState({loading: false});
         if (this.props.account.token) {
@@ -32,10 +39,11 @@ class AuthScreen extends React.Component {
       })
       .catch((error) => {
         this.setState({loading: false});
+        this.setState({errors: ErrorHandling.toErrorArray(error)});
       });
   }
 
-  renderSpinner = () => {
+  loginForm = () => {
     if (this.state.loading) {
       return <ActivityIndicator size="large" color={Colors.tintColor} />
     } else {
@@ -46,7 +54,10 @@ class AuthScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.renderSpinner()}
+        <ErrorDisplay errors={this.state.errors}/>
+        <View style={styles.content}>
+          {this.loginForm()}
+        </View>
       </View>
     );
   }
@@ -60,7 +71,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    login,
+    loginCallout,
+    fetchRecentExpenses,
+    fetchCategories
   }, dispatch)
 }
 
@@ -70,7 +83,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  content: {
+    flex: 9,
+    backgroundColor: '#fff',
     justifyContent: "center",
     alignItems: "center",
   },
+  error: {
+    height: "10%",
+  },
+  errorContainer: {
+    backgroundColor: "blue",
+  }
 });

@@ -27,10 +27,13 @@ export default class BackendCallout extends React.Component {
       },
       body: JSON.stringify(body)
     });
+
+    const responseBody = await response.json();
+
     if(response.status < 200 || response.status > 299) {
-      throw Error(body.message);
+      throw Error(responseBody.message);
     }
-    return response.json();
+    return responseBody;
   }
 
   static putToApi = async (url, body, token) => {
