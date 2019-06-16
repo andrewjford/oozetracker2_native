@@ -1,8 +1,12 @@
-const expenseReducer = (state = {
+const defaultState = {
+  expenses: [],
   monthlies: {
+    currentView: null,
     monthlies: [],
-  },
-}, action) => {
+  }
+};
+
+const expenseReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'FETCH_RECENT_EXPENSES':
       return {
@@ -43,11 +47,14 @@ const expenseReducer = (state = {
         expenses: afterDelete
       }
     case 'GET_MONTHLY':
+      const otherMonthlies = state.monthlies.monthlies.filter(monthly => {
+        return monthly.month !== action.payload.month || monthly.year !== action.payload.year;
+      });
       return {
         ...state,
         monthlies: {
           currentView: action.payload,
-          monthlies: [...state.monthlies.monthlies, action.payload]
+          monthlies: [...otherMonthlies, action.payload]
         },
       }
     case 'CHANGE_MONTHLY_VIEW':
@@ -58,6 +65,8 @@ const expenseReducer = (state = {
           currentView: action.payload,
         }
       }
+    case 'PURGE_EXPENSES':
+      return defaultState;
     default:
       return state
   }

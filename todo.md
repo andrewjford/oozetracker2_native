@@ -1,3 +1,4 @@
+- loading spinner when on monthlies screen
 - error handling
 - loading spinners
   - need spinner on monthly summary data fetch
