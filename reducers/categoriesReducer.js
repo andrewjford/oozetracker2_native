@@ -1,7 +1,9 @@
-const categoriesReducer = (state = {
+const defaultState = {
   displayCategoryInput: false,
   categories: [],
-}, action) => {
+}
+
+const categoriesReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'FETCH_CATEGORIES':
       return {
@@ -34,6 +36,8 @@ const categoriesReducer = (state = {
         ...state,
         categories: filteredCategories,
       }
+    case 'PURGE_CATEGORIES':
+      return defaultState;
     default:
       return state
   }

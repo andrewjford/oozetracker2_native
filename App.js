@@ -69,7 +69,7 @@ export default class App extends React.Component {
             <PaperProvider theme={theme}>
               <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                <AppNavigator />
+                <AppNavigator persistor={this.persistor}/>
               </View>
             </PaperProvider>
           </PersistGate>

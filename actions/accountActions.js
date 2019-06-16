@@ -4,6 +4,7 @@ import BackendCallout from '../services/BackendCallout';
 import { fetchRecentExpenses } from './expenseActions';
 import { fetchCategories } from './categoriesActions';
 import { API_URL } from '../constants/Config';
+import { PURGE } from 'redux-persist';
 
 export const login = (account) => {
   return (dispatch) => {
@@ -24,6 +25,20 @@ export const login = (account) => {
 
 export const logout = () => {
   return (dispatch) => {
+    dispatch({ 
+      type: PURGE,
+      key: "cashTrackerPersist",
+      result: () => null
+    });
+
+    dispatch({
+      type: "PURGE_EXPENSES"
+    });
+
+    dispatch({
+      type: "PURGE_CATEGORIES"
+    });
+
     return Promise.all([
       AsyncStorage.removeItem('token'),
       AsyncStorage.removeItem('expiryDate'),
