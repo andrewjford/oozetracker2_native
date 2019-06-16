@@ -43,11 +43,14 @@ const expenseReducer = (state = {
         expenses: afterDelete
       }
     case 'GET_MONTHLY':
+      const otherMonthlies = state.monthlies.monthlies.map(monthly => {
+        return monthly.month !== action.payload.month || monthly.year !== action.payload.year;
+      });
       return {
         ...state,
         monthlies: {
           currentView: action.payload,
-          monthlies: [...state.monthlies.monthlies, action.payload]
+          monthlies: [...otherMonthlies, action.payload]
         },
       }
     case 'CHANGE_MONTHLY_VIEW':
