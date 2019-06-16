@@ -5,6 +5,7 @@ import {
   Text,
   View,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import { connect } from 'react-redux';
@@ -23,7 +24,19 @@ class HomeScreen extends React.Component {
 
     this.state = {
       refreshing: false,
+      isLoading: true,
     };
+  }
+
+  componentDidMount() {
+    if (this.props.categories.length === 0 || this.props.expenses.length === 0) {
+      Promise.all([this.props.fetchCategories(), this.props.fetchRecentExpenses()])
+        .then(() => {
+          this.setState({isLoading: false});
+        });
+    } else {
+      this.setState({isLoading: false});
+    }
   }
 
   static navigationOptions = {
@@ -42,6 +55,16 @@ class HomeScreen extends React.Component {
     });
   }
 
+  renderExpenseList = () => {
+    if (this.state.isLoading) {
+      return <ActivityIndicator size="large" color={Colors.tintColor}
+        style={styles.container}/>;
+    } else {
+      return <ExpenseList expenseData={this.props.expenses}
+        navigation={this.props.navigation}/>;
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -53,7 +76,9 @@ class HomeScreen extends React.Component {
                         onRefresh={this._onRefresh}/>
                     }>
           <ErrorDisplay/>
-          <ExpenseList expenseData={this.props.expenses} navigation={this.props.navigation}/>
+
+          {this.renderExpenseList()}
+
         </ScrollView>
         <View style={styles.buttonContainer}>
           <Button mode="contained" style={styles.button} onPress={this.navigateToNewExpense}>
@@ -70,6 +95,7 @@ const mapStateToProps = (state) => {
   return {
     account: state.account,
     expenses: state.expenses.expenses,
+    categories: state.categories.categories,
   }
 }
 

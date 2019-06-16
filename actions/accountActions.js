@@ -1,8 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
 import BackendCallout from '../services/BackendCallout';
-import { fetchRecentExpenses } from './expenseActions';
-import { fetchCategories } from './categoriesActions';
 import { API_URL } from '../constants/Config';
 import { PURGE } from 'redux-persist';
 
@@ -59,27 +57,7 @@ export const setTokenFromLocalStorage = (token) => {
   }
 }
 
-export const setTokenAndFetchData = (token) => {
-  return (dispatch) => {
-    dispatch(setTokenFromLocalStorage(token));
-    dispatch(fetchRecentExpenses())
-    dispatch(fetchCategories());
-  }
-}
-
-export const register = (form) => {
-  return (dispatch) => {
-    dispatch(registerCallout(form))
-      .then(() => {
-        dispatch(fetchRecentExpenses());
-      })
-      .then(() => {
-        dispatch(fetchCategories());
-      });
-  }
-}
-
-export const registerCallout = (form) => {
+export const register = form => {
   return (dispatch, getState) => {
     return BackendCallout.postToApi('/api/v1/register', form, getState().account.token)
       .then((response) => {
