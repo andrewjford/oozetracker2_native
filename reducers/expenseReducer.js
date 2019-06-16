@@ -1,5 +1,7 @@
 const expenseReducer = (state = {
+  expenses: [],
   monthlies: {
+    currentView: null,
     monthlies: [],
   },
 }, action) => {

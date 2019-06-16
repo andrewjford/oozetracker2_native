@@ -5,6 +5,7 @@ import {
   Text,
   View,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import { DataTable, IconButton } from 'react-native-paper';
 import { connect } from 'react-redux';
@@ -25,6 +26,7 @@ class MonthlyScreen extends React.Component {
       ],
       rotate: false,
       isRefreshing: false,
+      isLoading: false,
     };
   }
 
@@ -37,7 +39,7 @@ class MonthlyScreen extends React.Component {
       month: this.state.date.getMonth(),
       year: this.state.date.getFullYear()
     };
-    this.props.getMonthly(currentMonthRequest);
+    this.loadMonthly(currentMonthRequest);
   }
 
   renderRows = () => {
@@ -46,7 +48,7 @@ class MonthlyScreen extends React.Component {
       return (
         <DataTable.Row key={lineItem.id}>
           <DataTable.Cell>{lineItem.name}</DataTable.Cell>
-          <DataTable.Cell numeric>{lineItem.sum.format()}</DataTable.Cell>
+          <DataTable.Cell numeric>{currency(lineItem.sum).format()}</DataTable.Cell>
         </DataTable.Row>
       );
     })
@@ -64,15 +66,20 @@ class MonthlyScreen extends React.Component {
     });
   }
 
-  changeMonthlyView = (monthlyObject) => {
+  loadMonthly = monthlyObject => {
+    this.setState({isLoading: true});
     const cachedView = this.props.monthlies.find((monthly) => {
       return monthly.month === monthlyObject.month && monthly.year === monthlyObject.year;
     });
 
     if (cachedView) {
       this.props.changeMonthlyView(cachedView);
+      this.setState({isLoading: false});
     } else {
-      this.props.getMonthly(monthlyObject);
+      this.props.getMonthly(monthlyObject)
+        .then(() => {
+          this.setState({isLoading: false});
+        });
     }
   }
 
@@ -85,7 +92,7 @@ class MonthlyScreen extends React.Component {
       month: date.getMonth(),
       year: date.getFullYear()
     };
-    this.changeMonthlyView(currentMonthRequest);
+    this.loadMonthly(currentMonthRequest);
   }
 
   handleRightMonthClick = () => {
@@ -97,20 +104,20 @@ class MonthlyScreen extends React.Component {
       month: date.getMonth(),
       year: date.getFullYear()
     };
-    this.changeMonthlyView(currentMonthRequest);
+    this.loadMonthly(currentMonthRequest);
   }
 
-  render() {
-    const total = !this.props.monthlyView ? currency(0) : this.props.monthlyView.rows.reduce((accum, lineItem) => {
+  
+  renderDataTable = () => {
+    total = !this.props.monthlyView ? currency(0) : this.props.monthlyView.rows.reduce((accum, lineItem) => {
       return accum.add(lineItem.sum);
     },currency(0));
-    
-    return (
-      <View style={styles.container}>
-        <Text style={styles.headerText}>
-          {this.state.date.getFullYear()} {this.state.monthNames[this.state.date.getMonth()]}
-        </Text>
 
+    if (this.state.isLoading) {
+      return <ActivityIndicator size="large" color={Colors.tintColor}
+      style={styles.container}/>;
+    } else {
+      return (
         <ScrollView style={styles.container}
           refreshControl={
             <RefreshControl
@@ -136,6 +143,18 @@ class MonthlyScreen extends React.Component {
             </DataTable.Row>
           </DataTable>
         </ScrollView>
+      );
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.headerText}>
+          {this.state.date.getFullYear()} {this.state.monthNames[this.state.date.getMonth()]}
+        </Text>
+
+        {this.renderDataTable()}
 
         <View style={styles.buttonContainer}>
           <IconButton color={Colors.tintColor} icon="arrow-back" onPress={this.handleLeftMonthClick}/>
