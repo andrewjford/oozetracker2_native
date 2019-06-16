@@ -1,11 +1,13 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { Provider as StoreProvider } from 'react-redux';
 import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from 'redux-persist/integration/react';
 
 import accountReducer from './reducers/accountReducer';
 import expenseReducer from './reducers/expenseReducer';
@@ -27,6 +29,11 @@ const theme = {
   }
 };
 
+const persistConfig = {
+  key: "cashTrackerPersist",
+  storage: AsyncStorage
+};
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -35,8 +42,14 @@ export default class App extends React.Component {
       isLoadingComplete: false,
     }
 
+    const persistedReducer = persistReducer(persistConfig, rootReducer);
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    this.store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+    this.store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
+    this.persistor = persistStore(this.store);
+  }
+
+  renderLoading = () => {
+    return <AppLoading />;
   }
 
 
@@ -52,12 +65,14 @@ export default class App extends React.Component {
     } else {
       return (
         <StoreProvider store={this.store}>
-          <PaperProvider theme={theme}>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <AppNavigator />
-            </View>
-          </PaperProvider>
+          <PersistGate persistor={this.persistor} loading={this.renderLoading()}>
+            <PaperProvider theme={theme}>
+              <View style={styles.container}>
+                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                <AppNavigator />
+              </View>
+            </PaperProvider>
+          </PersistGate>
         </StoreProvider>
       );
     }
@@ -66,8 +81,6 @@ export default class App extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require('./assets/images/robot-dev.png'),
-        require('./assets/images/robot-prod.png'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
