@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 81873,
-  "expoServerNgrokUrl": "https://nb-6z7.andrewjford.oozetracker2-native.exp.direct",
-  "packagerNgrokUrl": "https://packager.nb-6z7.andrewjford.oozetracker2-native.exp.direct",
-  "ngrokPid": 81959,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
