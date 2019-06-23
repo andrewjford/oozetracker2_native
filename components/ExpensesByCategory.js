@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
 
-import Colors from '../constants/Colors';
-import ExpenseList from './ExpenseList';
+import Colors from "../constants/Colors";
+import ExpenseList from "./ExpenseList";
 
 class ExpensesByCategory extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class ExpensesByCategory extends React.Component {
 
     this.state = {
       isLoading: true
-    }
+    };
   }
 
   componentDidMount() {
@@ -37,27 +37,27 @@ class ExpensesByCategory extends React.Component {
   };
 
   render() {
-    return <View>{this.renderExpenseList()}</View>;
+    return <View style={styles.container}>{this.renderExpenseList()}</View>;
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff"
   },
   button: {
     marginVertical: 8,
     minWidth: "35%",
     alignSelf: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   buttonContainer: {
     height: "10%",
     marginVertical: 8,
     borderTopColor: Colors.accentColor,
     borderTopWidth: StyleSheet.hairlineWidth,
-    justifyContent: "center",
+    justifyContent: "center"
   }
 });
 
