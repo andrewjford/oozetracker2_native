@@ -46,7 +46,7 @@ class MonthlyScreen extends React.Component {
     if (!this.props.monthlyView) {return <Text></Text>};
     return this.props.monthlyView.rows.map(lineItem => {
       return (
-        <DataTable.Row key={lineItem.id}>
+        <DataTable.Row key={lineItem.id} onPress={() => this.props.navigation.navigate("ExpensesByMonth")}>
           <DataTable.Cell>{lineItem.name}</DataTable.Cell>
           <DataTable.Cell numeric>{currency(lineItem.sum).format()}</DataTable.Cell>
         </DataTable.Row>

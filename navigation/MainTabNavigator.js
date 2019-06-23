@@ -10,9 +10,11 @@ import CategoriesScreen from '../screens/CategoriesScreen';
 import Colors from '../constants/Colors';
 import ExpenseDetail from '../components/ExpenseDetail';
 import SettingsScreen from '../screens/SettingsScreen';
+import ExpensesByCategory from '../components/ExpensesByCategory';
 
 const MonthlyStack = createStackNavigator({
   Monthly: MonthlyScreen,
+  ExpensesByMonth: ExpensesByCategory,
 });
 
 MonthlyStack.navigationOptions = {
@@ -48,7 +50,7 @@ HomeStack.navigationOptions = {
 };
 
 const CategoriesStack = createStackNavigator({
-  Categories: CategoriesScreen,
+  Categories: CategoriesScreen
 })
 
 CategoriesStack.navigationOptions = {
