@@ -24,7 +24,7 @@ class ExpenseDetail extends React.Component {
       id: expense.id,
       description: expense.description,
       amount: expense.amount,
-      date: new Date(expense.date),
+      date: this.convertTimestampToDate(expense.date),
       category: expense.category_id,
       editing: false,
     };
@@ -34,6 +34,15 @@ class ExpenseDetail extends React.Component {
     title: 'Expense Detail',
     headerTintColor: Colors.tintColor,
   };
+
+  convertTimestampToDate = timestamp => {
+    const recordDate = new Date();
+    const splitDate = timestamp.slice(0,10).split("-").map(each => parseInt(each));
+    recordDate.setFullYear(splitDate[0]);
+    recordDate.setMonth(splitDate[1] - 1);
+    recordDate.setDate(splitDate[2]);
+    return recordDate;
+  }
 
   categories = this.props.categories.map((category) => {
     return (
@@ -48,7 +57,7 @@ class ExpenseDetail extends React.Component {
         id: state.id,
         description: state.persisted.description,
         amount: state.persisted.amount,
-        date: new Date(state.persisted.date),
+        date: this.convertTimestampToDate(state.persisted.date),
         category: state.persisted.category_id,
         editing: false,
       };
