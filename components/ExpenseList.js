@@ -1,15 +1,24 @@
 import React from 'react';
 import { DataTable } from 'react-native-paper';
 
+convertTimestampToDate = timestamp => {
+  const recordDate = new Date();
+  const splitDate = timestamp.slice(0,10).split("-").map(each => parseInt(each));
+  recordDate.setFullYear(splitDate[0]);
+  recordDate.setMonth(splitDate[1] - 1);
+  recordDate.setDate(splitDate[2]);
+  return recordDate;
+}
+
 const listExpenses = (props) => {
     const expenses = props.expenseData;
     
     if (expenses) {
       const lineItems = expenses.map((expense) => {
-        const date = new Date(expense.date);
+        const date = convertTimestampToDate(expense.date);
         return (
           <DataTable.Row key={expense.id} onPress={() => props.navigation.navigate("Expense", { expense })}>
-            <DataTable.Cell>{new Date(expense.date).toLocaleDateString('en-US', {timeZone: 'UTC'})}</DataTable.Cell>
+            <DataTable.Cell>{date.toLocaleDateString('en-US', {timeZone: 'UTC'})}</DataTable.Cell>
             <DataTable.Cell>{expense.description}</DataTable.Cell>
             <DataTable.Cell numeric>{expense.amount}</DataTable.Cell>
           </DataTable.Row>
