@@ -25,7 +25,7 @@ class ExpenseDetail extends React.Component {
       description: expense.description,
       amount: expense.amount,
       date: new Date(expense.date),
-      category: expense.category,
+      category: expense.category_id,
       editing: false,
     };
   }
@@ -49,7 +49,7 @@ class ExpenseDetail extends React.Component {
         description: state.persisted.description,
         amount: state.persisted.amount,
         date: new Date(state.persisted.date),
-        category: state.persisted.category,
+        category: state.persisted.category_id,
         editing: false,
       };
     });
