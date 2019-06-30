@@ -1,14 +1,9 @@
-import React from 'react';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  View,
-} from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from "react";
+import { ActivityIndicator, AsyncStorage, StatusBar, View } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { setTokenFromLocalStorage } from '../actions/accountActions';
+import { setTokenFromLocalStorage } from "../actions/accountActions";
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -18,22 +13,24 @@ class AuthLoadingScreen extends React.Component {
 
   retrieveLocalStorage = async () => {
     try {
-      const tokenExpiryDate = JSON.parse(await AsyncStorage.getItem('expiryDate'));
+      const tokenExpiryDate = JSON.parse(
+        await AsyncStorage.getItem("expiryDate")
+      );
       if (tokenExpiryDate && Date.now() < new Date(tokenExpiryDate)) {
-        const token = await AsyncStorage.getItem('token');
+        const token = await AsyncStorage.getItem("token");
         if (token) {
           this.props.setTokenFromLocalStorage(token);
           return token;
         }
       }
     } catch (error) {
-      console.log('error fetching' + error.message);
+      console.log("error fetching" + error.message);
     }
   };
 
   navigateFromToken = async () => {
     const token = await this.retrieveLocalStorage();
-    this.props.navigation.navigate(token ? 'Main' : 'Auth');
+    this.props.navigation.navigate(token ? "Main" : "Auth");
   };
 
   // Render any loading content that you like here
@@ -47,10 +44,16 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    setTokenFromLocalStorage
-  }, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      setTokenFromLocalStorage
+    },
+    dispatch
+  );
+};
 
-export default connect(null, mapDispatchToProps)(AuthLoadingScreen);
+export default connect(
+  null,
+  mapDispatchToProps
+)(AuthLoadingScreen);

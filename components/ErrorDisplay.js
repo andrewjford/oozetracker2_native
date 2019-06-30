@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, StyleSheet,Text } from 'react-native';
-import { Surface, IconButton } from 'react-native-paper';
+import React from "react";
+import { View, StyleSheet, Text } from "react-native";
+import { Surface, IconButton } from "react-native-paper";
 
 const ErrorDisplay = props => {
   const errorSection = () => {
@@ -8,7 +8,7 @@ const ErrorDisplay = props => {
       return (
         <View style={styles.container}>
           <Surface style={styles.surface}>
-            <IconButton icon="error" color="white" style={styles.icon}/>
+            <IconButton icon="error" color="white" style={styles.icon} />
             <Text style={styles.text}>Error: {props.errors.toString()}</Text>
           </Surface>
         </View>
@@ -16,10 +16,10 @@ const ErrorDisplay = props => {
     } else {
       return null;
     }
-  }
-  
+  };
+
   return errorSection();
-}
+};
 
 export default ErrorDisplay;
 
@@ -28,20 +28,20 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
     height: 38,
-    width: '100%',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    width: "100%",
+    justifyContent: "center",
+    alignSelf: "center",
     elevation: 4,
-    backgroundColor: 'red',
+    backgroundColor: "red"
   },
   surface: {
-    flexDirection: 'row',
+    flexDirection: "row",
     flex: 1,
-    backgroundColor: 'red',
-    alignItems: 'center',
+    backgroundColor: "red",
+    alignItems: "center"
   },
   text: {
     color: "white",
-    fontSize: 18,
-  },
+    fontSize: 18
+  }
 });

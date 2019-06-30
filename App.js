@@ -1,22 +1,28 @@
-import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-import { Provider as StoreProvider } from 'react-redux';
-import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
-import thunk from 'redux-thunk';
+import React from "react";
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  AsyncStorage
+} from "react-native";
+import { AppLoading, Asset, Font, Icon } from "expo";
+import AppNavigator from "./navigation/AppNavigator";
+import { createStore, applyMiddleware, combineReducers, compose } from "redux";
+import { Provider as StoreProvider } from "react-redux";
+import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
+import thunk from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
-import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from "redux-persist/integration/react";
 
-import accountReducer from './reducers/accountReducer';
-import expenseReducer from './reducers/expenseReducer';
-import categoriesReducer from './reducers/categoriesReducer';
+import accountReducer from "./reducers/accountReducer";
+import expenseReducer from "./reducers/expenseReducer";
+import categoriesReducer from "./reducers/categoriesReducer";
 
 const rootReducer = combineReducers({
   account: accountReducer,
   expenses: expenseReducer,
-  categories: categoriesReducer,
+  categories: categoriesReducer
 });
 
 const theme = {
@@ -24,8 +30,8 @@ const theme = {
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#388e3c',
-    accent: '#a5d6a7',
+    primary: "#388e3c",
+    accent: "#a5d6a7"
   }
 };
 
@@ -39,19 +45,22 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      isLoadingComplete: false,
-    }
+      isLoadingComplete: false
+    };
 
     const persistedReducer = persistReducer(persistConfig, rootReducer);
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    this.store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
+    const composeEnhancers =
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    this.store = createStore(
+      persistedReducer,
+      composeEnhancers(applyMiddleware(thunk))
+    );
     this.persistor = persistStore(this.store);
   }
 
   renderLoading = () => {
     return <AppLoading />;
-  }
-
+  };
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -65,11 +74,14 @@ export default class App extends React.Component {
     } else {
       return (
         <StoreProvider store={this.store}>
-          <PersistGate persistor={this.persistor} loading={this.renderLoading()}>
+          <PersistGate
+            persistor={this.persistor}
+            loading={this.renderLoading()}
+          >
             <PaperProvider theme={theme}>
               <View style={styles.container}>
-                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                <AppNavigator persistor={this.persistor}/>
+                {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+                <AppNavigator persistor={this.persistor} />
               </View>
             </PaperProvider>
           </PersistGate>
@@ -80,12 +92,11 @@ export default class App extends React.Component {
 
   _loadResourcesAsync = async () => {
     return Promise.all([
-      Asset.loadAsync([
-      ]),
+      Asset.loadAsync([]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
-      }),
+        ...Icon.Ionicons.font
+      })
     ]);
   };
 
@@ -103,6 +114,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: "#fff"
+  }
 });

@@ -1,44 +1,42 @@
-import React from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Picker
-} from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
-import DatePicker from './DatePicker';
-import Colors from '../constants/Colors';
+import React from "react";
+import { View, ScrollView, StyleSheet, Picker } from "react-native";
+import { TextInput, Button } from "react-native-paper";
+import DatePicker from "./DatePicker";
+import Colors from "../constants/Colors";
 
 export default class ExpenseInput extends React.Component {
-
   constructor(props) {
     super(props);
     let theDate = new Date();
     this.state = {
-      description: '',
+      description: "",
       amount: 0,
       date: theDate,
       category: this.props.categories[0].id
     };
   }
 
-  categories = this.props.categories.map((category) => {
+  categories = this.props.categories.map(category => {
     return (
-      <Picker.Item label={category.name} value={category.id} key={category.id}/>
-    )
+      <Picker.Item
+        label={category.name}
+        value={category.id}
+        key={category.id}
+      />
+    );
   });
 
   submit = () => {
     this.props.createExpense(this.state);
-  }
+  };
 
-  handleAmountChange = (text) => {
-    this.setState({amount: text});
-  }
+  handleAmountChange = text => {
+    this.setState({ amount: text });
+  };
 
-  handleCategoryChange = (newcategory) => {
-    this.setState({category: newcategory});
-  }
+  handleCategoryChange = newcategory => {
+    this.setState({ category: newcategory });
+  };
 
   render() {
     return (
@@ -48,14 +46,16 @@ export default class ExpenseInput extends React.Component {
             <DatePicker
               style={styles.inputContainerStyle}
               date={this.state.date}
-              onDateChange={date => {this.setState({date: date})}}
+              onDateChange={date => {
+                this.setState({ date: date });
+              }}
             />
             <TextInput
               style={styles.inputContainerStyle}
               label="Description"
               value={this.state.description}
               selectTextOnFocus={true}
-              onChangeText={description => this.setState({description})}
+              onChangeText={description => this.setState({ description })}
             />
 
             <TextInput
@@ -67,9 +67,11 @@ export default class ExpenseInput extends React.Component {
               onChangeText={this.handleAmountChange}
             />
 
-            <Picker selectedValue={this.state.category}
+            <Picker
+              selectedValue={this.state.category}
               style={styles.inputContainerStyle}
-              onValueChange={this.handleCategoryChange}>
+              onValueChange={this.handleCategoryChange}
+            >
               {this.categories}
             </Picker>
           </View>
@@ -80,33 +82,33 @@ export default class ExpenseInput extends React.Component {
           </Button>
         </View>
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   inputFields: {
-    padding: 16,
+    padding: 16
   },
   wrapper: {
-    flex: 1,
+    flex: 1
   },
   inputContainerStyle: {
-    margin: 8,
+    margin: 8
   },
   button: {
     width: "40%",
-    alignSelf: "center",
+    alignSelf: "center"
   },
   buttonContainer: {
     height: "10%",
     marginVertical: 8,
     borderTopColor: Colors.accentColor,
     borderTopWidth: StyleSheet.hairlineWidth,
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });

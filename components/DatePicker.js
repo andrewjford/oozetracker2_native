@@ -1,7 +1,7 @@
-import React, { Component, createRef } from 'react';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import { Keyboard, View } from 'react-native';
-import { Text, TextInput, TouchableRipple } from 'react-native-paper';
+import React, { Component, createRef } from "react";
+import DateTimePicker from "react-native-modal-datetime-picker";
+import { Keyboard, View } from "react-native";
+import { Text, TextInput, TouchableRipple } from "react-native-paper";
 
 class DatePicker extends Component {
   constructor(props) {
@@ -49,12 +49,14 @@ class DatePicker extends Component {
 
   render() {
     const { date, open } = this.state;
-    const value = date ? `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}` : '';
+    const value = date
+      ? `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+      : "";
 
     return (
       <View style={this.props.style}>
         <TextInput
-          label='Date'
+          label="Date"
           ref={this._textInput}
           render={this.renderTouchText}
           value={value}

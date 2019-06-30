@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
 import {
   ScrollView,
   StyleSheet,
   Text,
   View,
-  KeyboardAvoidingView,
-} from 'react-native';
-import { List, Button, IconButton, TextInput } from 'react-native-paper';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+  KeyboardAvoidingView
+} from "react-native";
+import { List, Button, IconButton, TextInput } from "react-native-paper";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { 
+import {
   createCategory,
   deleteCategory,
-  updateCategory,
-} from '../actions/categoriesActions';
-import CategoryForm from '../components/CategoryForm';
-import Colors from '../constants/Colors';
+  updateCategory
+} from "../actions/categoriesActions";
+import CategoryForm from "../components/CategoryForm";
+import Colors from "../constants/Colors";
 
 class CategoriesScreen extends React.Component {
   constructor(props) {
@@ -25,87 +25,110 @@ class CategoriesScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Categories',
+    title: "Categories"
   };
 
   handleAddPress = () => {
-    this.setState({showCategoryForm: true});
-  }
+    this.setState({ showCategoryForm: true });
+  };
 
-  handleEdit = (category) => {
+  handleEdit = category => {
     this.setState({
       editing: category.id,
-      input: category.name,
+      input: category.name
     });
-  }
+  };
 
   handleUpdate = () => {
-    this.props.updateCategory({
-      id: this.state.editing,
-      name: this.state.input,
-    }).then(() => {
-      this.setState({
-        editing: null,
-        input: null,
+    this.props
+      .updateCategory({
+        id: this.state.editing,
+        name: this.state.input
+      })
+      .then(() => {
+        this.setState({
+          editing: null,
+          input: null
+        });
       });
-    });
-  }
+  };
 
   cancelForm = () => {
-    this.setState({showCategoryForm: false});
-  }
+    this.setState({ showCategoryForm: false });
+  };
 
-  createCategory = (newCategory) => {
+  createCategory = newCategory => {
     this.props.createCategory(newCategory);
-    this.setState({showCategoryForm: false});
-  }
+    this.setState({ showCategoryForm: false });
+  };
 
   renderLineItems = () => {
-    if (!this.props.categories) {return <Text>Add some categories!</Text>};
-    return this.props.categories.map((category) => {
+    if (!this.props.categories) {
+      return <Text>Add some categories!</Text>;
+    }
+    return this.props.categories.map(category => {
       if (this.state.editing && this.state.editing === category.id) {
         return (
           <View key={category.id}>
-              <TextInput
-                value={this.state.input}
-                onChangeText={input => this.setState({ input })}
-                onBlur={() => this.handleUpdate()}
-                autoFocus={true}/>
+            <TextInput
+              value={this.state.input}
+              onChangeText={input => this.setState({ input })}
+              onBlur={() => this.handleUpdate()}
+              autoFocus={true}
+            />
           </View>
-        )
+        );
       } else {
         return (
           <List.Item
-            title={category.name} 
+            title={category.name}
             key={category.id}
             onPress={() => this.handleEdit(category)}
-            right={() => <IconButton color="red" icon="close" onPress={() => this.props.deleteCategory({id: category.id})}/>}/>
+            right={() => (
+              <IconButton
+                color="red"
+                icon="close"
+                onPress={() => this.props.deleteCategory({ id: category.id })}
+              />
+            )}
+          />
         );
       }
     });
-  }
+  };
 
   renderAddCategories = () => {
     if (this.state.showCategoryForm) {
-      return <CategoryForm createCategory={this.createCategory}
-                           cancel={this.cancelForm} />
+      return (
+        <CategoryForm
+          createCategory={this.createCategory}
+          cancel={this.cancelForm}
+        />
+      );
     } else {
-      return <Button style={styles.button}
-                     mode="contained"
-                     onPress={this.handleAddPress}>Add Category</Button>
+      return (
+        <Button
+          style={styles.button}
+          mode="contained"
+          onPress={this.handleAddPress}
+        >
+          Add Category
+        </Button>
+      );
     }
-  }
+  };
 
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <ScrollView style={styles.scrollContainer}>
-          <List.Section>
-            {this.renderLineItems()}
-          </List.Section>
-  
+          <List.Section>{this.renderLineItems()}</List.Section>
         </ScrollView>
-        <View style={this.state.showCategoryForm ? styles.expandedAdd : styles.addSection}>
+        <View
+          style={
+            this.state.showCategoryForm ? styles.expandedAdd : styles.addSection
+          }
+        >
           {this.renderAddCategories()}
         </View>
       </KeyboardAvoidingView>
@@ -113,46 +136,52 @@ class CategoriesScreen extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    categories: state.categories.categories,
-  }
-}
+    categories: state.categories.categories
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    createCategory,
-    deleteCategory,
-    updateCategory,
-  }, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      createCategory,
+      deleteCategory,
+      updateCategory
+    },
+    dispatch
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CategoriesScreen);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignSelf: "center",
-    width: "100%",
+    width: "100%"
   },
   button: {
     width: "60%",
-    alignSelf: "center",
+    alignSelf: "center"
   },
   addSection: {
     height: "10%",
     marginVertical: 8,
     borderTopColor: Colors.accentColor,
     borderTopWidth: StyleSheet.hairlineWidth,
-    justifyContent: "center",
+    justifyContent: "center"
   },
   scrollContainer: {
-    height: "85%",
+    height: "85%"
   },
   expandedAdd: {
     height: "45%",
     borderTopColor: Colors.accentColor,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
+    borderTopWidth: StyleSheet.hairlineWidth
+  }
 });

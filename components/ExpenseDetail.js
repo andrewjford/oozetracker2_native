@@ -1,17 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Picker,
-  Keyboard,
-} from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
-import DatePicker from './DatePicker';
-import { updateExpense, deleteExpense } from '../actions/expenseActions';
-import Colors from '../constants/Colors';
+import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { View, ScrollView, StyleSheet, Picker, Keyboard } from "react-native";
+import { TextInput, Button } from "react-native-paper";
+import DatePicker from "./DatePicker";
+import { updateExpense, deleteExpense } from "../actions/expenseActions";
+import Colors from "../constants/Colors";
 
 class ExpenseDetail extends React.Component {
   constructor(props) {
@@ -26,28 +20,35 @@ class ExpenseDetail extends React.Component {
       amount: expense.amount,
       date: this.convertTimestampToDate(expense.date),
       category: expense.category_id,
-      editing: false,
+      editing: false
     };
   }
 
   static navigationOptions = {
-    title: 'Expense Detail',
-    headerTintColor: Colors.tintColor,
+    title: "Expense Detail",
+    headerTintColor: Colors.tintColor
   };
 
   convertTimestampToDate = timestamp => {
     const recordDate = new Date();
-    const splitDate = timestamp.slice(0,10).split("-").map(each => parseInt(each));
+    const splitDate = timestamp
+      .slice(0, 10)
+      .split("-")
+      .map(each => parseInt(each));
     recordDate.setFullYear(splitDate[0]);
     recordDate.setMonth(splitDate[1] - 1);
     recordDate.setDate(splitDate[2]);
     return recordDate;
-  }
+  };
 
-  categories = this.props.categories.map((category) => {
+  categories = this.props.categories.map(category => {
     return (
-      <Picker.Item label={category.name} value={category.id} key={category.id}/>
-    )
+      <Picker.Item
+        label={category.name}
+        value={category.id}
+        key={category.id}
+      />
+    );
   });
 
   resetStateToOrigin = () => {
@@ -59,78 +60,92 @@ class ExpenseDetail extends React.Component {
         amount: state.persisted.amount,
         date: this.convertTimestampToDate(state.persisted.date),
         category: state.persisted.category_id,
-        editing: false,
+        editing: false
       };
     });
-  }
+  };
 
-  handleDescriptionChange = (text) => {
+  handleDescriptionChange = text => {
     this.setState({
       description: text,
-      editing: true,
-    })
-  }
+      editing: true
+    });
+  };
 
-  handleAmountChange = (text) => {
+  handleAmountChange = text => {
     this.setState({
       amount: text,
-      editing: true,
+      editing: true
     });
-  }
+  };
 
-  handleCategoryChange = (newcategory) => {
+  handleCategoryChange = newcategory => {
     this.setState({
       category: newcategory,
-      editing: true,
+      editing: true
     });
-  }
+  };
 
-  handleDateChange = (date) => {
+  handleDateChange = date => {
     this.setState({
       date,
-      editing: true,
+      editing: true
     });
-  }
+  };
 
   handleCancel = () => {
     this.resetStateToOrigin();
     Keyboard.dismiss();
-  }
+  };
 
   saveExpense = () => {
-    this.props.updateExpense(this.state)
-      .then((data) => {
-        this.setState({editing: false});
-        Keyboard.dismiss();
-      });
-  }
+    this.props.updateExpense(this.state).then(data => {
+      this.setState({ editing: false });
+      Keyboard.dismiss();
+    });
+  };
 
   handleDelete = () => {
-    this.props.deleteExpense(this.state.id)
-      .then(() => {
-        this.props.navigation.navigate("Home");
-      });
-  }
+    this.props.deleteExpense(this.state.id).then(() => {
+      this.props.navigation.navigate("Home");
+    });
+  };
 
   buttons = () => {
     if (this.state.editing) {
-      return <View style={styles.buttonContainer}>
-        <Button onPress={this.handleCancel} mode="contained" style={styles.button}>
-          Cancel
-        </Button>
+      return (
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={this.handleCancel}
+            mode="contained"
+            style={styles.button}
+          >
+            Cancel
+          </Button>
 
-        <Button onPress={this.saveExpense} mode="contained" style={styles.button}>
-          Save
-        </Button>
-      </View>
+          <Button
+            onPress={this.saveExpense}
+            mode="contained"
+            style={styles.button}
+          >
+            Save
+          </Button>
+        </View>
+      );
     } else {
-      return <View style={styles.buttonContainer}>
-        <Button onPress={this.handleDelete} mode="contained" style={styles.button}>
-          Delete
-        </Button>
-      </View>
+      return (
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={this.handleDelete}
+            mode="contained"
+            style={styles.button}
+          >
+            Delete
+          </Button>
+        </View>
+      );
     }
-  }
+  };
 
   render() {
     return (
@@ -160,59 +175,66 @@ class ExpenseDetail extends React.Component {
             />
           </View>
 
-          <Picker selectedValue={this.state.category}
+          <Picker
+            selectedValue={this.state.category}
             style={styles.inputContainerStyle}
-            onValueChange={this.handleCategoryChange}>
+            onValueChange={this.handleCategoryChange}
+          >
             {this.categories}
           </Picker>
         </ScrollView>
 
         {this.buttons()}
-
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   inputFields: {
-    padding: 16,
+    padding: 16
   },
   wrapper: {
-    flex: 1,
+    flex: 1
   },
   inputContainerStyle: {
-    margin: 8,
+    margin: 8
   },
   button: {
     width: "40%",
-    alignSelf: "center",
+    alignSelf: "center"
   },
   buttonContainer: {
     height: "10%",
     marginVertical: 8,
     borderTopColor: Colors.accentColor,
     borderTopWidth: StyleSheet.hairlineWidth,
-    justifyContent: "center",
+    justifyContent: "center"
   }
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     expenses: state.expenses.expenses,
-    categories: state.categories.categories,
-  }
-}
+    categories: state.categories.categories
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    updateExpense,
-    deleteExpense,
-  }, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      updateExpense,
+      deleteExpense
+    },
+    dispatch
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseDetail);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ExpenseDetail);

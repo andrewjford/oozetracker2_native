@@ -1,11 +1,11 @@
-import React from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from "react";
+import { StyleSheet, ActivityIndicator } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import ExpenseInput from '../components/ExpenseInput';
-import { createExpense } from '../actions/expenseActions';
-import Colors from '../constants/Colors';
+import ExpenseInput from "../components/ExpenseInput";
+import { createExpense } from "../actions/expenseActions";
+import Colors from "../constants/Colors";
 
 class NewExpense extends React.Component {
   constructor(props) {
@@ -16,60 +16,70 @@ class NewExpense extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'New Expense',
-    headerTintColor: Colors.tintColor,
+    title: "New Expense",
+    headerTintColor: Colors.tintColor
   };
 
   setStateAsync = newState => {
     return new Promise(resolve => this.setState(newState, resolve));
-  }
+  };
 
-  addExpense = (newExpense) => {
-    return this.setStateAsync({isLoading: true})
+  addExpense = newExpense => {
+    return this.setStateAsync({ isLoading: true })
       .then(() => {
         return this.props.createExpense(newExpense);
       })
       .then(() => {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate("Home");
       })
-      .catch(error => console.log('error: '+error.message));
-  }
+      .catch(error => console.log("error: " + error.message));
+  };
 
   render() {
     if (this.state.isLoading) {
       return (
-        <ActivityIndicator size="large" color={Colors.tintColor}
-          style={styles.container}/>
+        <ActivityIndicator
+          size="large"
+          color={Colors.tintColor}
+          style={styles.container}
+        />
       );
     }
     return (
       <ExpenseInput
-        title={'Create Expense'}
+        title={"Create Expense"}
         categories={this.props.categories}
-        createExpense={this.addExpense} />
+        createExpense={this.addExpense}
+      />
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     expenses: state.expenses.expenses,
-    categories: state.categories.categories,
-  }
-}
+    categories: state.categories.categories
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    createExpense,
-  }, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      createExpense
+    },
+    dispatch
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewExpense);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewExpense);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: "#fff"
+  }
 });

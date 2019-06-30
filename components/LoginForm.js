@@ -1,25 +1,21 @@
-import React from 'react';
+import React from "react";
 
-import {
-  StyleSheet,
-  View,
-} from 'react-native';
-import { TextInput, Button, Text } from 'react-native-paper';
+import { StyleSheet, View } from "react-native";
+import { TextInput, Button, Text } from "react-native-paper";
 
 export default class LoginInput extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      loading: null,
+      email: "",
+      password: "",
+      loading: null
     };
   }
 
   submit = () => {
     this.props.login(this.state);
-  }
+  };
 
   render() {
     return (
@@ -28,24 +24,22 @@ export default class LoginInput extends React.Component {
           style={styles.inputContainerStyle}
           label="Email"
           value={this.state.email}
-          onChangeText={(email) => this.setState({email})}
+          onChangeText={email => this.setState({ email })}
         />
 
         <TextInput
           style={styles.inputContainerStyle}
           label="Password"
           value={this.state.password}
-          onChangeText={(password) => this.setState({password})}
+          onChangeText={password => this.setState({ password })}
           secureTextEntry={true}
         />
 
-        <Button mode="contained"
-                onPress={this.submit}
-                style={styles.button}>
+        <Button mode="contained" onPress={this.submit} style={styles.button}>
           <Text style={styles.buttonContent}>Login</Text>
         </Button>
       </View>
-    )
+    );
   }
 }
 
@@ -58,15 +52,15 @@ const styles = StyleSheet.create({
   button: {
     margin: 8,
     width: "30%",
-    borderRadius: 4,
+    borderRadius: 4
   },
   buttonContent: {
     fontWeight: "600",
     fontSize: 22,
-    color: "white",
+    color: "white"
   },
   inputContainerStyle: {
     margin: 8,
-    width: '85%',
-  },
+    width: "85%"
+  }
 });

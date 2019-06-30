@@ -1,34 +1,29 @@
-import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
-import { List } from 'react-native-paper';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { List } from "react-native-paper";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { logout } from '../actions/accountActions';
+import { logout } from "../actions/accountActions";
 
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      accountExpanded: true,
-    }
+      accountExpanded: true
+    };
   }
 
   handleAccountCollapse = () => {
-    this.setState((state) => ({accountExpanded: !state.accountExpanded}));
-  }
+    this.setState(state => ({ accountExpanded: !state.accountExpanded }));
+  };
 
   handleLogout = () => {
-    this.props.logout()
-      .then(() => {
-        this.props.navigation.navigate("AuthLoading");
-      });
-  }
+    this.props.logout().then(() => {
+      this.props.navigation.navigate("AuthLoading");
+    });
+  };
 
   render() {
     return (
@@ -38,19 +33,24 @@ class SettingsScreen extends React.Component {
           expanded={this.state.accountExpanded}
           onPress={this.handleAccountCollapse}
         >
-          <List.Item title="Logout"
-            onPress={this.handleLogout}/>
-          <List.Item title="Profile"/>
+          <List.Item title="Logout" onPress={this.handleLogout} />
+          <List.Item title="Profile" />
         </List.Accordion>
       </ScrollView>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    logout,
-  }, dispatch)
-}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      logout
+    },
+    dispatch
+  );
+};
 
-export default connect(null, mapDispatchToProps)(SettingsScreen);
+export default connect(
+  null,
+  mapDispatchToProps
+)(SettingsScreen);
