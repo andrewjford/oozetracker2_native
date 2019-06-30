@@ -1,4 +1,6 @@
 - loading spinner when on monthlies screen
+- getAllMonth needs to check cache
+- round dollar amounts should have cents displayed at the end
 - error handling
 - loading spinners
   - need spinner on monthly summary data fetch

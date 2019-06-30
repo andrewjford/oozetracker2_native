@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import Colors from "../constants/Colors";
 import ExpenseList from "./ExpenseList";
@@ -9,35 +9,19 @@ class ExpensesByCategory extends React.Component {
     super(props);
 
     this.state = {
-      isLoading: true
+      expenses: props.navigation.getParam("expenses", null)
     };
   }
 
-  componentDidMount() {
-    // fetch expenses by category by month
-  }
-
-  renderExpenseList = () => {
-    if (this.state.isLoading) {
-      return (
-        <ActivityIndicator
-          size="large"
-          color={Colors.tintColor}
-          style={styles.container}
-        />
-      );
-    } else {
-      return (
+  render() {
+    return (
+      <View style={styles.container}>
         <ExpenseList
-          expenseData={this.props.expenses}
+          expenseData={this.state.expenses}
           navigation={this.props.navigation}
         />
-      );
-    }
-  };
-
-  render() {
-    return <View style={styles.container}>{this.renderExpenseList()}</View>;
+      </View>
+    );
   }
 }
 

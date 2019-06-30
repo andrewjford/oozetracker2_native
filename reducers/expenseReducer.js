@@ -3,7 +3,8 @@ const defaultState = {
   monthlies: {
     currentView: null,
     monthlies: []
-  }
+  },
+  byMonth: {}
 };
 
 const expenseReducer = (state = defaultState, action) => {
@@ -71,6 +72,14 @@ const expenseReducer = (state = defaultState, action) => {
       };
     case "PURGE_EXPENSES":
       return defaultState;
+    case "GET_ALL_MONTH":
+      return {
+        ...state,
+        byMonth: {
+          ...state.byMonth,
+          [action.payload.monthString]: action.payload.expenses
+        }
+      }
     default:
       return state;
   }

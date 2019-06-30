@@ -12,7 +12,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import currency from "currency.js";
 
-import { getMonthly, changeMonthlyView } from "../actions/expenseActions";
+import {
+  getMonthly,
+  changeMonthlyView,
+  getAllMonth
+} from "../actions/expenseActions";
 import Colors from "../constants/Colors";
 
 class MonthlyScreen extends React.Component {
@@ -53,6 +57,24 @@ class MonthlyScreen extends React.Component {
     this.loadMonthly(currentMonthRequest);
   }
 
+  onCategorySelect = rowData => {
+    const monthString = `${this.state.date.getFullYear()}-${this.state.date.getMonth()}`;
+    this.getExpensesForMonth(monthString).then(() => {
+      const filteredExpenses = this.props.byMonth[monthString].filter(
+        expense => {
+          return expense.category_id === rowData.id;
+        }
+      );
+      this.props.navigation.navigate("ExpensesByMonth", {
+        expenses: filteredExpenses
+      });
+    });
+  };
+
+  getExpensesForMonth = monthString => {
+    return this.props.getAllMonth(monthString, this.state.date);
+  };
+
   renderRows = () => {
     if (!this.props.monthlyView) {
       return <Text />;
@@ -61,7 +83,7 @@ class MonthlyScreen extends React.Component {
       return (
         <DataTable.Row
           key={lineItem.id}
-          onPress={() => this.props.navigation.navigate("ExpensesByMonth")}
+          onPress={() => this.onCategorySelect(lineItem)}
         >
           <DataTable.Cell>{lineItem.name}</DataTable.Cell>
           <DataTable.Cell numeric>
@@ -208,7 +230,8 @@ class MonthlyScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     monthlyView: state.expenses.monthlies.currentView,
-    monthlies: state.expenses.monthlies.monthlies
+    monthlies: state.expenses.monthlies.monthlies,
+    byMonth: state.expenses.byMonth
   };
 };
 
@@ -216,7 +239,8 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       getMonthly,
-      changeMonthlyView
+      changeMonthlyView,
+      getAllMonth
     },
     dispatch
   );
