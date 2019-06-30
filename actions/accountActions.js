@@ -6,7 +6,7 @@ import { PURGE } from 'redux-persist';
 
 export const login = (account) => {
   return (dispatch) => {
-    return BackendCallout.postToApi(`${API_URL}/api/v1/login`, account)
+    return BackendCallout.postToApi(`${API_URL}/api/v1/login`, {body: account})
       .then(response => {
         const expiryDate = new Date();
         expiryDate.setSeconds(response.tokenExpiration);
@@ -59,7 +59,7 @@ export const setTokenFromLocalStorage = (token) => {
 
 export const register = form => {
   return (dispatch, getState) => {
-    return BackendCallout.postToApi('/api/v1/register', form, getState().account.token)
+    return BackendCallout.postToApi('/api/v1/register', {body: form, token: getState().account.token})
       .then((response) => {
         const expiryDate = new Date();
         expiryDate.setSeconds(response.tokenExpiration);

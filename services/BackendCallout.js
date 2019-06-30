@@ -18,12 +18,13 @@ export default class BackendCallout extends React.Component {
     return body;
   }
 
-  static postToApi = async (url, body, token) => {
+  static postToApi = async (url, { body, token, headers }) => {
     const response = await fetch(url, {
       method: 'POST',
       headers : {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+        ...(headers ? headers : {}),
       },
       body: JSON.stringify(body)
     });

@@ -15,7 +15,7 @@ export const fetchCategories = () => {
 
 export const createCategory = (newCategory) => {
   return (dispatch, getState) => {
-    BackendCallout.postToApi(`${API_URL}/api/v1/categories`, newCategory, getState().account.token)
+    BackendCallout.postToApi(`${API_URL}/api/v1/categories`, {body: newCategory, token: getState().account.token})
       .then((response) => {
         return dispatch({
           type: 'NEW_CATEGORY',
