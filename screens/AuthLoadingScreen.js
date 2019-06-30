@@ -33,7 +33,6 @@ class AuthLoadingScreen extends React.Component {
 
   navigateFromToken = async () => {
     const token = await this.retrieveLocalStorage();
-    console.log('derp '+token);
     this.props.navigation.navigate(token ? 'Main' : 'Auth');
   };
 
