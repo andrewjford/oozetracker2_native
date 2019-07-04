@@ -115,21 +115,23 @@ class ExpenseDetail extends React.Component {
     if (this.state.editing) {
       return (
         <View style={styles.buttonContainer}>
-          <Button
-            onPress={this.handleCancel}
-            mode="contained"
-            style={styles.button}
-          >
-            Cancel
-          </Button>
+          <View style={styles.horizontalButtons}>
+            <Button
+              onPress={this.handleCancel}
+              mode="outlined"
+              style={styles.button}
+            >
+              Cancel
+            </Button>
 
-          <Button
-            onPress={this.saveExpense}
-            mode="contained"
-            style={styles.button}
-          >
-            Save
-          </Button>
+            <Button
+              onPress={this.saveExpense}
+              mode="contained"
+              style={styles.button}
+            >
+              Save
+            </Button>
+          </View>
         </View>
       );
     } else {
@@ -183,7 +185,7 @@ class ExpenseDetail extends React.Component {
             {this.categories}
           </Picker>
         </ScrollView>
-
+        
         {this.buttons()}
       </View>
     );
@@ -214,6 +216,10 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.accentColor,
     borderTopWidth: StyleSheet.hairlineWidth,
     justifyContent: "center"
+  },
+  horizontalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-evenly"
   }
 });
 
