@@ -3,6 +3,7 @@ import { View, ScrollView, StyleSheet, Picker } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import DatePicker from "./DatePicker";
 import Colors from "../constants/Colors";
+import currency from "currency.js";
 
 export default class ExpenseInput extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class ExpenseInput extends React.Component {
     let theDate = new Date();
     this.state = {
       description: "",
-      amount: 0,
+      amount: currency(0).format(),
       date: theDate,
       category: this.props.categories[0].id
     };

@@ -1,5 +1,6 @@
 import React from "react";
 import { DataTable } from "react-native-paper";
+import currency from "currency.js";
 
 convertTimestampToDate = timestamp => {
   const recordDate = new Date();
@@ -28,7 +29,7 @@ const listExpenses = props => {
             {date.toLocaleDateString("en-US", { timeZone: "UTC" })}
           </DataTable.Cell>
           <DataTable.Cell>{expense.description}</DataTable.Cell>
-          <DataTable.Cell numeric>{expense.amount}</DataTable.Cell>
+          <DataTable.Cell numeric>{currency(expense.amount).format()}</DataTable.Cell>
         </DataTable.Row>
       );
     });

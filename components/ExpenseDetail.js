@@ -6,6 +6,7 @@ import { TextInput, Button } from "react-native-paper";
 import DatePicker from "./DatePicker";
 import { updateExpense, deleteExpense } from "../actions/expenseActions";
 import Colors from "../constants/Colors";
+import currency from "currency.js";
 
 class ExpenseDetail extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class ExpenseDetail extends React.Component {
       persisted: expense,
       id: expense.id,
       description: expense.description,
-      amount: expense.amount,
+      amount: currency(expense.amount).format(),
       date: this.convertTimestampToDate(expense.date),
       category: expense.category_id,
       editing: false
