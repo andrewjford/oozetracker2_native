@@ -9,9 +9,17 @@ class ExpensesByCategory extends React.Component {
     super(props);
 
     this.state = {
-      expenses: props.navigation.getParam("expenses", null)
+      expenses: props.navigation.getParam("expenses", null),
+      title: props.navigation.getParam("title", null) || null,
     };
   }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.state.params.title,
+      headerTintColor: Colors.tintColor
+    }
+  };
 
   render() {
     return (

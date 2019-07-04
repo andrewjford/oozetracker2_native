@@ -45,7 +45,8 @@ class HomeScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: "Recent Expenses"
+    title: "Recent Expenses",
+    headerTintColor: Colors.tintColor
   };
 
   navigateToNewExpense = () => {

@@ -46,7 +46,8 @@ class MonthlyScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: "Monthly Summary"
+    title: "Monthly Summary",
+    headerTintColor: Colors.tintColor
   };
 
   componentDidMount() {
@@ -66,7 +67,8 @@ class MonthlyScreen extends React.Component {
         }
       );
       this.props.navigation.navigate("ExpensesByMonth", {
-        expenses: filteredExpenses
+        expenses: filteredExpenses,
+        title: `${this.state.monthNames[this.state.date.getMonth()]} ${this.state.date.getFullYear()} - ${rowData.name}`
       });
     });
   };
@@ -200,8 +202,8 @@ class MonthlyScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.headerText}>
-          {this.state.date.getFullYear()}{" "}
-          {this.state.monthNames[this.state.date.getMonth()]}
+          {this.state.monthNames[this.state.date.getMonth()]}{" "}
+          {this.state.date.getFullYear()}
         </Text>
 
         {this.renderDataTable()}

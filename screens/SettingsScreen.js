@@ -4,6 +4,7 @@ import { List } from "react-native-paper";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+import Colors from "../constants/Colors";
 import { logout } from "../actions/accountActions";
 
 class SettingsScreen extends React.Component {
@@ -14,6 +15,11 @@ class SettingsScreen extends React.Component {
       accountExpanded: true
     };
   }
+
+  static navigationOptions = {
+    title: "Settings",
+    headerTintColor: Colors.tintColor
+  };
 
   handleAccountCollapse = () => {
     this.setState(state => ({ accountExpanded: !state.accountExpanded }));

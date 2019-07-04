@@ -25,7 +25,8 @@ class CategoriesScreen extends React.Component {
   }
 
   static navigationOptions = {
-    title: "Categories"
+    title: "Categories",
+    headerTintColor: Colors.tintColor
   };
 
   handleAddPress = () => {
