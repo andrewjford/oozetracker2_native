@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Cash Tracker",
-    "slug": "oozetracker2_native",
+    "slug": "cashtracker_native",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [

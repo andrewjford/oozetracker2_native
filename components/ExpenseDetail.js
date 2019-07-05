@@ -167,6 +167,7 @@ class ExpenseDetail extends React.Component {
               value={this.state.description}
               onChangeText={this.handleDescriptionChange}
               mode="outlined"
+              selectionColor={Colors.secondaryColor}
             />
             <TextInput
               style={styles.inputContainerStyle}
@@ -175,6 +176,7 @@ class ExpenseDetail extends React.Component {
               value={this.state.amount}
               onChangeText={this.handleAmountChange}
               mode="outlined"
+              selectionColor={Colors.secondaryColor}
             />
           </View>
 
