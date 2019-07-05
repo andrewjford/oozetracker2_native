@@ -26,7 +26,7 @@ const listExpenses = props => {
           onPress={() => props.navigation.navigate("Expense", { expense })}
         >
           <DataTable.Cell>
-            {date.toLocaleDateString("en-US", { timeZone: "UTC" })}
+            {date.toLocaleDateString("en-US")}
           </DataTable.Cell>
           <DataTable.Cell>{expense.description}</DataTable.Cell>
           <DataTable.Cell numeric>{currency(expense.amount).format()}</DataTable.Cell>
