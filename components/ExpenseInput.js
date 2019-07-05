@@ -47,9 +47,7 @@ export default class ExpenseInput extends React.Component {
             <DatePicker
               style={styles.inputContainerStyle}
               date={this.state.date}
-              onDateChange={date => {
-                this.setState({ date: date });
-              }}
+              onDateChange={date => this.setState({ date })}
             />
             <TextInput
               style={styles.inputContainerStyle}
@@ -57,6 +55,8 @@ export default class ExpenseInput extends React.Component {
               value={this.state.description}
               selectTextOnFocus={true}
               onChangeText={description => this.setState({ description })}
+              underlineColor={Colors.accentColor}
+              selectionColor={Colors.secondaryColor}
             />
 
             <TextInput
@@ -66,6 +66,8 @@ export default class ExpenseInput extends React.Component {
               value={String(this.state.amount)}
               selectTextOnFocus={true}
               onChangeText={this.handleAmountChange}
+              underlineColor={Colors.accentColor}
+              selectionColor={Colors.secondaryColor}
             />
 
             <Picker

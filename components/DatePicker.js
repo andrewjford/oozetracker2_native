@@ -2,6 +2,7 @@ import React, { Component, createRef } from "react";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { Keyboard, View } from "react-native";
 import { Text, TextInput, TouchableRipple } from "react-native-paper";
+import Colors from "../constants/Colors";
 
 class DatePicker extends Component {
   constructor(props) {
@@ -61,6 +62,8 @@ class DatePicker extends Component {
           render={this.renderTouchText}
           value={value}
           mode={this.props.mode ? this.props.mode : "flat"}
+          underlineColor={Colors.accentColor}
+          selectionColor={Colors.secondaryColor}
         />
         <DateTimePicker
           date={date}

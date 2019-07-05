@@ -18,6 +18,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import accountReducer from "./reducers/accountReducer";
 import expenseReducer from "./reducers/expenseReducer";
 import categoriesReducer from "./reducers/categoriesReducer";
+import Colors from "./constants/Colors";
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -30,8 +31,8 @@ const theme = {
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#388e3c",
-    accent: "#a5d6a7"
+    primary: Colors.tintColor,
+    accent: Colors.accentColor,
   }
 };
 

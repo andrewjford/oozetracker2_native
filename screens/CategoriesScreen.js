@@ -87,7 +87,7 @@ class CategoriesScreen extends React.Component {
             onPress={() => this.handleEdit(category)}
             right={() => (
               <IconButton
-                color="red"
+                color={Colors.secondaryColor}
                 icon="close"
                 onPress={() => this.props.deleteCategory({ id: category.id })}
               />
