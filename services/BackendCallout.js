@@ -8,13 +8,17 @@ export default class BackendCallout extends React.Component {
         Authorization: `Bearer ${token}`
       }
     });
-    const body = response.json();
+    try {
+      const body = await response.json();
 
-    if (response.status !== 200) {
-      throw Error(body.message);
+      if (response.status !== 200) {
+        throw Error(body.message);
+      }
+      return body;
+
+    } catch (error) {
+      throw Error("Bad/No response from server");
     }
-
-    return body;
   };
 
   static postToApi = async (url, { body, token, headers }) => {

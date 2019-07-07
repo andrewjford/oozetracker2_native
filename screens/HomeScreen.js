@@ -17,6 +17,7 @@ import { logout } from "../actions/accountActions";
 import { fetchRecentExpenses } from "../actions/expenseActions";
 import { fetchCategories } from "../actions/categoriesActions";
 import ErrorDisplay from "../components/ErrorDisplay";
+import ErrorHandling from "../services/ErrorHandling";
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -24,7 +25,8 @@ class HomeScreen extends React.Component {
 
     this.state = {
       refreshing: false,
-      isLoading: true
+      isLoading: true,
+      errors: [],
     };
   }
 
@@ -60,6 +62,12 @@ class HomeScreen extends React.Component {
       this.props.fetchRecentExpenses()
     ]).then(() => {
       this.setState({ refreshing: false });
+    })
+    .catch(error => {
+      this.setState({ 
+        refreshing: false,
+        errors: ErrorHandling.toErrorArray(error)
+      });
     });
   };
 
@@ -95,7 +103,7 @@ class HomeScreen extends React.Component {
             />
           }
         >
-          <ErrorDisplay />
+          <ErrorDisplay errors={this.state.errors} />
 
           {this.renderExpenseList()}
         </ScrollView>
