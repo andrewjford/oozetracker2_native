@@ -1,17 +1,20 @@
 import React from "react";
-import { StyleSheet, ActivityIndicator } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import ExpenseInput from "../components/ExpenseInput";
 import { createExpense } from "../actions/expenseActions";
 import Colors from "../constants/Colors";
+import ErrorDisplay from "../components/ErrorDisplay";
+import ErrorHandling from "../services/ErrorHandling";
 
 class NewExpense extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: false,
+      errors: []
     };
   }
 
@@ -32,7 +35,16 @@ class NewExpense extends React.Component {
       .then(() => {
         this.props.navigation.navigate("Home");
       })
-      .catch(error => console.log("error: " + error.message));
+      .catch(error => {
+        this.setState({
+          isLoading: false,
+          errors: ErrorHandling.toErrorArray(error)
+        });
+      });
+  };
+
+  clearErrors = () => {
+    this.setState({ errors: [] });
   };
 
   render() {
@@ -45,12 +57,20 @@ class NewExpense extends React.Component {
         />
       );
     }
+    // need to fix height of error display
     return (
-      <ExpenseInput
-        title={"Create Expense"}
-        categories={this.props.categories}
-        createExpense={this.addExpense}
-      />
+      <View style={styles.container}>
+        <ErrorDisplay
+          style={styles.error}
+          errors={this.state.errors}
+          clearErrors={this.clearErrors}
+        />
+        <ExpenseInput
+          title={"Create Expense"}
+          categories={this.props.categories}
+          createExpense={this.addExpense}
+        />
+      </View>
     );
   }
 }
@@ -79,7 +99,9 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
     backgroundColor: "#fff"
+  },
+  error: {
+    height: 32
   }
 });
