@@ -34,7 +34,6 @@ export default ErrorDisplay;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 4,
     width: "100%",
     justifyContent: "center",
     alignSelf: "center",
