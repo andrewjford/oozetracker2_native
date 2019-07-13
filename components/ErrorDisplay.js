@@ -8,8 +8,16 @@ const ErrorDisplay = props => {
       return (
         <View style={styles.container}>
           <Surface style={styles.surface}>
-            <IconButton icon="error" color="white" style={styles.icon} />
-            <Text style={styles.text}>Error: {props.errors.toString()}</Text>
+            <View style={styles.message}>
+              <IconButton icon="error" color="white" style={styles.icon} />
+              <Text style={styles.text}>Error: {props.errors.toString()}</Text>
+            </View>
+            <IconButton
+              style={styles.closeButton}
+              color="white"
+              icon="close"
+              onPress={props.clearErrors}
+            />
           </Surface>
         </View>
       );
@@ -26,8 +34,7 @@ export default ErrorDisplay;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8,
-    height: 38,
+    padding: 4,
     width: "100%",
     justifyContent: "center",
     alignSelf: "center",
@@ -43,5 +50,16 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 18
+  },
+  message: {
+    flexDirection: "row",
+    flex: 5,
+    alignItems: "center"
+  },
+  closeButton: {
+    flexDirection: "row",
+    flex: 1,
+    alignSelf: "center",
+    justifyContent: "flex-end"
   }
 });

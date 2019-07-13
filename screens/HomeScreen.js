@@ -71,6 +71,10 @@ class HomeScreen extends React.Component {
     });
   };
 
+  clearErrors = () => {
+    this.setState({errors: []});
+  }
+
   renderExpenseList = () => {
     if (this.state.isLoading) {
       return (
@@ -103,7 +107,7 @@ class HomeScreen extends React.Component {
             />
           }
         >
-          <ErrorDisplay errors={this.state.errors} />
+          <ErrorDisplay errors={this.state.errors} clearErrors={this.clearErrors} />
 
           {this.renderExpenseList()}
         </ScrollView>
