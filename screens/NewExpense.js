@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, ActivityIndicator, ScrollView, Picker } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView,
+  Picker
+} from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -80,7 +86,7 @@ class NewExpense extends React.Component {
       date: this.state.date,
       category: this.state.category
     });
-  }
+  };
 
   render() {
     if (this.state.isLoading) {
@@ -136,7 +142,11 @@ class NewExpense extends React.Component {
           </View>
         </ScrollView>
         <View style={styles.buttonContainer}>
-          <Button onPress={this.handleSubmit} mode="contained" style={styles.button}>
+          <Button
+            onPress={this.handleSubmit}
+            mode="contained"
+            style={styles.button}
+          >
             Submit
           </Button>
         </View>
