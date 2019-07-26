@@ -110,7 +110,8 @@ export const getAllMonth = (monthString, targetDate) => {
       `startDate=${lastDayOfMonth.getFullYear()}-${lastDayOfMonth.getMonth() +
         1}-01`,
       `endDate=${lastDayOfMonth.getFullYear()}-${lastDayOfMonth.getMonth() +
-        1}-${lastDayOfMonth.getDate()}`
+        1}-${lastDayOfMonth.getDate()}`,
+        `pageSize=ALL`
     ];
 
     return BackendCallout.getFromApi(
