@@ -7,7 +7,7 @@ import {
 
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
-import NewExpense from "../screens/NewExpense";
+import CreateExpense from "../screens/CreateExpense";
 import MonthlyScreen from "../screens/MonthlyScreen";
 import CategoriesScreen from "../screens/CategoriesScreen";
 import Colors from "../constants/Colors";
@@ -36,7 +36,7 @@ MonthlyStack.navigationOptions = {
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Expense: ExpenseDetail,
-  NewExpense: NewExpense
+  CreateExpense: CreateExpense
 });
 
 HomeStack.navigationOptions = {

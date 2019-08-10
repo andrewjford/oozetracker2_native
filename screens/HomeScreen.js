@@ -13,7 +13,7 @@ import { bindActionCreators } from "redux";
 
 import Colors from "../constants/Colors";
 import ExpenseList from "../components/ExpenseList";
-import { logout } from "../actions/accountActions";
+import { logout, ping } from "../actions/accountActions";
 import { fetchRecentExpenses } from "../actions/expenseActions";
 import { fetchCategories } from "../actions/categoriesActions";
 import ErrorDisplay from "../components/ErrorDisplay";
@@ -26,7 +26,7 @@ class HomeScreen extends React.Component {
     this.state = {
       refreshing: false,
       isLoading: true,
-      errors: [],
+      errors: []
     };
   }
 
@@ -51,8 +51,9 @@ class HomeScreen extends React.Component {
     headerTintColor: Colors.tintColor
   };
 
-  navigateToNewExpense = () => {
-    this.props.navigation.navigate("NewExpense");
+  navigateToCreateExpense = () => {
+    this.props.ping(); // to try to wake up sleeping dyno before new expense insert
+    this.props.navigation.navigate("CreateExpense");
   };
 
   _onRefresh = () => {
@@ -60,20 +61,21 @@ class HomeScreen extends React.Component {
     Promise.all([
       this.props.fetchCategories(),
       this.props.fetchRecentExpenses()
-    ]).then(() => {
-      this.setState({ refreshing: false });
-    })
-    .catch(error => {
-      this.setState({ 
-        refreshing: false,
-        errors: ErrorHandling.toErrorArray(error)
+    ])
+      .then(() => {
+        this.setState({ refreshing: false });
+      })
+      .catch(error => {
+        this.setState({
+          refreshing: false,
+          errors: ErrorHandling.toErrorArray(error)
+        });
       });
-    });
   };
 
   clearErrors = () => {
-    this.setState({errors: []});
-  }
+    this.setState({ errors: [] });
+  };
 
   renderExpenseList = () => {
     if (this.state.isLoading) {
@@ -107,7 +109,10 @@ class HomeScreen extends React.Component {
             />
           }
         >
-          <ErrorDisplay errors={this.state.errors} clearErrors={this.clearErrors} />
+          <ErrorDisplay
+            errors={this.state.errors}
+            clearErrors={this.clearErrors}
+          />
 
           {this.renderExpenseList()}
         </ScrollView>
@@ -115,7 +120,7 @@ class HomeScreen extends React.Component {
           <Button
             mode="contained"
             style={styles.button}
-            onPress={this.navigateToNewExpense}
+            onPress={this.navigateToCreateExpense}
           >
             New Expense
           </Button>
@@ -138,7 +143,8 @@ const mapDispatchToProps = dispatch => {
     {
       logout,
       fetchRecentExpenses,
-      fetchCategories
+      fetchCategories,
+      ping
     },
     dispatch
   );

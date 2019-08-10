@@ -62,7 +62,7 @@ export const setTokenFromLocalStorage = token => {
 
 export const register = form => {
   return (dispatch, getState) => {
-    return BackendCallout.postToApi("/api/v1/register", {
+    return BackendCallout.postToApi(`${API_URL}/api/v1/register`, {
       body: form,
       token: getState().account.token
     }).then(response => {
@@ -76,5 +76,11 @@ export const register = form => {
         payload: { token: response.token }
       });
     });
+  };
+};
+
+export const ping = () => {
+  return dispatch => {
+    return BackendCallout.getFromApi(`${API_URL}/api/v1/ping`);
   };
 };

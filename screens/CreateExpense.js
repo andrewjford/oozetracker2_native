@@ -17,7 +17,7 @@ import Colors from "../constants/Colors";
 import ErrorDisplay from "../components/ErrorDisplay";
 import ErrorHandling from "../services/ErrorHandling";
 
-class NewExpense extends React.Component {
+class CreateExpense extends React.Component {
   constructor(props) {
     super(props);
     const theDate = new Date();
@@ -174,7 +174,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewExpense);
+)(CreateExpense);
 
 const styles = StyleSheet.create({
   container: {
