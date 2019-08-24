@@ -6,7 +6,10 @@ import {
   View,
   AsyncStorage
 } from "react-native";
-import { AppLoading, Asset, Font, Icon } from "expo";
+import { AppLoading } from "expo";
+import { Asset } from "expo-asset";
+import * as Font from "expo-font";
+import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from "./navigation/AppNavigator";
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
 import { Provider as StoreProvider } from "react-redux";
@@ -96,7 +99,7 @@ export default class App extends React.Component {
       Asset.loadAsync([]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font
+        ...Ionicons.font
       })
     ]);
   };
