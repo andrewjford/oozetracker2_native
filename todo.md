@@ -1,8 +1,8 @@
+- register screem
+- profile page ie: password change
 - getAllMonth needs to check cache
 - error handling
-- home screen expense list column headers should stick
-- expense list needs date column
+- home screen expense list column headers should stick - tried unable to get scroll inside datatable
 - check other input screens for keyboard awareness
-- preload close icon?
 Bugs:
 - Error: undefined is not an object (evaluating 't.rows.map')
