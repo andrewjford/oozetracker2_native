@@ -89,11 +89,6 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AuthScreen);
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -116,3 +111,9 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AuthScreen);
+
