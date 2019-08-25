@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
+import Colors from "../constants/Colors";
 
-const SignupForm = () => {
+const SignupForm = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
   function submit() {
-    this.props.register({
+    props.register({
       name,
       email,
       password,
@@ -21,21 +22,21 @@ const SignupForm = () => {
         style={styles.inputContainerStyle}
         label="Name"
         value={name}
-        onChangeText={input => setName({ input })}
+        onChangeText={input => setName(input)}
       />
 
       <TextInput
         style={styles.inputContainerStyle}
         label="Email"
         value={email}
-        onChangeText={input => setEmail({ input })}
+        onChangeText={input => setEmail(input)}
       />
 
       <TextInput
         style={styles.inputContainerStyle}
         label="Password"
         value={password}
-        onChangeText={input => setPassword({ input })}
+        onChangeText={input => setPassword(input)}
         secureTextEntry={true}
       />
 
