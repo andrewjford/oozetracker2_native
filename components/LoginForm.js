@@ -2,6 +2,7 @@ import React from "react";
 
 import { StyleSheet, View } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
+import Colors from "../constants/Colors";
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -16,6 +17,10 @@ export default class LoginForm extends React.Component {
   submit = () => {
     this.props.login(this.state);
   };
+
+  openSignup = () => {
+
+  }
 
   render() {
     return (
@@ -38,6 +43,9 @@ export default class LoginForm extends React.Component {
         <Button mode="contained" onPress={this.submit} style={styles.button}>
           <Text style={styles.buttonContent}>Login</Text>
         </Button>
+        <Button mode="outlined" onPress={this.openSignup} style={styles.button}>
+          <Text style={styles.buttonContentOutline}>Sign Up</Text>
+        </Button>
       </View>
     );
   }
@@ -57,10 +65,15 @@ const styles = StyleSheet.create({
   buttonContent: {
     fontWeight: "600",
     fontSize: 22,
-    color: "white"
+    color: "white",
+  },
+  buttonContentOutline: {
+    fontWeight: "600",
+    fontSize: 22,
+    color: Colors.tintColor,
   },
   inputContainerStyle: {
     margin: 8,
     width: "85%"
-  }
+  },
 });
