@@ -40,9 +40,17 @@ const SignupForm = props => {
         secureTextEntry={true}
       />
 
-      <Button mode="contained" onPress={submit} style={styles.button}>
-        <Text style={styles.buttonContent}>Submit</Text>
-      </Button>
+      <View style={styles.buttonContainer}>
+        <View style={styles.horizontalButtons}>
+          <Button mode="outlined" onPress={props.closeForm} style={styles.button}>
+            <Text style={styles.buttonContentOutline}>Back</Text>
+          </Button>
+          <Button mode="contained" onPress={submit} style={styles.button}>
+            <Text style={styles.buttonContent}>Submit</Text>
+          </Button>
+        </View>
+      </View>
+
     </View>
   );
 };
@@ -55,22 +63,31 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 8,
-    width: "30%",
-    borderRadius: 4
+    width: "40%",
+    borderRadius: 4,
+    alignSelf: "center",
   },
   buttonContent: {
     fontWeight: "600",
-    fontSize: 22,
+    fontSize: 18,
     color: "white"
   },
   buttonContentOutline: {
     fontWeight: "600",
-    fontSize: 22,
+    fontSize: 18,
     color: Colors.tintColor
   },
   inputContainerStyle: {
     margin: 8,
     width: "85%"
+  },
+  buttonContainer: {
+    marginVertical: 8,
+    justifyContent: "center"
+  },
+  horizontalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-evenly"
   }
 });
 

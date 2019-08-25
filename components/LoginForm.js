@@ -24,10 +24,18 @@ export default class LoginForm extends React.Component {
     this.setState({signupFormOpen: true});
   }
 
+  register = (formData) => {
+    console.log(formData)
+  }
+
+  closeSignup = () => {
+    this.setState({signupFormOpen: false});
+  }
+
   render() {
 
     if (this.state.signupFormOpen) {
-      return <SignupForm register={() => {console.log('wut')}} />
+      return <SignupForm register={this.register} closeForm={this.closeSignup} />
     }
     return (
       <View style={styles.container}>
