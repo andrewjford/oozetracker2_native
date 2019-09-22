@@ -83,10 +83,18 @@ class CreateExpense extends React.Component {
     this.addExpense({
       description: this.state.description,
       amount: this.state.amount,
-      date: this.state.date,
+      date: this.convertDateToString(this.state.date),
       category: this.state.category
     });
   };
+
+  convertDateToString = (date) => {
+    let month = date.getMonth() + 1;
+    month = month.toString().length === 1 ? "0" + month : month;
+    let day = date.getDate();
+    day = day.toString().length === 1 ? "0" + day : day;
+    return `${date.getFullYear()}-${month}-${day}`;
+  }
 
   render() {
     if (this.state.isLoading) {
