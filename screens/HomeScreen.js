@@ -52,7 +52,6 @@ class HomeScreen extends React.Component {
   };
 
   navigateToCreateExpense = () => {
-    this.props.ping(); // to try to wake up sleeping dyno before new expense insert
     this.props.navigation.navigate("CreateExpense");
   };
 
