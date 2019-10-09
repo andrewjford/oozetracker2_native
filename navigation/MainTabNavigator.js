@@ -14,6 +14,7 @@ import Colors from "../constants/Colors";
 import ExpenseDetail from "../components/ExpenseDetail";
 import SettingsScreen from "../screens/SettingsScreen";
 import ExpensesByCategory from "../components/ExpensesByCategory";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const MonthlyStack = createStackNavigator({
   Monthly: MonthlyScreen,
@@ -70,7 +71,8 @@ CategoriesStack.navigationOptions = {
 };
 
 const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen
+  Settings: SettingsScreen,
+  Profile: ProfileScreen,
 });
 
 SettingsStack.navigationOptions = {

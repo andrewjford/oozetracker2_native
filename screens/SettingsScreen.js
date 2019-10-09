@@ -31,6 +31,10 @@ class SettingsScreen extends React.Component {
     });
   };
 
+  openProfile = () => {
+    this.props.navigation.navigate("Profile");
+  }
+
   render() {
     return (
       <ScrollView>
@@ -40,7 +44,7 @@ class SettingsScreen extends React.Component {
           onPress={this.handleAccountCollapse}
         >
           <List.Item title="Logout" onPress={this.handleLogout} />
-          <List.Item title="Profile" />
+          <List.Item title="Profile" onPress={this.openProfile}/>
         </List.Accordion>
       </ScrollView>
     );

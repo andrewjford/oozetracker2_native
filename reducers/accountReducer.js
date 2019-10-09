@@ -10,6 +10,13 @@ const accountReducer = (
         ...state,
         token: action.payload.token
       };
+    case "ADD_DETAILS":
+      return {
+        ...state,
+        email: action.payload.email,
+        name: action.payload.name,
+        id: action.payload.id
+      };
     case "REMOVE_TOKEN":
       const { token, ...rest } = state;
       return {
