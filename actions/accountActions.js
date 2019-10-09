@@ -78,9 +78,3 @@ export const register = form => {
     });
   };
 };
-
-export const ping = () => {
-  return dispatch => {
-    return BackendCallout.getFromApi(`${API_URL}/api/v1/ping`);
-  };
-};
