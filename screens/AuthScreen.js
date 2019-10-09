@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import LoginForm from "../components/LoginForm";
-import { login } from "../actions/accountActions";
+import { login, register } from "../actions/accountActions";
 import { fetchRecentExpenses } from "../actions/expenseActions";
 import { fetchCategories } from "../actions/categoriesActions";
 import Colors from "../constants/Colors";
@@ -45,11 +45,28 @@ class AuthScreen extends React.Component {
       });
   };
 
+  register = params => {
+    this.setState({ loading: true });
+
+    this.props
+      .register(params)
+      .then(() => {
+        this.setState({ loading: false });
+        if (this.props.account.token) {
+          this.props.navigation.navigate("Home");
+        }
+      })
+      .catch(error => {
+        this.setState({ loading: false });
+        this.setState({ errors: ErrorHandling.toErrorArray(error) });
+      });
+  };
+
   loginForm = () => {
     if (this.state.loading) {
       return <ActivityIndicator size="large" color={Colors.tintColor} />;
     } else {
-      return <LoginForm login={this.login} />;
+      return <LoginForm login={this.login} register={this.register} />;
     }
   };
 
@@ -83,7 +100,8 @@ const mapDispatchToProps = dispatch => {
     {
       login,
       fetchRecentExpenses,
-      fetchCategories
+      fetchCategories,
+      register
     },
     dispatch
   );
@@ -116,4 +134,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AuthScreen);
-
