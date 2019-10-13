@@ -95,3 +95,19 @@ export const getDetails = () => {
     });
   };
 };
+
+export const updateAccount = updatedAccount => {
+  return (dispatch, getState) => {
+    const account = getState().account;
+    return BackendCallout.putToApi(
+      `${API_URL}/api/v1/accounts/${account.id}`,
+      updatedAccount,
+      account.token
+    ).then(response => {
+      return dispatch({
+        type: "UPDATE_ACCOUNT",
+        payload: response
+      });
+    });
+  };
+};

@@ -22,6 +22,8 @@ const accountReducer = (
         name: action.payload.name,
         id: action.payload.id
       };
+    case "UPDATE_ACCOUNT":
+      return state;
     case "PURGE_ACCOUNT":
       return DEFAULT_STATE;
     default:

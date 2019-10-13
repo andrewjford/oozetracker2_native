@@ -7,15 +7,40 @@ import { bindActionCreators } from "redux";
 import { getDetails } from "../actions/accountActions";
 
 import { AsyncStorage } from "react-native";
+import ChangePasswordForm from "../components/ChangePasswordForm";
 
 class ProfileScreen extends React.Component {
+  state = {
+    showChangePassword: true,
+  }
   componentDidMount() {
     this.props.getDetails();
   }
 
-  showChangePassword = () => {
-    AsyncStorage.removeItem("token");
+  static navigationOptions = {
+    title: "Profile",
+    headerTintColor: Colors.tintColor
   };
+
+  toggleChangePassword = () => {
+    this.setState({showChangePassword: !this.state.showChangePassword});
+  };
+
+  renderChangePassword = () => {
+    if (this.state.showChangePassword) {
+      return <ChangePasswordForm cancel={this.toggleChangePassword}/>
+    }
+
+    return (
+      <View style={styles.buttonContainer}>
+          <View style={styles.horizontalButtons}>
+            <Button mode="contained" onPress={this.toggleChangePassword} style={styles.button}>
+              <Text style={styles.buttonContent}>Change Password</Text>
+            </Button>
+          </View>
+        </View>
+    )
+  }
 
   render() {
     return (
@@ -30,13 +55,7 @@ class ProfileScreen extends React.Component {
             right={() => <Text style={styles.rightText}>{this.props.account.name}</Text>}
           />
         </List.Section>
-        <View style={styles.buttonContainer}>
-          <View style={styles.horizontalButtons}>
-            <Button mode="contained" onPress={this.showChangePassword} style={styles.button}>
-              <Text style={styles.buttonContent}>Change Password</Text>
-            </Button>
-          </View>
-        </View>
+        {this.renderChangePassword()}
       </ScrollView>
     );
   }
@@ -80,7 +99,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   scrollContainer: {
-    height: "85%",
+    height: "100%",
     width: "90%",
     alignSelf: "center"
   }
