@@ -14,7 +14,7 @@ convertTimestampToDate = timestamp => {
   return recordDate;
 };
 
-const listExpenses = props => {
+const ExpenseList = props => {
   const expenses = props.expenseData;
 
   if (expenses) {
@@ -49,4 +49,4 @@ const listExpenses = props => {
   }
 };
 
-export default listExpenses;
+export default ExpenseList;
