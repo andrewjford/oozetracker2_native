@@ -3,7 +3,7 @@ import { ActivityIndicator, AsyncStorage, StatusBar, View } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { setTokenFromLocalStorage } from "../actions/accountActions";
+import { setTokenFromLocalStorage, purgeData } from "../actions/accountActions";
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -21,7 +21,11 @@ class AuthLoadingScreen extends React.Component {
         if (token) {
           this.props.setTokenFromLocalStorage(token);
           return token;
+        } else {
+          this.props.purgeData();
         }
+      } else {
+        this.props.purgeData();
       }
     } catch (error) {
       console.log("error fetching" + error.message);
@@ -46,7 +50,8 @@ class AuthLoadingScreen extends React.Component {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      setTokenFromLocalStorage
+      setTokenFromLocalStorage,
+      purgeData
     },
     dispatch
   );

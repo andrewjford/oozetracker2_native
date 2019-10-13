@@ -13,7 +13,6 @@ import { bindActionCreators } from "redux";
 
 import Colors from "../constants/Colors";
 import ExpenseList from "../components/ExpenseList";
-import { logout } from "../actions/accountActions";
 import { fetchRecentExpenses } from "../actions/expenseActions";
 import { fetchCategories } from "../actions/categoriesActions";
 import ErrorDisplay from "../components/ErrorDisplay";
@@ -140,7 +139,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      logout,
       fetchRecentExpenses,
       fetchCategories
     },

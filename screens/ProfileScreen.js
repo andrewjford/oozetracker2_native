@@ -6,13 +6,15 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getDetails } from "../actions/accountActions";
 
+import { AsyncStorage } from "react-native";
+
 class ProfileScreen extends React.Component {
   componentDidMount() {
     this.props.getDetails();
   }
 
   showChangePassword = () => {
-    console.log("show change paswwrddddd");
+    AsyncStorage.removeItem("token");
   };
 
   render() {

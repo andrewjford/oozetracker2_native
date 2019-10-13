@@ -1,11 +1,11 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native";
 import { List } from "react-native-paper";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Colors from "../constants/Colors";
-import { logout } from "../actions/accountActions";
+import { logout, purgeData } from "../actions/accountActions";
 
 class SettingsScreen extends React.Component {
   constructor(props) {
@@ -26,14 +26,19 @@ class SettingsScreen extends React.Component {
   };
 
   handleLogout = () => {
-    this.props.logout().then(() => {
-      this.props.navigation.navigate("AuthLoading");
-    });
+    this.props
+      .logout()
+      .then(() => {
+        return this.props.purgeData();
+      })
+      .then(() => {
+        this.props.navigation.navigate("AuthLoading");
+      });
   };
 
   openProfile = () => {
     this.props.navigation.navigate("Profile");
-  }
+  };
 
   render() {
     return (
@@ -44,7 +49,7 @@ class SettingsScreen extends React.Component {
           onPress={this.handleAccountCollapse}
         >
           <List.Item title="Logout" onPress={this.handleLogout} />
-          <List.Item title="Profile" onPress={this.openProfile}/>
+          <List.Item title="Profile" onPress={this.openProfile} />
         </List.Accordion>
       </ScrollView>
     );
@@ -54,7 +59,8 @@ class SettingsScreen extends React.Component {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      logout
+      logout,
+      purgeData
     },
     dispatch
   );

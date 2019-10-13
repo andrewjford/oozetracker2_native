@@ -27,31 +27,34 @@ export const login = account => {
 
 export const logout = () => {
   return dispatch => {
+    return Promise.all([
+      AsyncStorage.removeItem("token"),
+      AsyncStorage.removeItem("expiryDate")
+    ]);
+  };
+};
+
+export const purgeData = () => {
+  return dispatch => {
     dispatch({
       type: PURGE,
       key: "cashTrackerPersist",
       result: () => null
     });
-
+  
+    dispatch({
+      type: "PURGE_ACCOUNT"
+    })
+  
     dispatch({
       type: "PURGE_EXPENSES"
     });
-
+  
     dispatch({
       type: "PURGE_CATEGORIES"
     });
-
-    return Promise.all([
-      AsyncStorage.removeItem("token"),
-      AsyncStorage.removeItem("expiryDate")
-    ]).then(() => {
-      return dispatch({
-        type: "REMOVE_TOKEN",
-        payload: null
-      });
-    });
-  };
-};
+  }
+}
 
 export const setTokenFromLocalStorage = token => {
   return {
