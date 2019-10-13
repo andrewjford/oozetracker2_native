@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import Colors from "../constants/Colors";
 import ExpenseList from "./ExpenseList";
@@ -10,7 +10,7 @@ class ExpensesByCategory extends React.Component {
 
     this.state = {
       expenses: props.navigation.getParam("expenses", null),
-      title: props.navigation.getParam("title", null) || null,
+      title: props.navigation.getParam("title", null) || null
     };
   }
 
@@ -18,17 +18,17 @@ class ExpensesByCategory extends React.Component {
     return {
       title: navigation.state.params.title,
       headerTintColor: Colors.tintColor
-    }
+    };
   };
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <ExpenseList
           expenseData={this.state.expenses}
           navigation={this.props.navigation}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
