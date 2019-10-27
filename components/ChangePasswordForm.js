@@ -24,7 +24,7 @@ class ChangePasswordForm extends React.Component {
       newPassword: "",
       confirmPassword: "",
       errors: [],
-      updated: false,
+      updated: false
     };
   }
 
@@ -33,22 +33,57 @@ class ChangePasswordForm extends React.Component {
   };
 
   handleSubmit = () => {
-    this.props.updateAccount(this.state).then(result => {
+    const errors = this.validateForm();
+    if (errors) {
       this.setState({
-        errors: [],
-        updated: true
+        errors
       });
-    })
-    .catch(error => {
-      const parsedError = JSON.parse(error.message);
-      if (!parsedError) {
-        this.setState({ errors: [error.message] });
-      }
+      return;
+    } else {
       this.setState({
-        errors:
-          parsedError.constructor === Array ? parsedError : [parsedError]
+        errors: []
       });
-    });
+    }
+    this.props
+      .updateAccount(this.state)
+      .then(result => {
+        this.setState({
+          errors: [],
+          updated: true
+        });
+        this.props.toggleForm();
+      })
+      .catch(error => {
+        const errors = ErrorHandling.toErrorArray(error);
+
+        this.setState({
+          errors
+        });
+      });
+  };
+
+  validateForm = () => {
+    const errors = [];
+
+    if (this.state.oldPassword === "") {
+      errors.push("Old password must be completed");
+    }
+
+    if (this.state.newPassword === "") {
+      errors.push("New password must be completed");
+    }
+
+    if (this.state.confirmPassword === "") {
+      errors.push("Confirmed password must be completed");
+    }
+
+    if (this.state.newPassword !== this.state.confirmPassword) {
+      errors.push("Confirmed password and new password must be equal");
+    }
+
+    if (this.state.newPassword === this.state.oldPassword) {
+      errors.push("New password must be different from old password");
+    }
   };
 
   render() {
@@ -95,7 +130,7 @@ class ChangePasswordForm extends React.Component {
         <View style={styles.buttonContainer}>
           <View style={styles.horizontalButtons}>
             <Button
-              onPress={this.props.cancel}
+              onPress={this.props.toggleForm}
               mode="outlined"
               style={styles.button}
             >

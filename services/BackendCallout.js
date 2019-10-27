@@ -57,10 +57,11 @@ export default class BackendCallout extends React.Component {
       },
       body: JSON.stringify(body)
     });
+    const jsonResponse = await response.json();
     if (response.status < 200 || response.status > 299) {
-      throw Error(body.message);
+      throw new Error(JSON.stringify(jsonResponse.message));
     }
-    return response.json();
+    return jsonResponse;
   };
 
   static delete = async (url, token) => {

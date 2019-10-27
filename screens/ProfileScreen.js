@@ -28,7 +28,7 @@ class ProfileScreen extends React.Component {
 
   renderChangePassword = () => {
     if (this.state.showChangePassword) {
-      return <ChangePasswordForm cancel={this.toggleChangePassword}/>
+      return <ChangePasswordForm toggleForm={this.toggleChangePassword}/>
     }
 
     return (
