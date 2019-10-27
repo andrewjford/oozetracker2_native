@@ -34,7 +34,7 @@ class ChangePasswordForm extends React.Component {
 
   handleSubmit = () => {
     const errors = this.validateForm();
-    if (errors) {
+    if (errors.length > 0) {
       this.setState({
         errors
       });
@@ -84,6 +84,8 @@ class ChangePasswordForm extends React.Component {
     if (this.state.newPassword === this.state.oldPassword) {
       errors.push("New password must be different from old password");
     }
+
+    return errors;
   };
 
   render() {
