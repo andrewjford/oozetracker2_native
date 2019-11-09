@@ -1,4 +1,6 @@
-const DEFAULT_STATE = {
+import { AccountState } from "../types/accountTypes";
+
+const DEFAULT_STATE: AccountState = {
   token: null,
   email: null,
   name: null,
@@ -8,7 +10,7 @@ const DEFAULT_STATE = {
 const accountReducer = (
   state = DEFAULT_STATE,
   action
-) => {
+): AccountState => {
   switch (action.type) {
     case "SET_TOKEN":
       return {

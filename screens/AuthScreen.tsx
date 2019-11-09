@@ -17,8 +17,29 @@ import Colors from "../constants/Colors";
 import ErrorDisplay from "../components/ErrorDisplay";
 import ErrorHandling from "../services/ErrorHandling";
 import SignupForm from "../components/SignupForm";
+import { NavigationContainerProps } from "react-navigation";
+import { AccountState } from "../types/accountTypes";
 
-class AuthScreen extends React.Component {
+interface DispatchProps {
+  fetchRecentExpenses: Function;
+  fetchCategories: Function;
+  login: Function;
+  register: Function;
+}
+
+interface StateProps {
+  account: AccountState;
+}
+
+interface State {
+  loading: Boolean;
+  errors: String[];
+  signupOpen: Boolean;
+}
+
+type Props = DispatchProps & NavigationContainerProps & StateProps;
+
+class AuthScreen extends React.Component<Props, State> {
   state = {
     loading: null,
     errors: [],
