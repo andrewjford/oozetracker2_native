@@ -72,16 +72,17 @@ class AuthScreen extends React.Component {
     this.setState({ signupOpen: false });
   };
 
+  clearErrors = () => {
+    this.setState({ errors: [] });
+  };
+
   render() {
     const form = () => {
       if (this.state.loading) {
         return <ActivityIndicator size="large" color={Colors.tintColor} />;
       } else if (this.state.signupOpen) {
         return (
-          <SignupForm
-            register={this.register}
-            closeForm={this.closeSignup}
-          />
+          <SignupForm register={this.register} closeForm={this.closeSignup} />
         );
       } else {
         return <LoginForm login={this.login} openSignup={this.openSignup} />;
@@ -98,7 +99,10 @@ class AuthScreen extends React.Component {
               source={require("../assets/images/fullblob.png")}
             />
           </View>
-          <ErrorDisplay errors={this.state.errors} />
+          <ErrorDisplay
+            errors={this.state.errors}
+            clearErrors={this.clearErrors}
+          />
         </View>
         <View style={styles.formSection}>{form()}</View>
       </KeyboardAvoidingView>
