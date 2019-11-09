@@ -11,17 +11,26 @@ import { Asset } from "expo-asset";
 import * as Font from "expo-font";
 import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from "./navigation/AppNavigator";
-import { createStore, applyMiddleware, combineReducers, compose } from "redux";
+import { createStore, applyMiddleware, combineReducers, compose, Store } from "redux";
 import { Provider as StoreProvider } from "react-redux";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { Persistor } from "redux-persist/es/types";
 
 import accountReducer from "./reducers/accountReducer";
 import expenseReducer from "./reducers/expenseReducer";
 import categoriesReducer from "./reducers/categoriesReducer";
 import Colors from "./constants/Colors";
+
+interface Props {
+  skipLoadingScreen: Boolean
+}
+
+interface State {
+  isLoadingComplete: Boolean;
+};
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -44,7 +53,10 @@ const persistConfig = {
   storage: AsyncStorage
 };
 
-export default class App extends React.Component {
+export default class App extends React.Component<Props, State> {
+  persistor: Persistor;
+  store: Store;
+
   constructor(props) {
     super(props);
 

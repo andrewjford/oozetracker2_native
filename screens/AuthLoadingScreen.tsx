@@ -1,11 +1,21 @@
 import React from "react";
 import { ActivityIndicator, AsyncStorage, StatusBar, View } from "react-native";
-import { connect } from "react-redux";
+import { connect, DispatchProp } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { setTokenFromLocalStorage, purgeData } from "../actions/accountActions";
+import { NavigationContainerProps } from "react-navigation";
 
-class AuthLoadingScreen extends React.Component {
+interface State {}
+
+interface DispatchProps {
+  setTokenFromLocalStorage: any;
+  purgeData: any;
+}
+
+type Props = NavigationContainerProps & DispatchProps
+
+class AuthLoadingScreen extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.navigateFromToken();
@@ -16,7 +26,7 @@ class AuthLoadingScreen extends React.Component {
       const tokenExpiryDate = JSON.parse(
         await AsyncStorage.getItem("expiryDate")
       );
-      if (tokenExpiryDate && Date.now() < new Date(tokenExpiryDate)) {
+      if (tokenExpiryDate && new Date() < new Date(tokenExpiryDate)) {
         const token = await AsyncStorage.getItem("token");
         if (token) {
           this.props.setTokenFromLocalStorage(token);
