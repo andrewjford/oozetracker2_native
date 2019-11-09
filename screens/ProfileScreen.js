@@ -1,18 +1,18 @@
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { TextInput, Button, Text, List } from "react-native-paper";
+import { Button, Text, List } from "react-native-paper";
 import Colors from "../constants/Colors";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getDetails } from "../actions/accountActions";
 
-import { AsyncStorage } from "react-native";
 import ChangePasswordForm from "../components/ChangePasswordForm";
 
 class ProfileScreen extends React.Component {
   state = {
-    showChangePassword: true,
-  }
+    showChangePassword: false,
+    passwordUpdated: false
+  };
   componentDidMount() {
     this.props.getDetails();
   }
@@ -23,24 +23,57 @@ class ProfileScreen extends React.Component {
   };
 
   toggleChangePassword = () => {
-    this.setState({showChangePassword: !this.state.showChangePassword});
+    this.setState({ showChangePassword: !this.state.showChangePassword });
+  };
+
+  passwordUpdated = () => {
+    this.setState({
+      showChangePassword: false,
+      passwordUpdated: true
+    });
+
+    setTimeout(() => {
+      this.setState({
+        passwordUpdated: false
+      });
+    }, 3000);
   };
 
   renderChangePassword = () => {
     if (this.state.showChangePassword) {
-      return <ChangePasswordForm toggleForm={this.toggleChangePassword}/>
+      return (
+        <ChangePasswordForm
+          toggleForm={this.toggleChangePassword}
+          passwordUpdated={this.passwordUpdated}
+        />
+      );
     }
 
     return (
       <View style={styles.buttonContainer}>
-          <View style={styles.horizontalButtons}>
-            <Button mode="contained" onPress={this.toggleChangePassword} style={styles.button}>
-              <Text style={styles.buttonContent}>Change Password</Text>
-            </Button>
-          </View>
+        {this.renderSuccessMessage()}
+        <View style={styles.horizontalButtons}>
+          <Button
+            mode="contained"
+            onPress={this.toggleChangePassword}
+            style={styles.button}
+          >
+            <Text style={styles.buttonContent}>Change Password</Text>
+          </Button>
         </View>
-    )
-  }
+      </View>
+    );
+  };
+
+  renderSuccessMessage = () => {
+    if (this.state.passwordUpdated) {
+      return (
+        <Text style={styles.subtleText}>Password Updated Successfully!</Text>
+      );
+    } else {
+      return null;
+    }
+  };
 
   render() {
     return (
@@ -48,11 +81,15 @@ class ProfileScreen extends React.Component {
         <List.Section>
           <List.Item
             title="Email"
-            right={() => <Text style={styles.rightText}>{this.props.account.email}</Text>}
+            right={() => (
+              <Text style={styles.rightText}>{this.props.account.email}</Text>
+            )}
           />
           <List.Item
             title="Name"
-            right={() => <Text style={styles.rightText}>{this.props.account.name}</Text>}
+            right={() => (
+              <Text style={styles.rightText}>{this.props.account.name}</Text>
+            )}
           />
         </List.Section>
         {this.renderChangePassword()}
@@ -102,6 +139,10 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "90%",
     alignSelf: "center"
+  },
+  subtleText: {
+    alignSelf: "center",
+    color: "gray"
   }
 });
 

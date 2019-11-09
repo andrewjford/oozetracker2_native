@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  ScrollView,
-  Picker
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -51,7 +45,7 @@ class ChangePasswordForm extends React.Component {
           errors: [],
           updated: true
         });
-        this.props.toggleForm();
+        this.props.passwordUpdated();
       })
       .catch(error => {
         const errors = ErrorHandling.toErrorArray(error);
