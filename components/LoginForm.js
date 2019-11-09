@@ -3,7 +3,6 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import Colors from "../constants/Colors";
-import SignupForm from "./SignupForm";
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -11,8 +10,6 @@ export default class LoginForm extends React.Component {
     this.state = {
       email: "",
       password: "",
-      loading: null,
-      signupFormOpen: false,
     };
   }
 
@@ -21,18 +18,10 @@ export default class LoginForm extends React.Component {
   };
 
   openSignup = () => {
-    this.setState({signupFormOpen: true});
-  }
-
-  closeSignup = () => {
-    this.setState({signupFormOpen: false});
+    this.props.openSignup();
   }
 
   render() {
-
-    if (this.state.signupFormOpen) {
-      return <SignupForm register={this.props.register} closeForm={this.closeSignup} />
-    }
     return (
       <View style={styles.container}>
         <TextInput

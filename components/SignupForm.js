@@ -13,7 +13,7 @@ const SignupForm = props => {
       name,
       email,
       password,
-    })
+    });
   }
 
   return (

@@ -16,11 +16,13 @@ import { fetchCategories } from "../actions/categoriesActions";
 import Colors from "../constants/Colors";
 import ErrorDisplay from "../components/ErrorDisplay";
 import ErrorHandling from "../services/ErrorHandling";
+import SignupForm from "../components/SignupForm";
 
 class AuthScreen extends React.Component {
   state = {
     loading: null,
-    errors: []
+    errors: [],
+    signupOpen: false
   };
 
   static navigationOptions = {
@@ -48,7 +50,7 @@ class AuthScreen extends React.Component {
   register = params => {
     this.setState({ loading: true });
 
-    this.props
+    return this.props
       .register(params)
       .then(() => {
         this.setState({ loading: false });
@@ -62,15 +64,30 @@ class AuthScreen extends React.Component {
       });
   };
 
-  loginForm = () => {
-    if (this.state.loading) {
-      return <ActivityIndicator size="large" color={Colors.tintColor} />;
-    } else {
-      return <LoginForm login={this.login} register={this.register} />;
-    }
+  openSignup = () => {
+    this.setState({ signupOpen: true });
+  };
+
+  closeSignup = () => {
+    this.setState({ signupOpen: false });
   };
 
   render() {
+    const form = () => {
+      if (this.state.loading) {
+        return <ActivityIndicator size="large" color={Colors.tintColor} />;
+      } else if (this.state.signupOpen) {
+        return (
+          <SignupForm
+            register={this.register}
+            closeForm={this.closeSignup}
+          />
+        );
+      } else {
+        return <LoginForm login={this.login} openSignup={this.openSignup} />;
+      }
+    };
+
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.topSection}>
@@ -83,7 +100,7 @@ class AuthScreen extends React.Component {
           </View>
           <ErrorDisplay errors={this.state.errors} />
         </View>
-        <View style={styles.formSection}>{this.loginForm()}</View>
+        <View style={styles.formSection}>{form()}</View>
       </KeyboardAvoidingView>
     );
   }
