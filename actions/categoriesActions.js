@@ -1,9 +1,9 @@
-import BackendCallout from "../services/BackendCallout";
+import { getFromApi, postToApi, putToApi, deleteFromApi } from "../services/backendCallout";
 import { API_URL } from "../constants/Config";
 
 export const fetchCategories = () => {
   return (dispatch, getState) => {
-    return BackendCallout.getFromApi(
+    return getFromApi(
       `${API_URL}/api/v1/categories`,
       getState().account.token
     ).then(data => {
@@ -17,7 +17,7 @@ export const fetchCategories = () => {
 
 export const createCategory = newCategory => {
   return (dispatch, getState) => {
-    BackendCallout.postToApi(`${API_URL}/api/v1/categories`, {
+    postToApi(`${API_URL}/api/v1/categories`, {
       body: newCategory,
       token: getState().account.token
     }).then(response => {
@@ -31,7 +31,7 @@ export const createCategory = newCategory => {
 
 export const updateCategory = categoryToUpdate => {
   return (dispatch, getState) => {
-    return BackendCallout.putToApi(
+    return putToApi(
       `${API_URL}/api/v1/categories/${categoryToUpdate.id}`,
       categoryToUpdate,
       getState().account.token
@@ -46,7 +46,7 @@ export const updateCategory = categoryToUpdate => {
 
 export const deleteCategory = categoryToDelete => {
   return (dispatch, getState) => {
-    BackendCallout.delete(
+    deleteFromApi(
       `${API_URL}/api/v1/categories/${categoryToDelete.id}`,
       getState().account.token
     ).then(response => {

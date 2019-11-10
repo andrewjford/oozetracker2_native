@@ -1,16 +1,16 @@
 import { AsyncStorage } from "react-native";
 
-import BackendCallout from "../services/BackendCallout";
 import { API_URL } from "../constants/Config";
 import { PURGE } from "redux-persist";
 import { ThunkAction } from "redux-thunk";
-import { SetTokenAction, ActionTypes, StandardThunkResult, StandardThunkDispatch, ThunkFuncPromise } from "../types/accountTypes";
+import { SetTokenAction, ActionTypes, StandardThunkDispatch, ThunkFuncPromise } from "../types/accountTypes";
 import { LoginFormState } from "../types/formTypes";
 import { Action } from "redux";
+import { postToApi, getFromApi, putToApi } from "../services/backendCallout";
 
 export const login = (account: LoginFormState): ThunkFuncPromise => {
-  return (dispatch: StandardThunkDispatch): Promise<StandardThunkDispatch> => {
-    return BackendCallout.postToApi(`${API_URL}/api/v1/login`, {
+  return (dispatch): Promise<StandardThunkDispatch> => {
+    return postToApi(`${API_URL}/api/v1/login`, {
       body: account,
       headers: {
         "Client-Type": "mobile"
@@ -71,7 +71,7 @@ export const setTokenFromLocalStorage = (
 
 export const register = (form): ThunkFuncPromise => {
   return (dispatch, getState) => {
-    return BackendCallout.postToApi(`${API_URL}/api/v1/register`, {
+    return postToApi(`${API_URL}/api/v1/register`, {
       body: form,
       token: getState().account.token
     }).then(response => {
@@ -90,7 +90,7 @@ export const register = (form): ThunkFuncPromise => {
 
 export const getDetails = (): ThunkFuncPromise => {
   return (dispatch, getState) => {
-    return BackendCallout.getFromApi(
+    return getFromApi(
       `${API_URL}/api/v1/account`,
       getState().account.token
     ).then(response => {
@@ -105,7 +105,7 @@ export const getDetails = (): ThunkFuncPromise => {
 export const updateAccount = (updatedAccount): ThunkFuncPromise => {
   return (dispatch, getState) => {
     const account = getState().account;
-    return BackendCallout.putToApi(
+    return putToApi(
       `${API_URL}/api/v1/accounts/${account.id}`,
       updatedAccount,
       account.token

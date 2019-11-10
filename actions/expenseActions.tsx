@@ -1,10 +1,10 @@
-import BackendCallout from "../services/BackendCallout";
 import { API_URL } from "../constants/Config";
 import currency from "currency.js";
+import { getFromApi, postToApi, putToApi, deleteFromApi } from "../services/backendCallout";
 
 export const fetchRecentExpenses = () => {
   return (dispatch, getState) => {
-    return BackendCallout.getFromApi(
+    return getFromApi(
       `${API_URL}/api/v1/reports/recent`,
       getState().account.token
     ).then(data => {
@@ -18,7 +18,7 @@ export const fetchRecentExpenses = () => {
 
 export const createExpense = newExpense => {
   return (dispatch, getState) => {
-    return BackendCallout.postToApi(`${API_URL}/api/v1/expenses`, {
+    return postToApi(`${API_URL}/api/v1/expenses`, {
       body: newExpense,
       token: getState().account.token
     }).then(responseExpense => {
@@ -32,7 +32,7 @@ export const createExpense = newExpense => {
 
 export const updateExpense = expense => {
   return (dispatch, getState) => {
-    return BackendCallout.putToApi(
+    return putToApi(
       `${API_URL}/api/v1/expenses/${expense.id}`,
       expense,
       getState().account.token
@@ -47,7 +47,7 @@ export const updateExpense = expense => {
 
 export const getExpense = id => {
   return (dispatch, getState) => {
-    BackendCallout.getFromApi(
+    getFromApi(
       `${API_URL}/api/v1/expenses/` + id,
       getState().account.token
     ).then(expense => {
@@ -61,7 +61,7 @@ export const getExpense = id => {
 
 export const deleteExpense = id => {
   return (dispatch, getState) => {
-    return BackendCallout.delete(
+    return deleteFromApi(
       `${API_URL}/api/v1/expenses/` + id,
       getState().account.token
     ).then(response => {
@@ -75,7 +75,7 @@ export const deleteExpense = id => {
 
 export const getMonthly = monthObject => {
   return (dispatch, getState) => {
-    return BackendCallout.postToApi(`${API_URL}/api/v1/reports/monthly`, {
+    return postToApi(`${API_URL}/api/v1/reports/monthly`, {
       body: monthObject,
       token: getState().account.token
     }).then(report => {
@@ -114,7 +114,7 @@ export const getAllMonth = (monthString, targetDate) => {
         `pageSize=ALL`
     ];
 
-    return BackendCallout.getFromApi(
+    return getFromApi(
       `${API_URL}/api/v1/expenses/?` + paramsArray.join("&"),
       getState().account.token
     ).then(response => {

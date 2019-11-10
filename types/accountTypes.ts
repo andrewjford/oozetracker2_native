@@ -1,8 +1,8 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { LoginFormState } from "./formTypes";
-import { Action, AnyAction } from "redux";
+import { Action } from "redux";
 
-export type ThunkFuncPromise = StandardThunkResult<Promise<StandardThunkDispatch>>;
+export type ThunkFuncPromise = (dispatch, getState) => Promise<StandardThunkDispatch>;
 export type StandardThunkResult<R> = ThunkAction<R, any, any, Action>;
 export type StandardThunkDispatch = ThunkDispatch<any, any, Action>;
 
@@ -24,7 +24,7 @@ export interface LoginActionCreator {
   (account: LoginFormState): Promise<StandardThunkDispatch>;
 }
 
-export interface SetTokenAction extends Action {
+export interface SetTokenAction {
   type: ActionTypes.SET_TOKEN;
   payload: {
     token: string;
