@@ -4,6 +4,7 @@ import BackendCallout from "../services/BackendCallout";
 import { API_URL } from "../constants/Config";
 import { PURGE } from "redux-persist";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { PromiseAllVoids, SetTokenAction, ActionTypes } from "../types/accountTypes";
 
 export const login = (account): ThunkAction<Promise<void>, {}, {}, any> => {
   return (dispatch: ThunkDispatch<{}, {}, any>): Promise<void> => {
@@ -26,8 +27,8 @@ export const login = (account): ThunkAction<Promise<void>, {}, {}, any> => {
   };
 };
 
-export const logout = () => {
-  return dispatch => {
+export const logout = (): ThunkAction<Promise<[void, void]>, {}, {}, any> => {
+  return (): Promise<[void, void]> => {
     return Promise.all([
       AsyncStorage.removeItem("token"),
       AsyncStorage.removeItem("expiryDate")
@@ -35,8 +36,8 @@ export const logout = () => {
   };
 };
 
-export const purgeData = () => {
-  return dispatch => {
+export const purgeData = (): ThunkAction<void, {}, {}, any> => {
+  return (dispatch): void => {
     dispatch({
       type: PURGE,
       key: "cashTrackerPersist",
@@ -57,9 +58,11 @@ export const purgeData = () => {
   };
 };
 
-export const setTokenFromLocalStorage = token => {
+export const setTokenFromLocalStorage = (
+  token: String
+): SetTokenAction => {
   return {
-    type: "SET_TOKEN",
+    type: ActionTypes.SET_TOKEN,
     payload: { token }
   };
 };
@@ -70,10 +73,10 @@ export const register = form => {
       body: form,
       token: getState().account.token
     }).then(response => {
-      const expiryDate = new Date();
+      const expiryDate: Date = new Date();
       expiryDate.setSeconds(response.tokenExpiration);
       AsyncStorage.setItem("token", response.token);
-      AsyncStorage.setItem("expiryDate", expiryDate);
+      AsyncStorage.setItem("expiryDate", expiryDate.toString());
 
       return dispatch({
         type: "SET_TOKEN",

@@ -5,6 +5,10 @@ export interface AccountState {
   id: String;
 }
 
+export interface PromiseAllVoids {
+  (): Promise<[void, void]>;
+}
+
 export const enum ActionTypes {
   SET_TOKEN = "SET_TOKEN",
   ADD_DETAILS = "ADD_DETAILS",
