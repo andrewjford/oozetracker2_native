@@ -18,12 +18,12 @@ import ErrorDisplay from "../components/ErrorDisplay";
 import ErrorHandling from "../services/ErrorHandling";
 import SignupForm from "../components/SignupForm";
 import { NavigationContainerProps } from "react-navigation";
-import { AccountState } from "../types/accountTypes";
+import { AccountState, LoginActionCreator } from "../types/accountTypes";
 
 interface DispatchProps {
   fetchRecentExpenses: Function;
   fetchCategories: Function;
-  login: Function;
+  login: LoginActionCreator;
   register: Function;
 }
 
@@ -32,9 +32,9 @@ interface StateProps {
 }
 
 interface State {
-  loading: Boolean;
-  errors: String[];
-  signupOpen: Boolean;
+  loading: boolean;
+  errors: string[];
+  signupOpen: boolean;
 }
 
 type Props = DispatchProps & NavigationContainerProps & StateProps;

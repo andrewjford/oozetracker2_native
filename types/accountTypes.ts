@@ -1,12 +1,15 @@
-export interface AccountState {
-  token: String;
-  email: String;
-  name: String;
-  id: String;
-}
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { LoginFormState } from "./formTypes";
+import { Action, AnyAction } from "redux";
 
-export interface PromiseAllVoids {
-  (): Promise<[void, void]>;
+export type LoginThunkResult<R> = ThunkAction<R, any, any, Action>;
+export type LoginThunkDispatch = ThunkDispatch<any, any, Action>;
+
+export interface AccountState {
+  token: string;
+  email: string;
+  name: string;
+  id: string;
 }
 
 export const enum ActionTypes {
@@ -16,28 +19,32 @@ export const enum ActionTypes {
   PURGE_ACCOUNT = "PURGE_ACCOUNT"
 }
 
-export interface SetTokenAction {
+export interface LoginActionCreator {
+  (account: LoginFormState): Promise<LoginThunkDispatch>;
+}
+
+export interface SetTokenAction extends Action {
   type: ActionTypes.SET_TOKEN;
   payload: {
-    token: String;
+    token: string;
   };
 }
 
-export interface AddDetailsAction {
+export interface AddDetailsAction extends Action {
   type: ActionTypes.ADD_DETAILS;
   payload: {
-    email: String;
-    name: String;
-    id: String;
+    email: string;
+    name: string;
+    id: string;
   };
 }
 
-export interface UpdateAccountAction {
+export interface UpdateAccountAction extends Action {
   type: ActionTypes.UPDATE_ACCOUNT;
   payload: any;
 }
 
-export interface PurgeAccountAction {
+export interface PurgeAccountAction extends Action {
   type: ActionTypes.PURGE_ACCOUNT;
 }
 

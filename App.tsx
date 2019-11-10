@@ -25,11 +25,11 @@ import categoriesReducer from "./reducers/categoriesReducer";
 import Colors from "./constants/Colors";
 
 interface Props {
-  skipLoadingScreen: Boolean
+  skipLoadingScreen: boolean
 }
 
 interface State {
-  isLoadingComplete: Boolean;
+  isLoadingComplete: boolean;
 };
 
 const rootReducer = combineReducers({

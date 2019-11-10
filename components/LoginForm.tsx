@@ -3,8 +3,16 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import Colors from "../constants/Colors";
+import { LoginFormState } from "../types/formTypes";
 
-export default class LoginForm extends React.Component {
+interface DispatchProps {
+  login: any;
+  openSignup: any;
+}
+
+type Props = DispatchProps;
+
+export default class LoginForm extends React.Component<Props, LoginFormState> {
   constructor(props) {
     super(props);
     this.state = {

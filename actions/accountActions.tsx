@@ -3,11 +3,12 @@ import { AsyncStorage } from "react-native";
 import BackendCallout from "../services/BackendCallout";
 import { API_URL } from "../constants/Config";
 import { PURGE } from "redux-persist";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { PromiseAllVoids, SetTokenAction, ActionTypes } from "../types/accountTypes";
+import { ThunkAction } from "redux-thunk";
+import { SetTokenAction, ActionTypes, LoginThunkResult, LoginThunkDispatch } from "../types/accountTypes";
+import { LoginFormState } from "../types/formTypes";
 
-export const login = (account): ThunkAction<Promise<void>, {}, {}, any> => {
-  return (dispatch: ThunkDispatch<{}, {}, any>): Promise<void> => {
+export const login = (account: LoginFormState): LoginThunkResult<Promise<LoginThunkDispatch>> => {
+  return (dispatch: LoginThunkDispatch): Promise<LoginThunkDispatch> => {
     return BackendCallout.postToApi(`${API_URL}/api/v1/login`, {
       body: account,
       headers: {
@@ -20,7 +21,7 @@ export const login = (account): ThunkAction<Promise<void>, {}, {}, any> => {
       AsyncStorage.setItem("expiryDate", JSON.stringify(expiryDate));
 
       return dispatch({
-        type: "SET_TOKEN",
+        type: ActionTypes.SET_TOKEN,
         payload: { token: response.token }
       });
     });
@@ -59,7 +60,7 @@ export const purgeData = (): ThunkAction<void, {}, {}, any> => {
 };
 
 export const setTokenFromLocalStorage = (
-  token: String
+  token: string
 ): SetTokenAction => {
   return {
     type: ActionTypes.SET_TOKEN,
