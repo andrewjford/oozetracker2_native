@@ -12,7 +12,7 @@ export interface AccountState {
   id: string;
 }
 
-export const enum ActionTypes {
+export enum ActionTypes {
   SET_TOKEN = "SET_TOKEN",
   ADD_DETAILS = "ADD_DETAILS",
   UPDATE_ACCOUNT = "UPDATE_ACCOUNT",
