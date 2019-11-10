@@ -9,9 +9,15 @@ import {
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 import * as Font from "expo-font";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import AppNavigator from "./navigation/AppNavigator";
-import { createStore, applyMiddleware, combineReducers, compose, Store } from "redux";
+import {
+  createStore,
+  applyMiddleware,
+  combineReducers,
+  compose,
+  Store
+} from "redux";
 import { Provider as StoreProvider } from "react-redux";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import thunk from "redux-thunk";
@@ -25,12 +31,12 @@ import categoriesReducer from "./reducers/categoriesReducer";
 import Colors from "./constants/Colors";
 
 interface Props {
-  skipLoadingScreen: boolean
+  skipLoadingScreen: boolean;
 }
 
 interface State {
   isLoadingComplete: boolean;
-};
+}
 
 const rootReducer = combineReducers({
   account: accountReducer,
@@ -38,13 +44,15 @@ const rootReducer = combineReducers({
   categories: categoriesReducer
 });
 
+export type AppState = ReturnType<typeof rootReducer>;
+
 const theme = {
   ...DefaultTheme,
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
     primary: Colors.tintColor,
-    accent: Colors.accentColor,
+    accent: Colors.accentColor
   }
 };
 
