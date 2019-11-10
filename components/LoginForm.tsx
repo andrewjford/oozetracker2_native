@@ -6,8 +6,8 @@ import Colors from "../constants/Colors";
 import { LoginFormState } from "../types/formTypes";
 
 interface DispatchProps {
-  login: any;
-  openSignup: any;
+  login: (LoginFormState) => Promise<void>;
+  openSignup: () => void;
 }
 
 type Props = DispatchProps;
@@ -17,7 +17,7 @@ export default class LoginForm extends React.Component<Props, LoginFormState> {
     super(props);
     this.state = {
       email: "",
-      password: "",
+      password: ""
     };
   }
 
@@ -27,7 +27,7 @@ export default class LoginForm extends React.Component<Props, LoginFormState> {
 
   openSignup = () => {
     this.props.openSignup();
-  }
+  };
 
   render() {
     return (
@@ -72,15 +72,15 @@ const styles = StyleSheet.create({
   buttonContent: {
     fontWeight: "600",
     fontSize: 22,
-    color: "white",
+    color: "white"
   },
   buttonContentOutline: {
     fontWeight: "600",
     fontSize: 22,
-    color: Colors.tintColor,
+    color: Colors.tintColor
   },
   inputContainerStyle: {
     margin: 8,
     width: "85%"
-  },
+  }
 });

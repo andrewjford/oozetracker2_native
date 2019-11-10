@@ -4,11 +4,12 @@ import BackendCallout from "../services/BackendCallout";
 import { API_URL } from "../constants/Config";
 import { PURGE } from "redux-persist";
 import { ThunkAction } from "redux-thunk";
-import { SetTokenAction, ActionTypes, LoginThunkResult, LoginThunkDispatch } from "../types/accountTypes";
+import { SetTokenAction, ActionTypes, StandardThunkResult, StandardThunkDispatch, ThunkFuncPromise } from "../types/accountTypes";
 import { LoginFormState } from "../types/formTypes";
+import { Action } from "redux";
 
-export const login = (account: LoginFormState): LoginThunkResult<Promise<LoginThunkDispatch>> => {
-  return (dispatch: LoginThunkDispatch): Promise<LoginThunkDispatch> => {
+export const login = (account: LoginFormState): ThunkFuncPromise => {
+  return (dispatch: StandardThunkDispatch): Promise<StandardThunkDispatch> => {
     return BackendCallout.postToApi(`${API_URL}/api/v1/login`, {
       body: account,
       headers: {
@@ -28,7 +29,7 @@ export const login = (account: LoginFormState): LoginThunkResult<Promise<LoginTh
   };
 };
 
-export const logout = (): ThunkAction<Promise<[void, void]>, {}, {}, any> => {
+export const logout = (): ThunkAction<Promise<[void, void]>, any, any, Action> => {
   return (): Promise<[void, void]> => {
     return Promise.all([
       AsyncStorage.removeItem("token"),
@@ -37,7 +38,7 @@ export const logout = (): ThunkAction<Promise<[void, void]>, {}, {}, any> => {
   };
 };
 
-export const purgeData = (): ThunkAction<void, {}, {}, any> => {
+export const purgeData = (): ThunkAction<void, any, any, Action> => {
   return (dispatch): void => {
     dispatch({
       type: PURGE,
@@ -68,7 +69,7 @@ export const setTokenFromLocalStorage = (
   };
 };
 
-export const register = form => {
+export const register = (form): ThunkFuncPromise => {
   return (dispatch, getState) => {
     return BackendCallout.postToApi(`${API_URL}/api/v1/register`, {
       body: form,
@@ -87,7 +88,7 @@ export const register = form => {
   };
 };
 
-export const getDetails = () => {
+export const getDetails = (): ThunkFuncPromise => {
   return (dispatch, getState) => {
     return BackendCallout.getFromApi(
       `${API_URL}/api/v1/account`,
@@ -101,7 +102,7 @@ export const getDetails = () => {
   };
 };
 
-export const updateAccount = updatedAccount => {
+export const updateAccount = (updatedAccount): ThunkFuncPromise => {
   return (dispatch, getState) => {
     const account = getState().account;
     return BackendCallout.putToApi(
