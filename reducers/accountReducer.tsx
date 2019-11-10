@@ -1,4 +1,4 @@
-import { AccountState } from "../types/accountTypes";
+import { AccountState, AccountAction, ActionTypes } from "../types/accountTypes";
 
 const DEFAULT_STATE: AccountState = {
   token: null,
@@ -8,25 +8,25 @@ const DEFAULT_STATE: AccountState = {
 }
 
 const accountReducer = (
-  state = DEFAULT_STATE,
-  action
+  state: AccountState = DEFAULT_STATE,
+  action: AccountAction
 ): AccountState => {
   switch (action.type) {
-    case "SET_TOKEN":
+    case ActionTypes.SET_TOKEN:
       return {
         ...state,
         token: action.payload.token
       };
-    case "ADD_DETAILS":
+    case ActionTypes.ADD_DETAILS:
       return {
         ...state,
         email: action.payload.email,
         name: action.payload.name,
         id: action.payload.id
       };
-    case "UPDATE_ACCOUNT":
+    case ActionTypes.UPDATE_ACCOUNT:
       return state;
-    case "PURGE_ACCOUNT":
+    case ActionTypes.PURGE_ACCOUNT:
       return DEFAULT_STATE;
     default:
       return state;

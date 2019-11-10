@@ -3,9 +3,10 @@ import { AsyncStorage } from "react-native";
 import BackendCallout from "../services/BackendCallout";
 import { API_URL } from "../constants/Config";
 import { PURGE } from "redux-persist";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-export const login = account => {
-  return dispatch => {
+export const login = (account): ThunkAction<Promise<void>, {}, {}, any> => {
+  return (dispatch: ThunkDispatch<{}, {}, any>): Promise<void> => {
     return BackendCallout.postToApi(`${API_URL}/api/v1/login`, {
       body: account,
       headers: {
@@ -41,20 +42,20 @@ export const purgeData = () => {
       key: "cashTrackerPersist",
       result: () => null
     });
-  
+
     dispatch({
       type: "PURGE_ACCOUNT"
-    })
-  
+    });
+
     dispatch({
       type: "PURGE_EXPENSES"
     });
-  
+
     dispatch({
       type: "PURGE_CATEGORIES"
     });
-  }
-}
+  };
+};
 
 export const setTokenFromLocalStorage = token => {
   return {
