@@ -10,9 +10,10 @@ interface DatePickerState {
 }
 
 interface StandardProps {
-  onDateChange: (date) => {};
+  onDateChange: (Date) => void;
   style: any;
-  mode: any;
+  mode?: any;
+  date: Date;
 }
 
 class DatePicker extends Component<StandardProps, DatePickerState> {
@@ -34,7 +35,7 @@ class DatePicker extends Component<StandardProps, DatePickerState> {
     setTimeout(this._textInput.current._root._handleBlur, 100);
   };
 
-  handleChange = date => {
+  handleChange = (date: Date) => {
     this.handleClose();
     this.setState({ date });
     this.props.onDateChange(date);

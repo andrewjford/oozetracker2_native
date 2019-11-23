@@ -23,7 +23,7 @@ import { AccountState, LoginActionCreator } from "../types/accountTypes";
 interface DispatchProps {
   fetchRecentExpenses: Function;
   fetchCategories: Function;
-  login: LoginActionCreator;
+  login: Function;
   register: Function;
 }
 

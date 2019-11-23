@@ -16,8 +16,18 @@ import { createExpense } from "../actions/expenseActions";
 import Colors from "../constants/Colors";
 import ErrorDisplay from "../components/ErrorDisplay";
 import ErrorHandling from "../services/ErrorHandling";
+import { ExpenseFormState } from "../types/formTypes";
+import { Category } from "../types/categoryTypes";
+import { NavigationContainerProps } from "react-navigation";
 
-class CreateExpense extends React.Component {
+interface DispatchProps {
+  categories: Category[];
+  createExpense: Function;
+}
+
+type Props = DispatchProps & NavigationContainerProps;
+
+class CreateExpense extends React.Component<Props, ExpenseFormState> {
   constructor(props) {
     super(props);
     const theDate = new Date();
@@ -88,13 +98,13 @@ class CreateExpense extends React.Component {
     });
   };
 
-  convertDateToString = (date) => {
+  convertDateToString = date => {
     let month = date.getMonth() + 1;
     month = month.toString().length === 1 ? "0" + month : month;
     let day = date.getDate();
     day = day.toString().length === 1 ? "0" + day : day;
     return `${date.getFullYear()}-${month}-${day}`;
-  }
+  };
 
   render() {
     if (this.state.isLoading) {
@@ -117,7 +127,7 @@ class CreateExpense extends React.Component {
             <DatePicker
               style={styles.inputContainerStyle}
               date={this.state.date}
-              onDateChange={date => this.setState({ date })}
+              onDateChange={(date: Date) => this.setState({ date })}
             />
             <TextInput
               style={styles.inputContainerStyle}
@@ -179,10 +189,7 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateExpense);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateExpense);
 
 const styles = StyleSheet.create({
   container: {

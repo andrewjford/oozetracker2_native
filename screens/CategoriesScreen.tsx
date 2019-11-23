@@ -17,11 +17,28 @@ import {
 } from "../actions/categoriesActions";
 import CategoryForm from "../components/CategoryForm";
 import Colors from "../constants/Colors";
+import { Category } from "../types/categoryTypes";
+import { StandardThunkResult } from "../types/accountTypes";
 
-class CategoriesScreen extends React.Component {
+interface DispatchProps {
+  categories: Category[];
+  updateCategory: (Category) => any;
+  createCategory: (Category) => StandardThunkResult<any>;
+  deleteCategory: (string) => StandardThunkResult<any>;
+}
+
+interface State {
+  input: string;
+  editing?: string;
+  showCategoryForm?: boolean;
+}
+
+class CategoriesScreen extends React.Component<DispatchProps, State> {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      input: ""
+    };
   }
 
   static navigationOptions = {
@@ -154,10 +171,7 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CategoriesScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesScreen);
 
 const styles = StyleSheet.create({
   container: {
