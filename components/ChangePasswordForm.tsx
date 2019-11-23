@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { connect } from "react-redux";
@@ -8,8 +8,23 @@ import { updateAccount } from "../actions/accountActions";
 import Colors from "../constants/Colors";
 import ErrorDisplay from "./ErrorDisplay";
 import ErrorHandling from "../services/ErrorHandling";
+import {
+  ChangePasswordState,
+  UpdateActionCreator
+} from "../types/accountTypes";
 
-class ChangePasswordForm extends React.Component {
+interface PassedProps {
+  passwordUpdated: () => void;
+  toggleForm: () => void;
+}
+
+interface DispatchProps {
+  updateAccount: UpdateActionCreator;
+}
+
+type Props = PassedProps & DispatchProps;
+
+class ChangePasswordForm extends Component<Props, ChangePasswordState> {
   constructor(props) {
     super(props);
 
@@ -156,10 +171,7 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(ChangePasswordForm);
+export default connect(null, mapDispatchToProps)(ChangePasswordForm);
 
 const styles = StyleSheet.create({
   container: {

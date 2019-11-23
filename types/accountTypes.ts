@@ -2,7 +2,10 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { LoginFormState } from "./formTypes";
 import { Action } from "redux";
 
-export type ThunkFuncPromise = (dispatch, getState) => Promise<StandardThunkDispatch>;
+export type ThunkFuncPromise = (
+  dispatch,
+  getState
+) => Promise<StandardThunkDispatch>;
 export type StandardThunkResult<R> = ThunkAction<R, any, any, Action>;
 export type StandardThunkDispatch = ThunkDispatch<any, any, Action>;
 
@@ -21,7 +24,11 @@ export enum ActionTypes {
 }
 
 export interface LoginActionCreator {
-  (account: LoginFormState): Promise<StandardThunkDispatch>;
+  (account: LoginFormState): StandardThunkResult<any>;
+}
+
+export interface UpdateActionCreator {
+  (updatedAccount: ChangePasswordState): StandardThunkResult<any>;
 }
 
 export interface SetTokenAction {
@@ -54,3 +61,11 @@ export type AccountAction =
   | AddDetailsAction
   | UpdateAccountAction
   | PurgeAccountAction;
+
+export interface ChangePasswordState {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+  errors: string[];
+  updated: boolean;
+}

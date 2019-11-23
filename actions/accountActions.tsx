@@ -8,7 +8,9 @@ import {
   ActionTypes,
   StandardThunkDispatch,
   ThunkFuncPromise,
-  UpdateAccountAction
+  UpdateAccountAction,
+  ChangePasswordState,
+  AccountState
 } from "../types/accountTypes";
 import { LoginFormState } from "../types/formTypes";
 import { Action } from "redux";
@@ -111,20 +113,20 @@ export const getDetails = (): ThunkFuncPromise => {
   };
 };
 
-export const updateAccount = (updatedAccount): ThunkFuncPromise => {
+export const updateAccount = (
+  updatedAccount: ChangePasswordState
+): ThunkFuncPromise => {
   return (dispatch, getState): Promise<StandardThunkDispatch> => {
-    const account = getState().account;
+    const account: AccountState = getState().account;
     return putToApi(
       `${API_URL}/api/v1/accounts/${account.id}`,
       updatedAccount,
       account.token
-    ).then(
-      (response): ThunkDispatch<any, any, UpdateAccountAction> => {
-        return dispatch({
-          type: "UPDATE_ACCOUNT",
-          payload: response
-        });
-      }
-    );
+    ).then((response): any => {
+      return dispatch({
+        type: "UPDATE_ACCOUNT",
+        payload: response
+      });
+    });
   };
 };

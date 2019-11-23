@@ -4,7 +4,19 @@ import { Keyboard, View } from "react-native";
 import { Text, TextInput, TouchableRipple } from "react-native-paper";
 import Colors from "../constants/Colors";
 
-class DatePicker extends Component {
+interface DatePickerState {
+  date: Date;
+  open: boolean;
+}
+
+interface StandardProps {
+  onDateChange: (date) => {};
+  style: any;
+  mode: any;
+}
+
+class DatePicker extends Component<StandardProps, DatePickerState> {
+  _textInput: React.RefObject<any>;
   constructor(props) {
     super(props);
     this.state = {

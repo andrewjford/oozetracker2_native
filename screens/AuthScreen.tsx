@@ -172,7 +172,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AuthScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);

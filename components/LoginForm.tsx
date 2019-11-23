@@ -6,7 +6,7 @@ import Colors from "../constants/Colors";
 import { LoginFormState } from "../types/formTypes";
 
 interface DispatchProps {
-  login: (LoginFormState) => Promise<void>;
+  login: (LoginFormState) => void;
   openSignup: () => void;
 }
 
