@@ -1,6 +1,6 @@
-const toErrorArray = error => {
+const toErrorArray = (error: Error): string[] => {
   try {
-    let errorsArray;
+    let errorsArray: string[];
     const parsedError = JSON.parse(error.message);
     if (!parsedError) {
       errorsArray = [error.message];
