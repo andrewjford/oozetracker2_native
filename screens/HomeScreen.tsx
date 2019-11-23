@@ -17,8 +17,26 @@ import { fetchRecentExpenses } from "../actions/expenseActions";
 import { fetchCategories } from "../actions/categoriesActions";
 import ErrorDisplay from "../components/ErrorDisplay";
 import ErrorHandling from "../services/ErrorHandling";
+import { Category } from "../types/categoryTypes";
+import { Expense } from "../types/expenseTypes";
+import { NavigationContainerProps } from "react-navigation";
 
-class HomeScreen extends React.Component {
+interface DispatchProps {
+  categories: Category[];
+  expenses: Expense[];
+  fetchCategories: Function;
+  fetchRecentExpenses: Function;
+}
+
+interface State {
+  isLoading: boolean;
+  errors: string[];
+  refreshing: boolean;
+}
+
+type Props = DispatchProps & NavigationContainerProps;
+
+class HomeScreen extends React.Component<Props, State> {
   constructor(props) {
     super(props);
 
@@ -99,7 +117,6 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView
           style={styles.container}
-          contentContainerStyle={styles.contentContainer}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -146,10 +163,7 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {
