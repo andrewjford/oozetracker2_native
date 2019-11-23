@@ -7,8 +7,14 @@ import { bindActionCreators } from "redux";
 import { getDetails } from "../actions/accountActions";
 
 import ChangePasswordForm from "../components/ChangePasswordForm";
+import { GetDetailsActionCreator, AccountState } from "../types/accountTypes";
 
-class ProfileScreen extends React.Component {
+interface DispatchProps {
+  getDetails: GetDetailsActionCreator;
+  account: AccountState;
+}
+
+class ProfileScreen extends React.Component<DispatchProps> {
   state = {
     showChangePassword: false,
     passwordUpdated: false
@@ -161,7 +167,4 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfileScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

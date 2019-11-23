@@ -1,8 +1,10 @@
 import React from "react";
 import { DataTable } from "react-native-paper";
 import currency from "currency.js";
+import { NavigationContainerProps } from "react-navigation";
+import { Expense } from "../types/expenseTypes";
 
-convertTimestampToDate = timestamp => {
+const convertTimestampToDate = (timestamp: string): Date => {
   const recordDate = new Date();
   const splitDate = timestamp
     .slice(0, 10)
@@ -14,7 +16,13 @@ convertTimestampToDate = timestamp => {
   return recordDate;
 };
 
-const ExpenseList = props => {
+interface PassedProps {
+  expenseData: Expense[];
+}
+
+type Props = PassedProps & NavigationContainerProps;
+
+const ExpenseList = (props: Props) => {
   const expenses = props.expenseData;
 
   if (expenses) {
@@ -25,11 +33,11 @@ const ExpenseList = props => {
           key={expense.id}
           onPress={() => props.navigation.navigate("Expense", { expense })}
         >
-          <DataTable.Cell>
-            {date.toLocaleDateString("en-US")}
-          </DataTable.Cell>
+          <DataTable.Cell>{date.toLocaleDateString("en-US")}</DataTable.Cell>
           <DataTable.Cell>{expense.description}</DataTable.Cell>
-          <DataTable.Cell numeric>{currency(expense.amount).format()}</DataTable.Cell>
+          <DataTable.Cell numeric>
+            {currency(expense.amount).format()}
+          </DataTable.Cell>
         </DataTable.Row>
       );
     });

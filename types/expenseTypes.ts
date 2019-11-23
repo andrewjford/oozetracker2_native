@@ -1,10 +1,10 @@
 export interface ExpenseState {
-  expenses: Expense[],
+  expenses: Expense[];
   monthlies: {
-    currentView: any,
-    monthlies: any[]
-  },
-  byMonth: any
+    currentView: any;
+    monthlies: any[];
+  };
+  byMonth: any;
 }
 
 export interface Expense {
@@ -12,5 +12,5 @@ export interface Expense {
   description: string;
   amount: number;
   category_id: string;
-  date: Date;
+  date: string;
 }

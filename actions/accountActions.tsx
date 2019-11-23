@@ -15,6 +15,7 @@ import {
 import { LoginFormState } from "../types/formTypes";
 import { Action } from "redux";
 import { postToApi, getFromApi, putToApi } from "../services/backendCallout";
+import { SignupFormState } from "../components/SignupForm";
 
 export const login = (account: LoginFormState): ThunkFuncPromise => {
   return (dispatch): Promise<StandardThunkDispatch> => {
@@ -80,7 +81,7 @@ export const setTokenFromLocalStorage = (token: string): SetTokenAction => {
   };
 };
 
-export const register = (form): ThunkFuncPromise => {
+export const register = (form: SignupFormState): ThunkFuncPromise => {
   return (dispatch, getState) => {
     return postToApi(`${API_URL}/api/v1/register`, {
       body: form,

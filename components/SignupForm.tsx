@@ -2,8 +2,20 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import Colors from "../constants/Colors";
+import { RegisterActionCreator } from "../types/accountTypes";
 
-const SignupForm = props => {
+interface Props {
+  closeForm: () => void;
+  register: RegisterActionCreator;
+}
+
+export interface SignupFormState {
+  email: string;
+  password: string;
+  name: string;
+}
+
+const SignupForm = (props: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -12,7 +24,7 @@ const SignupForm = props => {
     props.register({
       name,
       email,
-      password,
+      password
     });
   }
 
@@ -42,7 +54,11 @@ const SignupForm = props => {
 
       <View style={styles.buttonContainer}>
         <View style={styles.horizontalButtons}>
-          <Button mode="outlined" onPress={props.closeForm} style={styles.button}>
+          <Button
+            mode="outlined"
+            onPress={props.closeForm}
+            style={styles.button}
+          >
             <Text style={styles.buttonContentOutline}>Back</Text>
           </Button>
           <Button mode="contained" onPress={submit} style={styles.button}>
@@ -50,7 +66,6 @@ const SignupForm = props => {
           </Button>
         </View>
       </View>
-
     </View>
   );
 };
@@ -65,7 +80,7 @@ const styles = StyleSheet.create({
     margin: 8,
     width: "40%",
     borderRadius: 4,
-    alignSelf: "center",
+    alignSelf: "center"
   },
   buttonContent: {
     fontWeight: "600",

@@ -1,6 +1,7 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { LoginFormState } from "./formTypes";
 import { Action } from "redux";
+import { SignupFormState } from "../components/SignupForm";
 
 export type ThunkFuncPromise = (
   dispatch,
@@ -29,6 +30,14 @@ export interface LoginActionCreator {
 
 export interface UpdateActionCreator {
   (updatedAccount: ChangePasswordState): StandardThunkResult<any>;
+}
+
+export interface RegisterActionCreator {
+  (form: SignupFormState): StandardThunkResult<any>;
+}
+
+export interface GetDetailsActionCreator {
+  (): StandardThunkResult<any>;
 }
 
 export interface SetTokenAction {
