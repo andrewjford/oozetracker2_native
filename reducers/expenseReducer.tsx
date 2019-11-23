@@ -9,7 +9,10 @@ const defaultState: ExpenseState = {
   byMonth: {}
 };
 
-const expenseReducer = (state: ExpenseState = defaultState, action) => {
+const expenseReducer = (
+  state: ExpenseState = defaultState,
+  action
+): ExpenseState => {
   switch (action.type) {
     case "FETCH_RECENT_EXPENSES":
       return {

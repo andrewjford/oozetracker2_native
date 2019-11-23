@@ -29,7 +29,7 @@ interface DispatchProps {
 
 interface State {
   input: string;
-  editing?: string;
+  existingId?: number;
   showCategoryForm?: boolean;
 }
 
@@ -52,7 +52,7 @@ class CategoriesScreen extends React.Component<DispatchProps, State> {
 
   handleEdit = category => {
     this.setState({
-      editing: category.id,
+      existingId: category.id,
       input: category.name
     });
   };
@@ -60,12 +60,12 @@ class CategoriesScreen extends React.Component<DispatchProps, State> {
   handleUpdate = () => {
     this.props
       .updateCategory({
-        id: this.state.editing,
+        id: this.state.existingId,
         name: this.state.input
       })
       .then(() => {
         this.setState({
-          editing: null,
+          existingId: null,
           input: null
         });
       });
@@ -85,7 +85,7 @@ class CategoriesScreen extends React.Component<DispatchProps, State> {
       return <Text>Add some categories!</Text>;
     }
     return this.props.categories.map(category => {
-      if (this.state.editing && this.state.editing === category.id) {
+      if (this.state.existingId && this.state.existingId === category.id) {
         return (
           <View key={category.id}>
             <TextInput

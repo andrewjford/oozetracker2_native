@@ -38,7 +38,7 @@ class CreateExpense extends React.Component<Props, ExpenseFormState> {
       description: "",
       amount: currency(0).format(),
       date: theDate,
-      category: this.props.categories[0].id
+      categoryId: this.props.categories[0].id
     };
   }
 
@@ -86,7 +86,7 @@ class CreateExpense extends React.Component<Props, ExpenseFormState> {
   };
 
   handleCategoryChange = newcategory => {
-    this.setState({ category: newcategory });
+    this.setState({ categoryId: newcategory });
   };
 
   handleSubmit = () => {
@@ -94,7 +94,7 @@ class CreateExpense extends React.Component<Props, ExpenseFormState> {
       description: this.state.description,
       amount: this.state.amount,
       date: this.convertDateToString(this.state.date),
-      category: this.state.category
+      category: this.state.categoryId
     });
   };
 
@@ -151,7 +151,7 @@ class CreateExpense extends React.Component<Props, ExpenseFormState> {
             />
 
             <Picker
-              selectedValue={this.state.category}
+              selectedValue={this.state.categoryId}
               style={styles.inputContainerStyle}
               onValueChange={this.handleCategoryChange}
             >

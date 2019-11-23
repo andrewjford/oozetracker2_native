@@ -8,7 +8,7 @@ export interface LoginFormState {
 export interface ExpenseFormState {
   description: string;
   date: Date;
-  category: string;
+  categoryId: number;
   amount: string;
   errors: string[];
   isLoading: boolean;

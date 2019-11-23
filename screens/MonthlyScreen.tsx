@@ -18,8 +18,33 @@ import {
   getAllMonth
 } from "../actions/expenseActions";
 import Colors from "../constants/Colors";
+import { NavigationContainerProps } from "react-navigation";
+import {
+  Expense,
+  MonthlyExpenseSummary,
+  MonthlyLineItem
+} from "../types/expenseTypes";
+import { rootState } from "../types/generalTypes";
 
-class MonthlyScreen extends React.Component {
+interface State {
+  date: Date;
+  monthNames: string[];
+  isRefreshing: boolean;
+  isLoading: boolean;
+}
+
+interface DispatchProps {
+  byMonth: { [key: string]: Expense[] };
+  monthlyView: MonthlyExpenseSummary;
+  monthlies: MonthlyExpenseSummary[];
+  getMonthly: Function;
+  changeMonthlyView: Function;
+  getAllMonth: Function;
+}
+
+type Props = DispatchProps & NavigationContainerProps;
+
+class MonthlyScreen extends React.Component<Props, State> {
   constructor(props) {
     super(props);
 
@@ -39,7 +64,6 @@ class MonthlyScreen extends React.Component {
         "November",
         "December"
       ],
-      rotate: false,
       isRefreshing: false,
       isLoading: false
     };
@@ -58,7 +82,7 @@ class MonthlyScreen extends React.Component {
     this.loadMonthly(currentMonthRequest);
   }
 
-  onCategorySelect = rowData => {
+  onCategorySelect = (rowData: MonthlyLineItem) => {
     const monthString = `${this.state.date.getFullYear()}-${this.state.date.getMonth()}`;
     this.getExpensesForMonth(monthString).then(() => {
       const filteredExpenses = this.props.byMonth[monthString].filter(
@@ -68,12 +92,14 @@ class MonthlyScreen extends React.Component {
       );
       this.props.navigation.navigate("ExpensesByMonth", {
         expenses: filteredExpenses,
-        title: `${this.state.monthNames[this.state.date.getMonth()]} ${this.state.date.getFullYear()} - ${rowData.name}`
+        title: `${
+          this.state.monthNames[this.state.date.getMonth()]
+        } ${this.state.date.getFullYear()} - ${rowData.name}`
       });
     });
   };
 
-  getExpensesForMonth = monthString => {
+  getExpensesForMonth = (monthString: string): Promise<any> => {
     return this.props.getAllMonth(monthString, this.state.date);
   };
 
@@ -81,7 +107,7 @@ class MonthlyScreen extends React.Component {
     if (!this.props.monthlyView) {
       return <Text />;
     }
-    return this.props.monthlyView.rows.map(lineItem => {
+    return this.props.monthlyView.rows.map((lineItem: MonthlyLineItem) => {
       return (
         <DataTable.Row
           key={lineItem.id}
@@ -107,7 +133,7 @@ class MonthlyScreen extends React.Component {
     });
   };
 
-  loadMonthly = monthlyObject => {
+  loadMonthly = (monthlyObject: { month: number; year: number }) => {
     this.setState({ isLoading: true });
     const cachedView = this.props.monthlies.find(monthly => {
       return (
@@ -127,11 +153,11 @@ class MonthlyScreen extends React.Component {
   };
 
   handleLeftMonthClick = () => {
-    const date = this.state.date;
+    const date: Date = this.state.date;
     date.setMonth(this.state.date.getMonth() - 1);
     this.setState({ date });
 
-    const currentMonthRequest = {
+    const currentMonthRequest: { month: number; year: number } = {
       month: date.getMonth(),
       year: date.getFullYear()
     };
@@ -139,7 +165,7 @@ class MonthlyScreen extends React.Component {
   };
 
   handleRightMonthClick = () => {
-    const date = this.state.date;
+    const date: Date = this.state.date;
     date.setMonth(this.state.date.getMonth() + 1);
     this.setState({ date });
 
@@ -151,7 +177,7 @@ class MonthlyScreen extends React.Component {
   };
 
   renderDataTable = () => {
-    total = !this.props.monthlyView
+    const total: currency = !this.props.monthlyView
       ? currency(0)
       : this.props.monthlyView.rows.reduce((accum, lineItem) => {
           return accum.add(lineItem.sum);
@@ -229,7 +255,7 @@ class MonthlyScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: rootState) => {
   return {
     monthlyView: state.expenses.monthlies.currentView,
     monthlies: state.expenses.monthlies.monthlies,
@@ -248,10 +274,7 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MonthlyScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MonthlyScreen);
 
 const styles = StyleSheet.create({
   container: {

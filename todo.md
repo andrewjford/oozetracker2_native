@@ -1,5 +1,6 @@
 - fix your error handling from backend to front, weird json parsing going on
 - intro typescript
+- addcategory UI is messed up
 - getMonthly uses post request??
 - getAllMonth needs to check cache
 - error handling
