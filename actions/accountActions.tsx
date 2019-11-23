@@ -2,8 +2,14 @@ import { AsyncStorage } from "react-native";
 
 import { API_URL } from "../constants/Config";
 import { PURGE } from "redux-persist";
-import { ThunkAction } from "redux-thunk";
-import { SetTokenAction, ActionTypes, StandardThunkDispatch, ThunkFuncPromise } from "../types/accountTypes";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import {
+  SetTokenAction,
+  ActionTypes,
+  StandardThunkDispatch,
+  ThunkFuncPromise,
+  UpdateAccountAction
+} from "../types/accountTypes";
 import { LoginFormState } from "../types/formTypes";
 import { Action } from "redux";
 import { postToApi, getFromApi, putToApi } from "../services/backendCallout";
@@ -29,7 +35,12 @@ export const login = (account: LoginFormState): ThunkFuncPromise => {
   };
 };
 
-export const logout = (): ThunkAction<Promise<[void, void]>, any, any, Action> => {
+export const logout = (): ThunkAction<
+  Promise<[void, void]>,
+  any,
+  any,
+  Action
+> => {
   return (): Promise<[void, void]> => {
     return Promise.all([
       AsyncStorage.removeItem("token"),
@@ -60,9 +71,7 @@ export const purgeData = (): ThunkAction<void, any, any, Action> => {
   };
 };
 
-export const setTokenFromLocalStorage = (
-  token: string
-): SetTokenAction => {
+export const setTokenFromLocalStorage = (token: string): SetTokenAction => {
   return {
     type: ActionTypes.SET_TOKEN,
     payload: { token }
@@ -103,17 +112,19 @@ export const getDetails = (): ThunkFuncPromise => {
 };
 
 export const updateAccount = (updatedAccount): ThunkFuncPromise => {
-  return (dispatch, getState) => {
+  return (dispatch, getState): Promise<StandardThunkDispatch> => {
     const account = getState().account;
     return putToApi(
       `${API_URL}/api/v1/accounts/${account.id}`,
       updatedAccount,
       account.token
-    ).then(response => {
-      return dispatch({
-        type: "UPDATE_ACCOUNT",
-        payload: response
-      });
-    });
+    ).then(
+      (response): ThunkDispatch<any, any, UpdateAccountAction> => {
+        return dispatch({
+          type: "UPDATE_ACCOUNT",
+          payload: response
+        });
+      }
+    );
   };
 };

@@ -1,5 +1,5 @@
-export const getFromApi = async (url, token) => {
-  const response = await fetch(url, {
+export const getFromApi = async (url: string, token: string): Promise<any> => {
+  const response: Response = await fetch(url, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`
@@ -19,9 +19,9 @@ export const getFromApi = async (url, token) => {
 
 export const postToApi = async (
   url: string,
-  { body, token, headers }: { body: any; token?: string; headers?: any }
-) => {
-  const response = await fetch(url, {
+  { body, token, headers }: ApiFetchOptions
+): Promise<any> => {
+  const response: Response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,8 +38,12 @@ export const postToApi = async (
   return response.json();
 };
 
-export const putToApi = async (url, body, token) => {
-  const response = await fetch(url, {
+export const putToApi = async (
+  url: string,
+  body: any,
+  token: string
+): Promise<any> => {
+  const response: Response = await fetch(url, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -54,7 +58,10 @@ export const putToApi = async (url, body, token) => {
   return jsonResponse;
 };
 
-export const deleteFromApi = async (url, token) => {
+export const deleteFromApi = async (
+  url: string,
+  token: string
+): Promise<any> => {
   const response: any = await fetch(url, {
     method: "DELETE",
     headers: {

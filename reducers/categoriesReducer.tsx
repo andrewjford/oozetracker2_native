@@ -1,9 +1,14 @@
-const defaultState = {
+import { CategoryState } from "../types/categoryTypes";
+
+const defaultState: CategoryState = {
   displayCategoryInput: false,
   categories: []
 };
 
-const categoriesReducer = (state = defaultState, action) => {
+const categoriesReducer = (
+  state: CategoryState = defaultState,
+  action
+): CategoryState => {
   switch (action.type) {
     case "FETCH_CATEGORIES":
       return {
